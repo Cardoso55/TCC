@@ -1,0 +1,2 @@
+<?php
+// Rotas de navegação

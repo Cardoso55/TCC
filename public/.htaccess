@@ -1,0 +1,18 @@
+// Para que serve no nosso projeto
+
+// URLs amigáveis (pretty URLs)
+// Exemplo:
+//   Antes: http://meusite.com/index.php?page=dashboard
+//   Depois: http://meusite.com/dashboard
+
+// Facilita leitura e deixa mais profissional.
+
+// Redirecionamento e regras de acesso
+// Pode forçar todos acessos para https:// (segurança).
+// Pode redirecionar usuários de páginas antigas para novas.
+// Proteção de pastas e arquivos
+// Bloquear acesso a pastas que não devem ser públicas, tipo /app/models/ ou /app/controllers/.
+// Exemplo: ninguém consegue abrir Usuario.php direto no navegador.
+// Configurações de cache, compressão e performance
+// Pode ativar gzip para deixar o site mais rápido.
+// Configurar tempo de cache de imagens, CSS e JS.
