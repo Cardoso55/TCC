@@ -1,0 +1,59 @@
+/* ===== Reset CSS - Macaw Systems ===== */
+/* Remove estilos padrões de todos os navegadores para garantir consistência */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Remove decoração e cores padrão de links */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Remove marcadores de listas */
+ul, ol {
+    list-style: none;
+}
+
+/* Remove bordas e background padrão de botões e inputs */
+button, input, select, textarea {
+    font: inherit;
+    background: none;
+    border: none;
+    outline: none;
+}
+
+/* Define comportamento padrão do body */
+body {
+    line-height: 1.5;
+    font-family: "Poppins", sans-serif;
+    background-color: #f5f7fa;
+    color: #222;
+}
+
+/* Imagens responsivas */
+img, picture, video, canvas {
+    max-width: 100%;
+    display: block;
+}
+
+/* Remove espaçamento de tabelas */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* Suaviza fontes em navegadores WebKit */
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+}
+
+/* Força todos os elementos a respeitarem o box model */
+*, *::before, *::after {
+    box-sizing: inherit;
+}

@@ -1,0 +1,188 @@
+/* ===== Página de Login - Macaw Systems ===== */
+
+.login-wrapper {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    background-color: #f5f7fa;
+    font-family: "Poppins", sans-serif;
+}
+
+/* ===== LADO ESQUERDO ===== */
+.login-left {
+    flex: 1;
+    background-color: #d9d9d9; /* cinza claro */
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem;
+    box-shadow: 5px 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.logo-area .logo {
+    width: 500px; /* aumenta a logo para telas grandes */
+    max-width: 90%;
+    margin-bottom: 1rem;
+}
+
+/* ===== LADO DIREITO ===== */
+.login-right {
+    flex: 1.5; /* um pouco mais largo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+/* ===== Caixa do formulário ===== */
+.form-area {
+    width: 100%;
+    max-width: 450px;   /* aumenta largura do formulário */
+    background: #fff;
+    border-radius: 20px;
+    padding: 3rem;      /* aumenta espaço interno */
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    max-height: 95vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ===== Ícone do usuário ===== */
+.icon-user {
+    width: 80px;      /* maior círculo */
+    height: 80px;
+    margin: 0 auto 15px auto;
+    border-radius: 50%;
+    border: 2px solid #000; /* borda preta */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.icon-user img {
+    width: 80%;  /* maior ícone dentro do círculo */
+    height: 80%;
+    object-fit: contain;
+}
+
+/* ===== Títulos e textos ===== */
+.form-area h2 {
+    color: #1f2937;
+    font-size: 1.8rem; /* aumenta título */
+    margin-bottom: 0.5rem;
+}
+
+.form-area p {
+    color: #6b7280;
+    font-size: 1rem;   /* aumenta texto */
+    margin-bottom: 2rem;
+}
+
+/* ===== Inputs ===== */
+.input-group {
+    text-align: left;
+    margin-bottom: 1.5rem;
+    width: 100%;
+
+}
+
+.input-group label {
+    font-weight: 600;
+    color: #374151;
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 1rem;       /* aumenta altura */
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    font-size: 1.1rem;   /* aumenta fonte */
+    transition: border 0.3s, box-shadow 0.3s;
+    min-width: 300px;
+}
+
+.input-group input:focus {
+    border-color: #a31d1c;
+    box-shadow: 0 0 5px #a31c1c5e;
+    outline: none;
+}
+
+/* ===== Botão de login ===== */
+.btn-login {
+    width: 100%;
+    padding: 1rem;      /* maior botão */
+    font-size: 1.2rem;     /* fonte maior */
+    border-radius: 15px;
+    border: none;
+    background-color: #a31d1c;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 1rem;
+    font-weight: bold;
+}
+
+.btn-login:hover {
+    background-color: #6d0f0f;
+}
+
+/* ===== Esqueceu a senha ===== */
+.forgot {
+    margin-top: 1rem;
+}
+
+.forgot a {
+    color: #a31d1c;
+    font-size: 1rem;    /* aumenta fonte */
+    text-decoration: none;
+}
+
+.forgot a:hover {
+    text-decoration: underline;
+}
+
+/* ===== Responsividade ===== */
+@media (max-width: 900px) {
+    .login-wrapper {
+        flex-direction: column;
+    }
+
+    .login-left {
+        border-radius: 0;
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+        padding: 3rem 1rem;
+    }
+
+    .login-right {
+        padding: 2rem 1rem;
+    }
+
+    .form-area {
+        max-width: 90%;  /* ocupa mais espaço na tela pequena */
+        padding: 2rem;
+    }
+
+    .form-area h2 {
+        font-size: 1.5rem;
+    }
+
+    .form-area p,
+    .input-group label,
+    .input-group input,
+    .btn-login,
+    .forgot a {
+        font-size: 1rem;
+    }
+}

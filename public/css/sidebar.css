@@ -1,0 +1,104 @@
+/* ===== Sidebar ===== */
+.sidebar {
+    width: 250px;
+    background-color: #fff;  /* branco */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 3px 0 10px rgba(0,0,0,0.1);
+    padding: 1rem ;
+    align-items: center;
+}
+
+/* ===== Logo ===== */
+.sidebar-logo {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.sidebar-logo img {
+    width: 150px;
+    max-width: 80%;
+}
+
+/* ===== Botões do menu ===== */
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    
+}
+
+.menu-btn {
+    display: block;
+    padding: 0.9rem 1.5rem;
+    color: #374151;
+    background-color: #d9d9d9; 
+    text-decoration: none;
+    border-radius: 20px;
+    font-weight: 600;
+    transition: 0.3s;
+    margin-bottom: 10px;
+    min-width: 140px;
+    text-align: center;
+}
+
+.menu-btn:hover {
+    background-color: #e8e8e8;
+    color: #a31d1c;
+}
+
+/* ===== Botão vermelho ===== */
+.sidebar-bottom {
+    padding: 1rem 1.5rem;
+}
+
+.logout-btn {
+    display: block;
+    padding: 0.9rem 1.5rem;
+    background-color: #a31d1c; /* vermelho */
+    color: #fff;
+    text-align: center;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+    
+}
+
+.logout-btn:hover {
+    background-color: #6d0f0f;
+}
+
+/* ===== Responsividade ===== */
+@media (max-width: 900px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding: 0.5rem 0;
+    }
+
+    .sidebar-menu {
+        flex-direction: row;
+        gap: 0.5rem;
+    }
+
+    .sidebar-bottom {
+        padding: 0 0.5rem;
+    }
+
+    .menu-btn {
+        padding: 0.6rem 1rem;
+        border-radius: 5px;
+        font-size: 0.9rem;
+    }
+
+    .logout-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+}
