@@ -1,6 +1,6 @@
 /* ===== Sidebar ===== */
 .sidebar {
-    width: 250px;
+    width: 15%;
     background-color: #fff;  /* branco */
     height: 100vh;
     display: flex;

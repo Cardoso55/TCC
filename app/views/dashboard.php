@@ -1,7 +1,3 @@
-<?php
-include 'partials/sidebar.php'; 
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +9,62 @@ include 'partials/sidebar.php';
     <link rel="stylesheet" href="/TCC/public/css/dashboard.css">
 </head>
 <body>
-    
+    <div class="all">
+        <?php
+            include 'partials/sidebar.php'; 
+        ?>
+        <div class="main-content">
+            <h2 class="title">Dashboard</h2>
+            <div class="cards">
+                <div class="card">
+                    <h2>Card Title 1</h2>
+                    <p>This is some content for card 1.</p>
+                </div>
+                <div class="card">
+                    <h2>Card Title 2</h2>
+                    <p>This is some content for card 2.</p>
+                </div>
+                <div class="card">
+                    <h2>Card Title 3</h2>
+                    <p>This is some content for card 3.</p>
+                </div>
+                <div class="card">
+                    <h2>Card Title 4</h2>
+                    <p>This is some content for card 4.</p>
+                </div>
+            </div>
+
+            <div class="graphics">
+                <div class="graphic">
+                    <h2>Graphic Section</h2>
+                    <p>This section can be used for displaying graphics or charts.</p>
+                </div>
+                <div class="graphic">
+                    <h2>Graphic Section</h2>
+                    <p>This section can be used for displaying graphics or charts.</p>
+                </div>
+            </div>
+
+            <h2 class="subtitle">Alertas</h2>
+
+            <div class="alerts">
+                <div class="alert">
+                    <img src="/TCC/public/images/icons/alertaExclamacao.png" alt="Alert Icon" class="alert-icon">
+                    <h3>Alert Title 1</h3>
+                    <p>This is some information about alert 1.</p>
+                </div>
+                <div class="alert">
+                    <img src="/TCC/public/images/icons/alertaExclamacao.png" alt="Alert Icon" class="alert-icon">
+                    <h3>Alert Title 2</h3>
+                    <p>This is some information about alert 2.</p>
+                </div>
+                <div class="alert">
+                    <img src="/TCC/public/images/icons/alertaExclamacao.png" alt="Alert Icon" class="alert-icon">
+                    <h3>Alert Title 3</h3>
+                    <p>This is some information about alert 3.</p>
+                </div>
+
+        </div>
+    </div>
 </body>
 </html>
