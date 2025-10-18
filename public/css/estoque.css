@@ -1,0 +1,146 @@
+.all{
+    display: flex;
+    flex-direction: row;
+}
+
+.main-content{
+    width: 80%;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    box-shadow: 10px 0 10px rgba(0,0,0,0.1);
+}
+
+.title{
+    font-size: 50px;
+    font-weight: bold;
+    margin: 30px 0px 10px 30px;
+}
+
+.subtitle{
+    font-size: 30px;
+    font-weight: bold;
+    margin: 20px 0px 10px 30px;
+}
+
+.stock-management {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.stock-management input[type="text"] {
+    width: 250px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.stock-management input[type="text"]:focus {
+    border-color: #b50000;
+}
+
+.stock-management button {
+    background-color: #b50000;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.stock-management button:hover {
+    background-color: #c2001d;
+}
+
+.product-list {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+thead {
+    background-color: #fafafa;
+}
+
+th {
+    padding: 14px 12px;
+    font-weight: 600;
+    font-size: 15px;
+    color: #333;
+    border-bottom: 2px solid #ddd;
+}
+
+td {
+    padding: 12px;
+    font-size: 14px;
+    color: #555;
+    border-bottom: 1px solid #eee;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #e2e2e2; /* Linhas cinza */
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #f6f6f6;
+}
+
+th button {
+    background-color: #b50000;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+th button:hover {
+    background-color: #a91313;
+}
+
+td a {
+    text-decoration: none;
+    color: #b50000;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+td a:hover {
+    text-decoration: underline;
+}
+
+th:last-child,
+td:last-child {
+    text-align: right;
+    padding-right: 25px;
+}
+
+td:last-child a,
+td:last-child button {
+    margin-left: 8px;
+}
+
+td:not(:last-child),
+th:not(:last-child) {
+    padding-right: 10px;
+}
