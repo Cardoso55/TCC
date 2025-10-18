@@ -28,16 +28,20 @@
                     <input type="email" id="email" value="email@gmail.com" readonly>
                 </div>
                 
-                <div class="input-group">
+                <div class="input-group level-group">
                     <label for="password">Senha</label>
-                    <input type="password" id="password" value="********" readonly>
+                    <div class="level-display">
+                        <span>Coxinha123</span>
+                        <i class="fas fa-eye"></i> 
+                    </div>
                 </div>
                 
                 <div class="input-group level-group">
                     <label>Nível</label>
                     <div class="level-display">
                         <span>Administrador</span>
-                        <i class="fas fa-lock"></i> </div>
+                        <i class="fas fa-lock"></i> 
+                    </div>
                     <button class="edit-button"><i class="fas fa-pencil-alt"></i> Editar</button>
                 </div>
             </div>
