@@ -7,6 +7,7 @@
         <!-- BOTÕES PRINCIPAIS -->
         <div class="sidebar-menu">
             <a href="/TCC/app/views/dashboard.php" class="menu-btn">Dashboard</a>
+            <a href="/TCC/app/views/perfil.php" class="menu-btn">Perfil</a>
             <a href="/TCC/app/views/usuarios.php" class="menu-btn">Usuários</a>
             <a href="/TCC/app/views/estoque.php" class="menu-btn">Estoque</a>
             <a href="/TCC/app/views/compras.php" class="menu-btn">Compras</a>

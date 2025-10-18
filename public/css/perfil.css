@@ -1,0 +1,351 @@
+.all{
+    display: flex;
+    flex-direction: row;
+}
+
+.main-content{
+    width: 80%;
+    margin: 10px;
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    background-color: #fff;
+    box-shadow: 10px 0 10px rgba(0,0,0,0.1);
+}
+
+.title{
+    font-size: 50px;
+    font-weight: bold;
+    margin: 30px 0px 10px 30px;
+}
+
+.subtitle{
+    font-size: 30px;
+    font-weight: bold;
+    margin: 20px 0px 10px 30px;
+}
+
+/* =================================
+   ESTILOS GERAIS DA PÁGINA DE PERFIL (CLEAN)
+   ================================= */
+
+/* Variáveis para consistência */
+:root {
+    --color-primary: #b50000;
+    --color-text: #333;
+    --color-label: #555;
+    --color-border: #e0e0e0;
+    --color-background-light: #f9f9f9;
+    --color-background-page: #f0f2f5;
+}
+
+/* Estilo do Card (bloco principal) */
+.card {
+    background-color: #ffffff;
+    border-radius: 8px; /* Mais clean que 12px */
+    padding: 30px; /* Mais espaço interno */
+    margin-bottom: 25px;
+    /* Ajustando a sombra para o estilo profissional/clean */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); 
+}
+
+/* Os títulos do card serão estilizados de forma mais sutil */
+.card h1 {
+    color: var(--color-text);
+    font-weight: 600;
+    font-size: 1.6em;
+    padding-bottom: 15px;
+    margin: 0 0 25px 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.card h2 {
+    color: var(--color-text);
+    font-weight: 600;
+    font-size: 1.4em;
+    padding-bottom: 15px;
+    margin: 0 0 20px 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+
+/* Estilo dos Grupos de Input */
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px; /* Mais espaço */
+}
+
+.input-group label {
+    width: 120px; /* Largura mais profissional para labels */
+    font-weight: 500; /* Menos bold */
+    color: var(--color-label);
+    white-space: nowrap;
+    font-size: 0.95em;
+    flex-shrink: 0;
+}
+
+.input-group input {
+    flex-grow: 1;
+    padding: 10px 15px; /* Mais padding */
+    border: 1px solid var(--color-border);
+    border-radius: 4px; /* Menos arredondado */
+    font-size: 1em;
+    color: var(--color-text);
+    background-color: var(--color-background-light); /* Fundo claro para campos */
+    box-shadow: none; /* Remove qualquer sombra desnecessária */
+}
+
+/* Estilo específico para o campo de Nível */
+.level-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Alinha à esquerda */
+}
+
+.level-group .level-display {
+    flex-grow: 1;
+    padding: 10px 15px;
+    background-color: var(--color-background-light);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--color-text);
+}
+
+.level-group .level-display i {
+    color: var(--color-label);
+    margin-left: 10px;
+}
+
+.edit-button {
+    background-color: transparent; /* Fundo transparente */
+    color: var(--color-label);
+    border: 1px solid var(--color-border);
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s;
+}
+.edit-button:hover {
+    background-color: #eee;
+}
+
+.edit-button i {
+    margin-right: 5px;
+}
+
+/* Estilo das Configurações Individuais */
+.individual-settings {
+    padding-bottom: 30px;
+}
+
+.setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 15px;
+    padding: 10px 0;
+    width: 20%;
+}
+
+.setting-row label {
+    font-weight: 500;
+    color: var(--color-text);
+    white-space: nowrap;
+    margin-right: 20px;
+    flex-grow: 1;
+}
+
+/* Estilos para os grupos de botões (Toggle) */
+.options-group {
+    display: flex;
+    border: 1px solid var(--color-border); /* Borda sutil */
+    border-radius: 4px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.options-group button {
+    padding: 8px 15px;
+    background-color: #fff;
+    color: var(--color-text);
+    border: none;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: all 0.2s;
+    margin-left: -1px;
+}
+
+.options-group button:first-child {
+    margin-left: 0;
+}
+
+
+.options-group button.selected {
+    background-color: var(--color-primary); /* Seu vermelho de destaque */
+    color: #fff;
+    font-weight: 600;
+    border-color: var(--color-primary);
+}
+
+/* Remove classes theme-options desnecessárias */
+
+
+/* Estilos para os Botões de Ação (Cancelar e Salvar) */
+.action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 25px;
+    margin-top: 15px;
+    border-top: 1px solid var(--color-border); /* Linha divisória mais clean */
+}
+
+.action-buttons button {
+    padding: 10px 25px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    transition: background-color 0.2s, opacity 0.2s;
+}
+
+.cancel-button {
+    background-color: var(--color-border);
+    color: var(--color-text);
+}
+.cancel-button:hover {
+    background-color: #d8d8d8;
+}
+
+.save-button {
+    background-color: var(--color-primary); /* Seu vermelho de destaque */
+    color: #fff;
+}
+.save-button:hover {
+    opacity: 0.9;
+}
+
+
+/* =================================
+   ESTILOS DO MODAL
+   ================================= */
+
+/* O Fundo do Modal (dark overlay) */
+.modal {
+    display: none; /* Escondido por padrão */
+    position: fixed; 
+    z-index: 1000; /* Garante que fique acima de tudo */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4); /* Fundo escuro semi-transparente */
+    padding-top: 50px; /* Espaço do topo */
+}
+
+/* O Conteúdo do Modal (o box branco) */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto; /* Centraliza o modal verticalmente com padding-top e horizontalmente com margin: auto */
+    padding: 0;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px; /* Largura ideal para um formulário de modal */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    animation-name: animatetop; /* Animação para aparecer de cima */
+    animation-duration: 0.4s;
+}
+
+/* Animação de entrada */
+@keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+}
+
+/* Cabeçalho do Modal */
+.modal-header {
+    padding: 15px 25px;
+    background-color: #fff;
+    border-bottom: 1px solid var(--color-border);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
+    padding: 0;
+    border-bottom: none; /* Remove a linha divisória do h1/h2 principal */
+}
+
+/* Botão de Fechar (o 'x') */
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+    padding: 10px 15px;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: var(--color-primary); /* Vermelho no hover */
+    text-decoration: none;
+}
+
+/* Corpo do Modal */
+.modal-body {
+    padding: 20px 25px;
+}
+
+/* Rodapé do Modal (botões) */
+.modal-footer {
+    padding: 15px 25px;
+    border-top: 1px solid var(--color-border);
+    text-align: right;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+/* Reutilizando estilos de input e botão */
+.modal-body .input-group input,
+.modal-body .input-group select {
+    /* Herda o estilo do input-group, mas garante que o select também seja estilizado */
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    font-size: 1em;
+    color: var(--color-text);
+    background-color: #fff; /* Fundo branco para edição */
+}
+
+.modal-footer .save-button {
+    /* Garante que o botão Salvar Alterações use a cor primária */
+    background-color: var(--color-primary);
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 12px;
+}
+
+.modal-footer .cancel-button {
+    margin-right: 10px;
+    padding: 8px 12px;
+    border-radius: 12px;
+}
+
