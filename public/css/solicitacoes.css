@@ -1,0 +1,151 @@
+.all{
+    display: flex;
+    flex-direction: row;
+}
+
+.main-content{
+    width: 80%;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    box-shadow: 10px 0 10px rgba(0,0,0,0.1);
+}
+
+.title{
+    font-size: 50px;
+    font-weight: bold;
+    margin: 30px 0px 10px 30px;
+}
+
+.subtitle{
+    font-size: 30px;
+    font-weight: bold;
+    margin: 20px 0px 10px 30px;
+}
+
+.count{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin: 20px 30px;
+}
+
+.count-card{
+    width: 250px;
+    height: 150px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.pending{
+    background-color: #efe5b1;
+    border: 1px solid #e3d48f;
+}
+
+.approved{
+    background-color: #b1eab1;
+    border: 1px solid #8fe38f;
+}
+
+.denied{
+    background-color: #f7a8a8;
+    border: 1px solid #e38f8f;
+}
+
+.number{
+    font-size: 40px;
+    font-weight: bold;
+    color: #333;
+}
+
+.card-title{
+    font-size: 20px;
+    font-weight: bold;
+    color: #666;
+}
+
+.request-history {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 90%;
+    margin: 20px auto;
+    overflow-x: auto;
+}
+
+.request-history h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.request-history table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+}
+
+.request-history th {
+    text-align: left;
+    background-color: #f7f7f7;
+    padding: 10px;
+    color: #333;
+    font-weight: 600;
+    border-bottom: 2px solid #ddd;
+}
+
+.request-history td {
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    color: #444;
+}
+
+.request-history tr:last-child td {
+    border-bottom: none;
+}
+
+.request-history tr:hover {
+    background-color: #f9f9f9;
+    transition: 0.2s ease;
+}
+
+.status {
+    font-weight: 500;
+}
+
+.status.aprovado {
+    color: #2ecc71; /* Verde */
+}
+
+.status.negado {
+    color: #e74c3c; /* Vermelho */
+}
+
+.status.pendente {
+    color: #f1c40f; /* Amarelo */
+}
+
+.view-btn {
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.view-btn:hover {
+    color: #007bff;
+}
+
+
+
