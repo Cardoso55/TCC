@@ -1,0 +1,139 @@
+/* Layout principal */
+body {
+    background-color: #f5f7fa; /* fundo cinza claro */
+    font-family: "Poppins", sans-serif;
+}
+
+.all {
+    display: flex;
+    flex-direction: row;
+}
+
+/* Conteúdo principal */
+.main-content {
+    flex: 1;
+    margin: 20px; /* espaço para sidebar */
+    padding: 30px;
+}
+
+/* Títulos */
+.title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #222;
+}
+
+.subtitle {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Seções */
+.tabela-container, .filtros {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    margin-bottom: 25px;
+}
+
+/* Formulário de filtros */
+.filter-form {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+select, input[type="date"] {
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+
+/* Botões */
+.btn-filtrar, .btn-limpar, .detalhes-btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s ease;
+}
+
+.btn-filtrar, .detalhes-btn {
+    background-color: #e63946; /* vermelho da logo */
+    color: #fff;
+}
+
+.btn-filtrar:hover, .detalhes-btn:hover {
+    background-color: #d62828;
+}
+
+.btn-limpar {
+    background-color: #adb5bd; /* cinza neutro */
+    color: #fff;
+}
+
+.btn-limpar:hover {
+    background-color: #868e96;
+}
+
+/* Tabelas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    margin-top: 10px;
+}
+
+th {
+    text-align: left;
+    padding: 12px;
+    background-color: #f1f3f5;
+    border-bottom: 2px solid #dee2e6;
+}
+
+td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #eee;
+}
+
+tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Nível (cargo do usuário) */
+.nivel {
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: #fff;
+    font-weight: 600;
+}
+
+.nivel.Gerente {
+    background-color: #457b9d;
+}
+
+.nivel.Operário {
+    background-color: #1d3557;
+}
+
+.nivel.Diretor {
+    background-color: #e63946;
+}

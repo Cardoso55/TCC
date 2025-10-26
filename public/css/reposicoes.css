@@ -1,0 +1,123 @@
+/* Layout geral */
+.all {
+  display: flex;
+  flex-direction: row;
+  background-color: #f7f8fa;
+  min-height: 100vh;
+}
+
+/* Conteúdo principal */
+.main-content {
+  width: 80%;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  background-color: #f7f8fa;
+  border-radius: 10px;
+  padding: 20px 30px;
+}
+
+/* Títulos */
+.title {
+  font-size: 40px;
+  font-weight: bold;
+  margin: 10px 0 20px 0;
+  color: #222;
+}
+
+.subtitle {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #a31d1c;
+}
+
+/* Tabela */
+.tabela-container {
+  background-color: #fafafa;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+thead {
+  background-color: #a31d1c;
+  color: white;
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+tbody tr:hover {
+  background-color: #f1f1f1;
+  transition: background 0.3s;
+}
+
+/* Status */
+.status {
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.status.pendente {
+  background-color: #ffcc00;
+  color: #333;
+}
+
+.status.a-caminho {
+  background-color: #17a2b8;
+  color: #fff;
+}
+
+.status.entregue {
+  background-color: #28a745;
+  color: #fff;
+}
+
+/* Botões */
+.check-btn {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.check-btn:hover {
+  background-color: #0056b3;
+}
+
+.integrar-btn {
+  margin-top: 20px;
+  align-self: flex-start; /* joga o botão pra direita */
+  padding: 10px 20px;
+  background-color: #a70b0b; /* cinza neutro */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-weight: bold;
+}
+
+.integrar-btn:hover {
+  background-color: #6d0f0f;
+  color: white;
+}

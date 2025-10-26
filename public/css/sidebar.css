@@ -2,7 +2,7 @@
 .sidebar {
     width: 15%;
     background-color: #fff;  /* branco */
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -45,8 +45,8 @@
 }
 
 .menu-btn:hover {
-    background-color: #e8e8e8;
-    color: #a31d1c;
+    background-color: #a31d1c;
+    color: #e8e8e8;
 }
 
 /* ===== Botão vermelho ===== */
@@ -69,6 +69,7 @@
 
 .logout-btn:hover {
     background-color: #6d0f0f;
+    color: white;
 }
 
 /* ===== Responsividade ===== */
