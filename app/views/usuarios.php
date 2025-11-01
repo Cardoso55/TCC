@@ -11,6 +11,9 @@ $updateResult = $controller->atualizarUsuarioFromPost();
 // Buscar usuários pra listar
 $usuarios = $controller->listarUsuarios();
 
+$controller->deletarUsuarioFromPost();
+
+
 // Mensagem (opcional)
 $msg = null;
 if ($resultado) $msg = "Usuário cadastrado com sucesso!";
@@ -73,7 +76,15 @@ if ($updateResult) $msg = "Usuário atualizado com sucesso!";
                             <tr>
                                 <td><?= htmlspecialchars($usuario['nome']) ?></td>
                                 <td><?= htmlspecialchars($usuario['email']) ?></td>
-                                <td><?= htmlspecialchars($usuario['nivel']) ?></td>
+                                <?php
+                                    $roles = [
+                                    'diretor' => 'Diretor',
+                                    'gerente' => 'Gerente',
+                                    'supervisor' => 'Supervisor',
+                                    'operario' => 'Operário'
+                                    ];
+                                ?>
+                                <td><?= $roles[$usuario['nivel']] ?? ucfirst($usuario['nivel']) ?></td>
                                 <td><?= $usuario['ativo'] ? 'Ativo' : 'Inativo' ?></td>
                                 <td>
                                     <button class="edit-btn" data-user='<?= $userJson ?>'>Editar</button>
@@ -88,34 +99,36 @@ if ($updateResult) $msg = "Usuário atualizado com sucesso!";
             <div id="editModal" class="modal-overlay" style="display:none;">
             <div class="modal-content">
                 <button class="modal-close" id="modalCloseBtn">&times;</button>
-                <h3>Editar Usuário</h3>
-                <form id="editForm" method="POST" action="usuarios.php">
-                <input type="hidden" name="id" id="edit-id">
+                    <h3>Editar Usuário</h3>
+                    <form id="editForm" method="POST" action="usuarios.php">
+                        <input type="hidden" name="id" id="edit-id">
 
-                <label for="edit-nome">Nome</label>
-                <input type="text" name="nome" id="edit-nome" required>
+                        <label for="edit-nome">Nome</label>
+                        <input type="text" name="nome" id="edit-nome" required>
 
-                <label for="edit-email">Email</label>
-                <input type="email" name="email" id="edit-email" required>
+                        <label for="edit-email">Email</label>
+                        <input type="email" name="email" id="edit-email" required>
 
-                <label for="edit-nivel">Nível</label>
-                <select name="nivel" id="edit-nivel" required>
-                    <option value="diretor">Diretor</option>
-                    <option value="gerente">Gerente</option>
-                    <option value="supervisor">Supervisor</option>
-                    <option value="operario">Operário</option>
-                </select>
+                        <label for="edit-nivel">Nível</label>
+                        <select name="nivel" id="edit-nivel" required>
+                            <option value="diretor">Diretor</option>
+                            <option value="gerente">Gerente</option>
+                            <option value="supervisor">Supervisor</option>
+                            <option value="operario">Operário</option>
+                        </select>
 
-                <label>
-                    <input type="checkbox" name="ativo" id="edit-ativo">
-                    Ativo
-                </label>
+                        <label>
+                            <input type="checkbox" name="ativo" id="edit-ativo">
+                            Ativo
+                        </label>
 
-                <div class="modal-buttons">
-                    <button type="submit" class="save">Salvar</button>
-                    <button type="button" class="cancel" id="modalCancelBtn">Cancelar</button>
-                </div>
+                        <div class="modal-buttons">
+                            <button type="submit" class="save">Salvar</button>
+                            <button type="button" class="delete" id="deleteUserBtn">Excluir</button>
+                            <button type="button" class="cancel" id="modalCancelBtn">Cancelar</button>
+                        </div>
                 </form>
+
             </div>
             </div>
 
@@ -198,6 +211,26 @@ function closeModal() {
   document.getElementById('editModal').addEventListener('click', (e) => {
     if (e.target === document.getElementById('editModal')) {
       document.getElementById('editModal').style.display = 'none';
+    }
+  });
+
+  document.getElementById('deleteUserBtn').addEventListener('click', () => {
+    const id = document.getElementById('edit-id').value;
+    if (!id) return alert('Erro: ID não encontrado.');
+
+    if (confirm('Tem certeza que deseja excluir este usuário?')) {
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = 'usuarios.php';
+
+      const idInput = document.createElement('input');
+      idInput.type = 'hidden';
+      idInput.name = 'delete_id';
+      idInput.value = id;
+
+      form.appendChild(idInput);
+      document.body.appendChild(form);
+      form.submit();
     }
   });
 </script>

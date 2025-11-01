@@ -10,28 +10,48 @@ class UsuarioController {
     }
 
     public function criarUsuarioFromPost() {
-        if(isset($_POST['name'], $_POST['email'], $_POST['password'], $_POST['level'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'])) {
             $nome = $_POST['name'];
             $email = $_POST['email'];
-            $senha = password_hash($_POST['password'], PASSWORD_DEFAULT); // hash da senha
+            $senha = password_hash($_POST['password'], PASSWORD_DEFAULT);
             $nivel = $_POST['level'];
 
-            return $this->usuario->criar($nome, $email, $senha, $nivel);
+            $usuarioModel = new Usuario();
+            $resultado = $usuarioModel->criarUsuario($nome, $email, $senha, $nivel);
+
+            if ($resultado) {
+                // ✅ Redireciona para evitar reenvio do POST
+                header("Location: usuarios.php?msg=success");
+                exit;
+            } else {
+                header("Location: usuarios.php?msg=error");
+                exit;
+            }
+        }
+    }
+
+    public function listarUsuarios() {
+        return $this->usuario->listarUsuario();
+    }
+
+    public function buscarUsuario($id) {
+        return $this->usuario->buscarUsuarioPorId($id);
+    }
+
+    public function atualizarUsuario($id, $nome, $email, $cargo, $ativo) {
+        return $this->usuario->atualizarUsuario($id, $nome, $email, $cargo, $ativo);
+    }
+
+    public function deletarUsuarioFromPost() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
+            $id = intval($_POST['delete_id']);
+            $this->usuario->deletarUsuario($id);
+            header("Location: usuarios.php");
+            exit;
         }
         return false;
     }
 
-    public function listarUsuarios() {
-        return $this->usuario->listar();
-    }
-
-    public function buscarUsuario($id) {
-        return $this->usuario->buscarPorId($id);
-    }
-
-    public function atualizarUsuario($id, $nome, $email, $cargo, $ativo) {
-        return $this->usuario->atualizar($id, $nome, $email, $cargo, $ativo);
-    }
     
     public function atualizarUsuarioFromPost() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id']) && isset($_POST['nome'])) {

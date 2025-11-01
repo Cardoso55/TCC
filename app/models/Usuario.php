@@ -9,7 +9,7 @@ class Usuario {
     }
 
     //  Cadastra um novo usuário
-    public function criar($nome, $email, $senha, $nivel) {
+    public function criarUsuario($nome, $email, $senha, $nivel) {
         $sql = "INSERT INTO usuarios_tbl (nome, email, senha_hash, nivel, data_criacao, ativo) VALUES (?, ?, ?, ?, NOW(), 1)";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("ssss", $nome, $email, $senha, $nivel);
@@ -17,14 +17,14 @@ class Usuario {
     }
 
     // Busca todos os usuários
-    public function listar() {
+    public function listarUsuario() {
         $sql = "SELECT * FROM usuarios_tbl";
         $resultado = $this->conn->query($sql);
         return $resultado->fetch_all(MYSQLI_ASSOC);
     }
 
     // Busca um usuário por ID
-    public function buscarPorId($id) {
+    public function buscarUsuarioPorId($id) {
         $sql = "SELECT * FROM usuarios_tbl WHERE id_usuario = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i", $id);
@@ -33,7 +33,7 @@ class Usuario {
     }
 
     // Atualiza um usuário
-    public function atualizar($id, $nome, $email, $nivel, $ativo) {
+    public function atualizarUsuario($id, $nome, $email, $nivel, $ativo) {
         $sql = "UPDATE usuarios_tbl SET nome=?, email=?, nivel=?, ativo=? WHERE id_usuario=?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("sssii", $nome, $email, $nivel, $ativo, $id);
@@ -41,7 +41,7 @@ class Usuario {
     }
 
     // Deleta um usuário
-    public function deletar($id) {
+    public function deletarUsuario($id) {
         $sql = "DELETE FROM usuarios_tbl WHERE id_usuario=?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i", $id);
