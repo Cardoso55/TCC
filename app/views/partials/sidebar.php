@@ -21,6 +21,6 @@
 
         <!-- BOTÃO VERMELHO -->
         <div class="sidebar-bottom">
-            <a href="#" class="menu-btn logout-btn">Sair</a>
+            <a href="../helpers/logout.php" class="menu-btn logout-btn">Sair</a>
         </div>
     </div>

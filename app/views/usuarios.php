@@ -1,5 +1,8 @@
 <?php
 require_once '../controllers/UsuarioController.php';
+require_once '../controllers/AuthController.php';
+
+AuthController::checkAuth();
 $controller = new UsuarioController();
 
 // Processar criação (já existente)

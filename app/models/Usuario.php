@@ -47,5 +47,30 @@ class Usuario {
         $stmt->bind_param("i", $id);
         return $stmt->execute();
     }
+
+    // Valida login
+    // login
+    public function login($email, $senha) {
+        $sql = "SELECT * FROM usuarios_tbl WHERE email = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+
+        if ($result && password_verify($senha, $result['senha_hash'])) {
+            return $result;
+        }
+        return false;
+    }
+
+    // atualizar último login
+    public function atualizarUltimoLogin($id) {
+        $sql = "UPDATE usuarios_tbl SET ultimo_login = NOW() WHERE id_usuario = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        return $stmt->execute();
+    }
+
+
 }
 ?>

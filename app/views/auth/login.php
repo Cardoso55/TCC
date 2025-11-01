@@ -1,10 +1,7 @@
 <?php
-// =======================================
-// Página: login.php
-// Função: Autentica o usuário no sistema.
-// Exibe o formulário de login (usuário e senha).
-// Redireciona para o dashboard conforme o nível hierárquico.
-// =======================================
+require_once '../../controllers/AuthController.php';
+$auth = new AuthController();
+$error = $auth->loginFromPost();
 ?>
 
 <!DOCTYPE html>
@@ -36,10 +33,10 @@
                 <h2>Bem-vindo de volta!</h2>
                 <p>Entre com suas credenciais para continuar</p>
 
-                <form action="#" method="POST">
+                <form action="" method="POST">
                     <div class="input-group">
                         <label for="email">Usuário</label>
-                        <input type="text" id="email" name="email" placeholder="Digite seu ID" required>
+                        <input type="text" id="email" name="email" placeholder="Digite seu email" required>
                     </div>
 
                     <div class="input-group">
@@ -51,6 +48,10 @@
 
                     <p class="forgot"><a href="alterar_senha.php">Esqueceu a senha?</a></p>
                 </form>
+                <?php if ($error): ?>
+                    <p style="color:red;"><?= $error ?></p>
+                <?php endif; ?>
+
             </div>
         </div>
     </div>
