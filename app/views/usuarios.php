@@ -21,6 +21,15 @@ $controller->deletarUsuarioFromPost();
 $msg = null;
 if ($resultado) $msg = "Usuário cadastrado com sucesso!";
 if ($updateResult) $msg = "Usuário atualizado com sucesso!";
+
+// Captura os filtros enviados via GET
+$nome = $_GET['nome'] ?? '';
+$nivel = $_GET['nivel'] ?? '';
+$ativo = $_GET['ativo'] ?? ''; // pega status
+
+$usuarios = $controller->listarUsuarios($nome, $ativo, $nivel); // Ajuste o controller para receber ativo
+
+
 ?>
 
 
@@ -43,17 +52,24 @@ if ($updateResult) $msg = "Usuário atualizado com sucesso!";
 
             <h2 class="title">Gestão de Usuário</h2>
 
+
             <div class="user-management">
-                <input type="text" placeholder="Nome">
-                <input type="email" placeholder="Email">
-                <select>
-                    <option value="" disabled selected>Nível</option>
+                <label for="filter-nome">Nome:</label>
+                <input type="text" id="filter-nome" placeholder="Filtrar por nome">
+                <label for="filter-status">Status:</label>
+                <select id="filter-status">
+                    <option value="" selected>Nenhum</option>
+                    <option value="1">Ativo</option>
+                    <option value="0">Inativo</option>
+                </select>
+                <label for="filter-nivel">Cargo:</label>
+                <select id="filter-nivel">
+                    <option value="" selected>Nenhum</option>
                     <option value="diretor">Diretor</option>
                     <option value="gerente">Gerente</option>
                     <option value="supervisor">Supervisor</option>
                     <option value="operario">Operário</option>
                 </select>
-                <button>Filtrar</button>
             </div>
             
             <div class="middle-line">
@@ -236,6 +252,51 @@ function closeModal() {
       form.submit();
     }
   });
+
+    const nomeInput = document.getElementById('filter-nome');
+    const nivelSelect = document.getElementById('filter-nivel');
+    const userTableBody = document.querySelector('.user-list tbody');
+    const statusSelect = document.getElementById('filter-status');
+
+    function atualizarUsuarios() {
+        const nome = nomeInput.value;
+        const nivel = nivelSelect.value;
+        const status = statusSelect.value; // pode ser "0" ou "1" ou ""
+        const params = new URLSearchParams({ nome, nivel });
+
+        // Só adiciona se não for vazio
+        if (status !== '') params.append('ativo', status);
+
+        fetch('../controllers/usuarios_filtro.php?' + params)
+            .then(res => res.text())
+            .then(html => {
+                userTableBody.innerHTML = html;
+
+                // Reaplicar evento nos botões de editar
+                document.querySelectorAll('.edit-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const user = JSON.parse(btn.dataset.user);
+                        document.getElementById('edit-id').value = user.id_usuario ?? user.id ?? null;
+                        document.getElementById('edit-nome').value = user.nome ?? '';
+                        document.getElementById('edit-email').value = user.email ?? '';
+                        document.getElementById('edit-nivel').value = user.nivel ?? '';
+                        document.getElementById('edit-ativo').checked = parseInt(user.ativo ?? 0) === 1;
+                        document.getElementById('editModal').style.display = 'flex';
+                    });
+                });
+            });
+    }
+
+    // Atualiza enquanto digita ou muda select
+    [nomeInput, nivelSelect, statusSelect].forEach(el => {
+        el.addEventListener('input', atualizarUsuarios);
+        el.addEventListener('change', atualizarUsuarios);
+    });
+
+    // Mostrar todos ao carregar
+    atualizarUsuarios();
+
+
 </script>
 
 </body>

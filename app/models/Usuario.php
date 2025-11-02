@@ -17,11 +17,47 @@ class Usuario {
     }
 
     // Busca todos os usuários
-    public function listarUsuario() {
-        $sql = "SELECT * FROM usuarios_tbl";
-        $resultado = $this->conn->query($sql);
-        return $resultado->fetch_all(MYSQLI_ASSOC);
+    public function listarUsuario($nome = '', $ativo = '', $nivel = '') {
+    $conn = $this->conn;
+    $sql = "SELECT * FROM usuarios_tbl WHERE 1=1";
+    $params = [];
+    $tipos = '';
+
+    // Filtro por nome
+    if ($nome !== '') {
+        $sql .= " AND nome LIKE ?";
+        $params[] = "%$nome%";
+        $tipos .= 's';
     }
+
+    // Filtro por status (ativo/inativo)
+    if ($ativo !== '' && $ativo !== null) {
+        $sql .= " AND ativo = ?";
+        $params[] = (int)$ativo;
+        $tipos .= 'i';
+    }
+
+    // Filtro por cargo
+    if ($nivel !== '') {
+        $sql .= " AND nivel = ?";
+        $params[] = $nivel;
+        $tipos .= 's';
+    }
+
+    // Prepara e executa
+    $stmt = $conn->prepare($sql);
+
+    if (!empty($params)) {
+        $stmt->bind_param($tipos, ...$params);
+    }
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC);
+} // 👈 ESSA CHAVE FINALIZA A FUNÇÃO
+
+
+
 
     // Busca um usuário por ID
     public function buscarUsuarioPorId($id) {

@@ -30,9 +30,16 @@ class UsuarioController {
         }
     }
 
-    public function listarUsuarios() {
-        return $this->usuario->listarUsuario();
+    public function listarUsuarios($nome = '', $ativo = '', $nivel = '') {
+        // Se TODOS os filtros forem string vazia (ou não definidos), retorna todos
+        if ($nome === '' && $ativo === '' && $nivel === '') {
+            return $this->usuario->listarUsuario(); // lista completa
+        }
+        // Caso contrário, passa os filtros (mesmo que ativo seja "0")
+        return $this->usuario->listarUsuario($nome, $ativo, $nivel);
     }
+
+
 
     public function buscarUsuario($id) {
         return $this->usuario->buscarUsuarioPorId($id);
