@@ -331,3 +331,23 @@ textarea {
   display: block;
   margin-top: 4px;
 }
+
+.sort {
+    cursor: pointer;
+    font-size: 0.8em;
+    margin-left: 4px;
+    color: #666;
+    transition: 0.2s;
+}
+
+.sort:hover {
+    color: #000;
+}
+
+.sort[data-ordem="asc"]::after {
+    content: "▲";
+}
+
+.sort[data-ordem="desc"]::after {
+    content: "▼";
+}
