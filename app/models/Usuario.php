@@ -68,6 +68,17 @@ class Usuario {
         return $stmt->get_result()->fetch_assoc();
     }
 
+    public function atualizarSenha($id, $hash) {
+    $stmt = $this->conn->prepare("UPDATE usuarios_tbl SET senha_hash = ? WHERE id_usuario = ?");
+    return $stmt->execute([$hash, $id]);
+}
+
+    
+    public function atualizarPerfil($id, $nome, $email) {
+        $stmt = $this->conn->prepare("UPDATE usuarios_tbl SET nome = ?, email = ? WHERE id_usuario = ?");
+        return $stmt->execute([$nome, $email, $id]);
+    }
+
     // Atualiza um usuário
     public function atualizarUsuario($id, $nome, $email, $nivel, $ativo) {
         $sql = "UPDATE usuarios_tbl SET nome=?, email=?, nivel=?, ativo=? WHERE id_usuario=?";
