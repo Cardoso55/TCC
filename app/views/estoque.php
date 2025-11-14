@@ -46,6 +46,7 @@ $produtos = ProdutoController::listarProdutos();
                             Quantidade 
                             <span class="sort" data-campo="quantidade" data-ordem="asc">▲</span>
                         </th>
+                        <th>Quantidade Mínima</th>
                         <th><button id="btnAdd">Adicionar</button></th>
                     </tr>
                 </thead>
@@ -58,6 +59,7 @@ $produtos = ProdutoController::listarProdutos();
                                 <td><?= htmlspecialchars($p['categoria']) ?></td>
                                 <td>R$ <?= number_format($p['preco_unitario'], 2, ',', '.') ?></td>
                                 <td><?= $p['quantidade_atual'] ?? 0 ?></td>
+                                <td><?= $p['quantidade_minima'] ?? 0 ?></td>
                                 <td>
                                     <button class="edit-btn">✏️</button>
                                     <button class="delete-btn">🗑️</button>

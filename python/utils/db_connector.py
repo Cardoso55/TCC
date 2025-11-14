@@ -1,13 +1,12 @@
-# utils/db_connector.py
 from sqlalchemy import create_engine
 
-def conectar():
-    """
-    Cria e retorna uma engine SQLAlchemy conectada ao MySQL do Laragon.
-    """
+def conectar_engine():
     try:
-        engine = create_engine("mysql+mysqlconnector://root:@localhost/macawsystems")
+        engine = create_engine(
+            "mysql+mysqlconnector://root:@localhost/macawsystems",
+            echo=False
+        )
         return engine
     except Exception as e:
-        print(f"Erro ao conectar ao banco: {e}")
+        print(f"Erro ao conectar ao MySQL: {e}")
         return None
