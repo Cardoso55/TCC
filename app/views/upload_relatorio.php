@@ -10,7 +10,7 @@ $uploadDir = $projectRoot . DIRECTORY_SEPARATOR . 'python' . DIRECTORY_SEPARATOR
 // Garante que a pasta existe e é gravável
 if (!file_exists($uploadDir)) {
     if (!mkdir($uploadDir, 0777, true)) {
-        die("❌ Falha ao criar pasta de upload: $uploadDir");
+        die("Falha ao criar pasta de upload: $uploadDir");
     }
 }
 
@@ -27,7 +27,7 @@ if (!empty($_FILES['arquivo_csv']['name'])) {
     // Valida extensão
     $ext = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
     if ($ext !== 'csv') {
-        die("❌ Apenas arquivos .csv são permitidos. Arquivo enviado: $originalName");
+        die("Apenas arquivos .csv são permitidos. Arquivo enviado: $originalName");
     }
 
     // Move o arquivo temporário para a pasta final
@@ -49,7 +49,7 @@ if (!empty($_FILES['arquivo_csv']['name'])) {
         $output = shell_exec($command);
         echo "<pre>Saída da IA:\n" . htmlspecialchars($output) . "</pre>";
     } else {
-        echo "❌ Erro ao enviar arquivo. Verifique permissão da pasta: $uploadDir";
+        echo "Erro ao enviar arquivo. Verifique permissão da pasta: $uploadDir";
     }
 
 } else {

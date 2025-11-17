@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 from utils.estoque_db import carregar_estoque_produtos, atualizar_estoque_minimo
+from alertas_ruptura import calcular_media_diaria, calcular_dias_ate_acabar, gerar_alertas_de_ruptura, salvar_alertas_no_db
 
 def obter_csv_mais_recente():
     pasta_vendas = os.path.join(os.path.dirname(__file__), "data", "vendas")
@@ -58,6 +59,24 @@ def calcular_estoque_minimo(caminho_csv, engine):
             print(f"Atualizado: Produto {cod} | mínimo = {minimo}")
         else:
             print(f"Produto {cod} não existe no banco.")
+
+# 1) calcula médias (janela 30 dias)
+medias = calcular_media_diaria(df_vendas, dias_anteriores=30)
+
+# 2) pega estoque (carregar_estoque_produtos já retorna id_estoque, codigo_produto, quantidade_atual)
+estoque_df = carregar_estoque_produtos(engine)
+
+# 3) calcula dias até acabar e risco
+ruptura_df = calcular_dias_ate_acabar(estoque_df, medias, fallback_days=30)
+
+# 4) gera alertas (lista de dicts)
+alertas = gerar_alertas_de_ruptura(ruptura_df)
+
+# 5) salva no banco (opcional)
+salvar_alertas_no_db(engine, alertas)
+
+# 6) print pra debug
+print("Alertas de ruptura gerados:", alertas)
 
 def main():
     from utils.db_connector import conectar_engine
