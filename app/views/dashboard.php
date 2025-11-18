@@ -45,10 +45,6 @@
                 </div>
             </div>
 
-            <h2 class="subtitle">Alertas</h2>
-
-            <div id="alertasIA"></div>
-
         </div>
     </div>
 </body>

@@ -1,0 +1,4 @@
+# Ignorar builds e executáveis
+python/dist/
+python/build/
+*.exe

@@ -41,6 +41,8 @@ if (!empty($_FILES['arquivo_csv']['name'])) {
         // $command = "\"$exe\" 2>&1";
 
         // Se usa Python (instalado no PATH do servidor):
+
+        
         $pythonCmd = "python"; // ou full path quando necessário
         $script = $projectRoot . DIRECTORY_SEPARATOR . "python" . DIRECTORY_SEPARATOR . "ia_main.py";
         $command = "\"$pythonCmd\" \"$script\" 2>&1";

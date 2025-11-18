@@ -6,6 +6,7 @@ def carregar_estoque_produtos(engine):
         query = """
         SELECT 
             e.id_estoque,
+            e.quantidade_atual,
             e.quantidade_minima,
             p.codigo_produto
         FROM estoque_tbl e

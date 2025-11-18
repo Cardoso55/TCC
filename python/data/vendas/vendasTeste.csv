@@ -1,5 +1,18 @@
-codigo_produto,quantidade_vendida,data_venda
-6A9DB927,10,2025-10-10
-18FE18F4,10,2025-10-11
-6E89FAE2,10,2025-10-12
-6B9275C7,10,2025-10-13
+codigo_produto,nome,categoria,preco_unitario,quantidade_vendida,faturamento,vendedor,canais_venda,taxa_conversao,ticket_medio,preferencias_cliente,meta_vendas,resultado_meta,campanha,data_venda
+6A9DB927,Redmi Buds 6 Lite,Eletrônicos,150.00,5,750.00,Ana,Online,0.30,150.00,Compras esporádicas,15,12,Campanha Natal,2025-11-05
+18FE18F4,Monitor Acer 23.9',Eletrônicos,920.00,2,1840.00,Beto,Físico,0.28,920.00,Alta fidelidade,20,16,Campanha Verão,2025-10-12
+249CFE33,Detergente,Produtos de limpeza,13.00,3,39.00,Carlos,Telefone,0.25,13.00,Compras semanais,60,50,Campanha Promoção,2025-10-08
+6B9275C7,Sabão em Pó,Produtos de limpeza,16.00,4,64.00,Diana,Online,0.40,16.00,Compras recorrentes,40,32,Campanha Natal,2025-11-02
+6E89FAE2,Arroz Branco Tipo 1,Alimentos,22.00,3,66.00,Ana,Físico,0.30,22.00,Compras semanais,50,42,Campanha Verão,2025-09-12
+16C3B123,Feijão Carioca,Alimentos,6.00,8,48.00,Felipe,Físico,0.22,6.00,Compras semanais,30,28,Campanha Verão,2025-09-20
+C85B9124,Bolacha Tortinhas de Chocolate,Alimentos,7.50,15,112.50,Ana,Online,0.27,7.50,Compras esporádicas,50,42,Campanha Natal,2025-10-12
+628875A8,Água Sanitária,Produtos de limpeza,16.00,25,400.00,Carlos,Telefone,0.22,16.00,Compras semanais,60,55,Campanha Promoção,2025-08-25
+64611111,Contra Filé,Alimentos,62.00,7,434.00,Diana,Físico,0.29,62.00,Compras semanais,15,13,Campanha Verão,2025-11-13
+6A9DB927,Redmi Buds 6 Lite,Eletrônicos,150.00,2,300.00,Ana,Online,0.30,150.00,Compras esporádicas,15,12,Campanha Natal,2025-08-15
+249CFE33,Detergente,Produtos de limpeza,13.00,5,65.00,Carlos,Telefone,0.25,13.00,Compras semanais,60,50,Campanha Promoção,2025-11-09
+6B9275C7,Sabão em Pó,Produtos de limpeza,16.00,1,16.00,Diana,Online,0.40,16.00,Compras recorrentes,40,32,Campanha Natal,2025-11-10
+6E89FAE2,Arroz Branco Tipo 1,Alimentos,22.00,6,132.00,Ana,Físico,0.30,22.00,Compras semanais,50,42,Campanha Verão,2025-11-18
+16C3B123,Feijão Carioca,Alimentos,6.00,12,72.00,Felipe,Físico,0.22,6.00,Compras semanais,30,28,Campanha Verão,2025-10-25
+C85B9124,Bolacha Tortinhas de Chocolate,Alimentos,7.50,18,135.00,Ana,Online,0.27,7.50,Compras esporádicas,50,42,Campanha Natal,2025-09-15
+628875A8,Água Sanitária,Produtos de limpeza,16.00,35,560.00,Carlos,Telefone,0.22,16.00,Compras semanais,60,55,Campanha Promoção,2025-10-20
+64611111,Contra Filé,Alimentos,62.00,9,558.00,Diana,Físico,0.29,62.00,Compras semanais,15,13,Campanha Verão,2025-10-15
