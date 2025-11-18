@@ -10,6 +10,7 @@ if (isset($_GET['idCompra'])) $filtros['idCompra_TBL'] = $_GET['idCompra'];
 if (isset($_GET['idPedido'])) $filtros['idPedidosReposicao_TBL'] = $_GET['idPedido'];
 
 $checklists = ChecklistController::listar($filtros);
+
 ?>
 
 <!DOCTYPE html>
@@ -52,7 +53,7 @@ Checklist confirmado com sucesso!
     <!-- Form para confirmar checklist -->
     <form action="?pagina=checklist_confirmar" method="post" style="display:inline">
         <input type="hidden" name="idChecklist" value="<?= $c['id_checklist'] ?>">
-        <input type="hidden" name="idUsuario" value="<?= $_SESSION['id_usuario'] ?? 1 ?>">
+        <input type="hidden" name="idUsuario" value="<?= $_SESSION['user_id'] ?? 1 ?>">
         <?php if (!empty($c['idPedidosReposicao_TBL'])): ?>
             <input type="hidden" name="idPedido" value="<?= $c['idPedidosReposicao_TBL'] ?>">
         <?php endif; ?>

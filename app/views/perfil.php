@@ -6,6 +6,7 @@ $nome = $_SESSION['user_name'];
 $nivel = $_SESSION['user_level'];
 $userId = $_SESSION['user_id'];
 
+
 // buscar dados extras do usuário
 require_once __DIR__ . '/../models/Usuario.php';
 $usuarioModel = new Usuario();
