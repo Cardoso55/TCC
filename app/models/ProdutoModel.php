@@ -34,7 +34,7 @@ class ProdutoModel {
 
     public static function buscarComEstoque() {
         $db = conectarBanco();
-        $res = $db->query("SELECT p.*, e.quantidade_atual 
+        $res = $db->query("SELECT p.*, e.quantidade_atual, e.quantidade_minima
                            FROM produtos_tbl p
                            LEFT JOIN estoque_tbl e ON p.id_produto = e.idProdutos_TBL");
         $produtos = $res->fetch_all(MYSQLI_ASSOC);

@@ -9,7 +9,7 @@ def calcular_estoque_minimo(df_vendas, tempo_reposicao_dias=7, margem_seguranca=
     # Garante que as colunas esperadas existem
     colunas_necessarias = {'produto', 'quantidade', 'data'}
     if not colunas_necessarias.issubset(df_vendas.columns):
-        print("⚠️ O DataFrame não contém as colunas necessárias:", colunas_necessarias)
+        print("O DataFrame não contém as colunas necessárias:", colunas_necessarias)
         return pd.DataFrame()
 
     # Agrupa vendas por produto e por dia

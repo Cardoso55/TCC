@@ -1,51 +1,35 @@
-# python/utils/estoque_db.py
-# utils/estoque_db.py
 import pandas as pd
-from utils.db_connector import conectar
+from sqlalchemy import text
 
-def carregar_estoque_produtos():
-    """
-    Carrega os produtos e estoques do banco de dados.
-    """
-    engine = conectar()
-    if engine is None:
-        print("❌ Falha na conexão com o banco.")
-        return pd.DataFrame()
-
+def carregar_estoque_produtos(engine):
     try:
         query = """
         SELECT 
             e.id_estoque,
-            e.IdProdutos_TBL,
-            p.nome,
-            e.quantidade_atual
+            e.quantidade_atual,
+            e.quantidade_minima,
+            p.codigo_produto
         FROM estoque_tbl e
-        INNER JOIN produtos_tbl p ON e.IdProdutos_TBL = p.id_produto
+        JOIN produtos_tbl p ON e.idProdutos_TBL = p.id_produto
         """
-        df = pd.read_sql(query, engine)
-        return df
+        return pd.read_sql(query, engine)
     except Exception as e:
-        print(f"❌ Erro ao carregar estoque: {e}")
+        print(f"Erro ao carregar estoque: {e}")
         return pd.DataFrame()
-    finally:
-        if hasattr(engine, "dispose"):
-            engine.dispose()
 
-
-def atualizar_estoque_minimo(id_estoque, novo_estoque_minimo):
-    engine = conectar()
-    if not engine:
-        return
-
+def atualizar_estoque_minimo(engine, id_estoque, novo_minimo):
     try:
-        cursor = engine.cursor()
-        cursor.execute("""
-            UPDATE estoque_tbl
-            SET quantidade_minima = %s
-            WHERE id_estoque = %s
-        """, (novo_estoque_minimo, id_estoque))
-        engine.commit()
-        engine.dispose()
-        print(f"✅ Estoque mínimo atualizado (ID {id_estoque}): {novo_estoque_minimo}")
+        with engine.begin() as conn:
+            conn.execute(
+                text("""
+                    UPDATE estoque_tbl
+                    SET quantidade_minima = :minimo
+                    WHERE id_estoque = :id
+                """),
+                {
+                    "minimo": int(novo_minimo),     # <-- CORREÇÃO DEFINITIVA
+                    "id": int(id_estoque)           # <-- CORREÇÃO DEFINITIVA
+                }
+            )
     except Exception as e:
-        print("❌ Erro ao atualizar estoque mínimo:", e)
+        print(f"Erro ao atualizar estoque mínimo: {e}")

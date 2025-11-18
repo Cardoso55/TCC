@@ -45,25 +45,6 @@
                 </div>
             </div>
 
-            <h2 class="subtitle">Alertas</h2>
-
-            <div class="alerts">
-                <div class="alert">
-                    <img src="/TCC/public/images/icons/alertaExclamacao.png" alt="Alert Icon" class="alert-icon">
-                    <h3>Alert Title 1</h3>
-                    <p>This is some information about alert 1.</p>
-                </div>
-                <div class="alert">
-                    <img src="/TCC/public/images/icons/alertaExclamacao.png" alt="Alert Icon" class="alert-icon">
-                    <h3>Alert Title 2</h3>
-                    <p>This is some information about alert 2.</p>
-                </div>
-                <div class="alert">
-                    <img src="/TCC/public/images/icons/alertaExclamacao.png" alt="Alert Icon" class="alert-icon">
-                    <h3>Alert Title 3</h3>
-                    <p>This is some information about alert 3.</p>
-                </div>
-
         </div>
     </div>
 </body>

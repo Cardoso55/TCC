@@ -61,12 +61,6 @@
     text-align: center;
 }
 
-.alerts {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-}
-
 img.alert-icon{
     width: 50px;
     height: 50px;
@@ -74,16 +68,3 @@ img.alert-icon{
 
 }
 
-.alert{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 40%;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin: 20px;
-    
-    text-align: center;
-}

@@ -2,13 +2,14 @@
 .sidebar {
     width: 15%;
     background-color: #fff;  /* branco */
-    max-height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    box-shadow: 3px 0 10px rgba(0,0,0,0.1);
-    padding: 1rem ;
+    box-shadow: 3px 0 20px rgba(0,0,0,0.08);
+    padding: 1rem;
     align-items: center;
+    border-right: 1px solid #eee;
 }
 
 /* ===== Logo ===== */
@@ -27,18 +28,16 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    
 }
 
 .menu-btn {
-    display: block;
     padding: 0.9rem 1.5rem;
     color: #374151;
-    background-color: #d9d9d9; 
+    background-color: #e7e7e7;
     text-decoration: none;
-    border-radius: 20px;
+    border-radius: 14px;
     font-weight: 600;
-    transition: 0.3s;
+    transition: 0.25s ease;
     margin-bottom: 10px;
     min-width: 140px;
     text-align: center;
@@ -46,7 +45,8 @@
 
 .menu-btn:hover {
     background-color: #a31d1c;
-    color: #e8e8e8;
+    color: #fff;
+    transform: translateY(-2px);
 }
 
 /* ===== Botão vermelho ===== */
@@ -55,51 +55,222 @@
 }
 
 .logout-btn {
-    display: block;
     padding: 0.9rem 1.5rem;
-    background-color: #a31d1c; /* vermelho */
+    background-color: #a31d1c;
     color: #fff;
     text-align: center;
-    border-radius: 20px;
+    border-radius: 14px;
     text-decoration: none;
     font-weight: 600;
-    transition: 0.3s;
-    
+    transition: 0.25s ease;
 }
 
 .logout-btn:hover {
-    background-color: #6d0f0f;
-    color: white;
+    background-color: #741212;
+    transform: translateY(-2px);
 }
 
-/* ===== Responsividade ===== */
-@media (max-width: 900px) {
-    .sidebar {
-        width: 100%;
-        height: auto;
-        flex-direction: row;
-        justify-content: flex-start;
-        overflow-x: auto;
-        padding: 0.5rem 0;
-    }
+/* Header da sidebar (logo + botão) */
+.sidebar-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 0;
+    position: relative;
+}
 
-    .sidebar-menu {
-        flex-direction: row;
-        gap: 0.5rem;
-    }
+/* ========================================= */
+/* 🔔 BOTÃO DO SINO BRABO */
+/* ========================================= */
+.btn-alertas {
+    background: #8f1919;
+    color: #fff;
+    padding: 10px 14px;
+    font-size: 20px;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.22s ease;
+    box-shadow: 0 6px 15px rgba(76, 121, 255, 0.3);
+}
 
-    .sidebar-bottom {
-        padding: 0 0.5rem;
-    }
+.btn-alertas:hover {
+    background: #cc3636;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 22px rgba(76, 121, 255, 0.4);
+}
 
-    .menu-btn {
-        padding: 0.6rem 1rem;
-        border-radius: 5px;
-        font-size: 0.9rem;
-    }
+/* Badge */
+.badge {
+    padding: 4px 8px;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+}
 
-    .logout-btn {
-        padding: 0.6rem 1rem;
-        font-size: 0.9rem;
-    }
+/* ========================================= */
+/* 🔔 DROPDOWN ULTRA CLEAN + GLASS */
+/* ========================================= */
+.alertas-dropdown {
+    position: absolute;
+    top: 110px;
+    left: 130%;
+    transform: translateX(-50%) translateY(-10px);
+    width: 700px;
+    min-height: 600px;
+    max-height: 700px;
+
+    /* Glass effect PRO */
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(230, 230, 230, 0.55);
+    border-radius: 18px;
+
+    box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition: opacity .32s ease,
+                transform .32s cubic-bezier(.16,.6,.3,1),
+                visibility .32s;
+}
+
+/* Mostrando */
+.alertas-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Header */
+.alertas-header {
+    background: linear-gradient(135deg, #7a0c0c, #c42222);
+    padding: 14px 18px;
+    color: #fff;
+    border-radius: 18px 18px 0 0;
+}
+
+.alertas-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: .3px;
+}
+
+/* Lista com scroll suave */
+.alertas-list {
+    max-height: 480px;
+    overflow-y: auto;
+    padding: 12px;
+}
+
+.alertas-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.alertas-list::-webkit-scrollbar-thumb {
+    background: #cfcfcf;
+    border-radius: 10px;
+}
+
+/* ========================================= */
+/* 🧩 CARTÃO DE ALERTA ESTILO PREMIUM */
+/* ========================================= */
+.alerta-card {
+    background: #ffffffcc;
+    border-left: 5px solid #8f1919;
+    padding: 14px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    display: flex;
+    
+    gap: 12px;
+    justify-content: space-between;
+    align-items: center;
+    transition: .18s ease;
+}
+
+.alerta-card:hover {
+    background: #f3f6ff;
+    transform: translateX(8px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+}
+
+/* Ícone */
+.alerta-card .icone {
+    font-size: 22px;
+    color: #ffb03b;
+}
+
+/* Texto */
+.conteudo-alerta {
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.conteudo-alerta strong {
+    color: #222;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.botao-visto {
+  margin-left: auto;
+  background: #8f1919;
+  color: #fff;
+  border: none;
+  padding: 10px 0;               /* mais alto */
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  width: 110px;                  /* 🔥 TAMANHO PADRÃO */
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.25s ease;
+}
+
+.botao-visto:hover {
+  background: #cc3636;
+  transform: translateY(-2px);
+}
+
+
+/* Nenhum alerta */
+.alerta-card.nenhum {
+    justify-content: center;
+    text-align: center;
+    border-left: none;
+    background: #fff;
+    color: #777;
+    padding: 18px;
+}
+
+/* Efeito remoção */
+.sumindo {
+    opacity: 0;
+    transform: translateX(25px);
+    transition: .25s ease;
+}
+
+/* ========================================= */
+/* MOBILE */
+/* ========================================= */
+@media (max-width:900px) {
+  .alertas-dropdown {
+    width: 92vw;
+  }
 }
