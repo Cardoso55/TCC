@@ -1,14 +1,14 @@
 [
     {
-        "nome": "Contra Filé",
-        "variacao": -22
+        "nome": "Água Sanitária",
+        "variacao": 25
     },
     {
         "nome": "Arroz Branco Tipo 1",
-        "variacao": 600
+        "variacao": 900
     },
     {
         "nome": "Detergente",
-        "variacao": 67
+        "variacao": -33
     }
 ]

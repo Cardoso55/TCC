@@ -1,47 +1,47 @@
 {
     "16C3B123": {
         "nome": "Feijão Carioca",
-        "preco_unitario": 6.0,
-        "previsao": 413
+        "preco_unitario": 5.0,
+        "previsao": 440
     },
     "18FE18F4": {
         "nome": "Monitor Acer 23.9'",
-        "preco_unitario": 920.0,
-        "previsao": 2
+        "preco_unitario": 899.0,
+        "previsao": 3
     },
     "249CFE33": {
         "nome": "Detergente",
-        "preco_unitario": 13.0,
-        "previsao": 179
+        "preco_unitario": 12.0,
+        "previsao": 140
     },
     "628875A8": {
         "nome": "Água Sanitária",
-        "preco_unitario": 16.0,
-        "previsao": 1133
+        "preco_unitario": 15.0,
+        "previsao": 1573
     },
     "64611111": {
         "nome": "Contra Filé",
-        "preco_unitario": 62.0,
-        "previsao": 178
+        "preco_unitario": 60.0,
+        "previsao": 108
     },
     "6A9DB927": {
         "nome": "Redmi Buds 6 Lite",
-        "preco_unitario": 150.0,
-        "previsao": 167
+        "preco_unitario": 146.0,
+        "previsao": 76
     },
     "6B9275C7": {
         "nome": "Sabão em Pó",
-        "preco_unitario": 16.0,
-        "previsao": 1
+        "preco_unitario": 15.0,
+        "previsao": 4
     },
     "6E89FAE2": {
         "nome": "Arroz Branco Tipo 1",
-        "preco_unitario": 22.0,
-        "previsao": 201
+        "preco_unitario": 20.0,
+        "previsao": 155
     },
     "C85B9124": {
         "nome": "Bolacha Tortinhas de Chocolate",
-        "preco_unitario": 7.5,
-        "previsao": 398
+        "preco_unitario": 7.0,
+        "previsao": 161
     }
 }
