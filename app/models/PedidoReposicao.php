@@ -73,18 +73,17 @@ class PedidoReposicao {
     $db = conectarBanco();
 
     $sql = "SELECT 
-                p.id_pedido,
-                p.id_produto,
-                p.quantidade,
-                p.fornecedor,
-                p.idUsuarios_TBL,
-                pr.valor_compra
-            FROM pedidosreposicao_tbl p
-            INNER JOIN produtos_tbl pr
-                ON pr.id_produto = p.id_produto
-            WHERE p.id_pedido = ?
-              AND p.status = 'a-caminho'
-              AND p.id_compra IS NULL";
+            p.id_pedido,
+            p.id_produto,
+            p.quantidade,
+            p.fornecedor,
+            p.idUsuarios_TBL,
+            pr.valor_compra
+        FROM pedidosreposicao_tbl p
+        INNER JOIN produtos_tbl pr
+            ON pr.id_produto = p.id_produto
+        WHERE p.id_pedido = ?";
+
 
     $stmt = $db->prepare($sql);
     $stmt->bind_param("i", $idPedido);

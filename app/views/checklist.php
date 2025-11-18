@@ -1,6 +1,8 @@
 <?php
+
 require_once __DIR__ . '/../controllers/ChecklistController.php';
 
+// Filtros opcionais
 $filtros = [];
 if (isset($_GET['tipo'])) $filtros['tipo'] = $_GET['tipo'];
 if (isset($_GET['idProduto'])) $filtros['idProduto_TBL'] = $_GET['idProduto'];
@@ -47,14 +49,17 @@ Checklist confirmado com sucesso!
     <p><strong>Usuário responsável:</strong> <?= $c['usuario_nome'] ?></p>
 
     <?php if ($c['status'] !== 'concluído'): ?>
+    <!-- Form para confirmar checklist -->
     <form action="?pagina=checklist_confirmar" method="post" style="display:inline">
         <input type="hidden" name="idChecklist" value="<?= $c['id_checklist'] ?>">
-        <input type="hidden" name="idUsuario" value="1"> <!-- substituir pelo usuário logado -->
-        <input type="hidden" name="idPedido" value="<?= $c['idPedidosReposicao_TBL'] ?? '' ?>">
-        <input type="hidden" name="idPedido" value="<?= $c['idPedidosReposicao_TBL'] ?>"> <!-- novo -->
+        <input type="hidden" name="idUsuario" value="<?= $_SESSION['id_usuario'] ?? 1 ?>">
+        <?php if (!empty($c['idPedidosReposicao_TBL'])): ?>
+            <input type="hidden" name="idPedido" value="<?= $c['idPedidosReposicao_TBL'] ?>">
+        <?php endif; ?>
         <button class="botao botao-confirmar">Confirmar</button>
     </form>
 
+    <!-- Form para adicionar observação -->
     <form action="?pagina=checklist_observacao" method="post" style="display:inline">
         <input type="hidden" name="idChecklist" value="<?= $c['id_checklist'] ?>">
         <input type="text" name="observacao" placeholder="Adicionar observação">
@@ -63,6 +68,7 @@ Checklist confirmado com sucesso!
     <?php endif; ?>
 </div>
 <?php endforeach; ?>
+
 </div>
 </div>
 </body>

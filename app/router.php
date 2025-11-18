@@ -64,17 +64,24 @@ function router() {
             require __DIR__ . '/views/checklist.php';
             break;
 
-       case 'checklist_confirmar':
-        require_once __DIR__ . '/controllers/ChecklistController.php';
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $idChecklist = $_POST['idChecklist'];
-            $idUsuario = $_POST['idUsuario'];
-            $idPedido = $_POST['idPedido'] ?? null; // pega do form
+      case 'checklist_confirmar':
+    require_once __DIR__ . '/controllers/ChecklistController.php';
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $idChecklist = $_POST['idChecklist'] ?? null;
+        $idUsuario = $_POST['idUsuario'] ?? null;
+        $idPedido = $_POST['idPedido'] ?? null; // precisa vir do form
 
-            ChecklistController::confirmar($idChecklist, $idUsuario, $idPedido);
-            exit;
+        // Valida se todos os dados existem
+        if (!$idChecklist || !$idUsuario || !$idPedido) {
+            die("Erro: faltando dados para confirmar o checklist.");
         }
-        break;
+
+        ChecklistController::confirmar($idChecklist, $idUsuario, $idPedido);
+        // A função já redireciona, então não precisa de header aqui
+        exit;
+    }
+    break;
+
 
 
         case 'checklist_observacao':
