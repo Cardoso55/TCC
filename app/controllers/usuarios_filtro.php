@@ -12,7 +12,9 @@ foreach ($usuarios as $usuario) {
         'diretor' => 'Diretor',
         'gerente' => 'Gerente',
         'supervisor' => 'Supervisor',
-        'operario' => 'Operário'
+        'operario' => 'Operário',
+        'setor-de-compras' => 'Setor de compras',
+        'setor-de-vendas' => 'Setor de vendas'
     ];
     echo "<tr>
             <td>".htmlspecialchars($usuario['nome'])."</td>

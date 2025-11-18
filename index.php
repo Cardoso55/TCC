@@ -1,4 +1,7 @@
 <?php
-header('Location: app/views/auth/login.php');
-exit;
+session_start();
+
+require __DIR__ . '/app/router.php';
+
+router();
 ?>

@@ -1,0 +1,64 @@
+/* checklist.css */
+
+/* Wrapper para alinhar sidebar + conteúdo */
+.wrapper {
+    display: flex;
+    min-height: 100vh; /* faz o wrapper ocupar toda a altura da tela */
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px; /* ajusta conforme sua sidebar */
+    background-color: #333; /* exemplo, ajuste conforme o seu design */
+    color: #fff;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    position: fixed; /* opcional, se quiser que fique fixa na tela */
+}
+
+/* Conteúdo principal */
+.conteudo {
+    flex: 1;
+    margin-left: 300px; /* mesma largura da sidebar */
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #f4f4f4;
+}
+
+/* Cards de checklist */
+.card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Tipos */
+.tipo-entrada { border-left: 5px solid #3498db; }
+.tipo-saida { border-left: 5px solid #2ecc71; }
+
+/* Status */
+.status-pendente { background-color: #f9e79f; }
+.status-em_andamento { background-color: #f5b041; }
+.status-concluido { background-color: #d5dbdb; }
+
+/* Botões */
+.botao {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.botao-confirmar { background: #2ecc71; color: #fff; }
+.botao-observacao { background: #3498db; color: #fff; }
+
+/* Inputs de observação */
+form input[type="text"] {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}

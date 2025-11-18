@@ -1,5 +1,6 @@
 <?php
-require_once '../../controllers/AuthController.php';
+require_once __DIR__ . '/../../controllers/AuthController.php';
+
 $auth = new AuthController();
 $error = $auth->loginFromPost();
 ?>

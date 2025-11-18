@@ -21,4 +21,6 @@ function conectarBanco() {
 
 conectarBanco();
 
+
+
 ?>

@@ -66,41 +66,31 @@ tbody tr:hover {
 
 /* Status */
 .status {
-  padding: 6px 10px;
-  border-radius: 8px;
-  font-weight: 500;
-  text-transform: capitalize;
+    padding: 3px 8px;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: bold;
+    text-transform: capitalize;
 }
 
-.status.pendente {
-  background-color: #ffcc00;
-  color: #333;
+.status.ativo {
+    color: #28a745; /* verde */
 }
 
 .status.a-caminho {
-  background-color: #17a2b8;
-  color: #fff;
+    color: #007bff; /* azul */
 }
 
-.status.entregue {
-  background-color: #28a745;
-  color: #fff;
+.status.negado {
+    color: #dc3545; /* vermelho */
 }
 
-/* Botões */
-.check-btn {
-  background-color: #007bff;
-  border: none;
-  color: white;
-  padding: 6px 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.3s;
+.status.pendente {
+    color: #ffc107; /* amarelo */
 }
 
-.check-btn:hover {
-  background-color: #0056b3;
-}
+
+
 
 .integrar-btn {
   margin-top: 20px;
@@ -120,4 +110,42 @@ tbody tr:hover {
 .integrar-btn:hover {
   background-color: #6d0f0f;
   color: white;
+}
+
+/* Botão Aceitar */
+.check-btn {
+  background-color: #28a745; /* verde */
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.check-btn:hover {
+  background-color: #218838; /* verde mais escuro no hover */
+}
+
+/* Botão Negar */
+.deny-btn {
+  background-color: #dc3545; /* vermelho */
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.deny-btn:hover {
+  background-color: #c82333; /* vermelho mais escuro no hover */
+}
+
+/* Se quiser que fiquem lado a lado com espaço */
+td form {
+  display: inline-block;
+  margin-right: 5px;
 }
