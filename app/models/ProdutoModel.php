@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../database/conexao.php';
 
 class ProdutoModel {
+
     public static function salvar($dados, $arquivo) {
         $db = conectarBanco();
 
@@ -18,8 +19,8 @@ class ProdutoModel {
             }
         }
 
-        $stmt = $db->prepare("INSERT INTO produtos_tbl (codigo_produto, nome, categoria, descricao, preco_unitario, imagem_url) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssdss", $codigo, $dados['nome'], $dados['categoria'], $dados['descricao'], $dados['preco'], $imagem_url);
+        $stmt = $db->prepare("INSERT INTO produtos_tbl (codigo_produto, nome, categoria, descricao, preco_unitario, valor_compra, imagem_url) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssdsss", $codigo, $dados['nome'], $dados['categoria'], $dados['descricao'], $dados['preco'], $dados['valor_compra'], $imagem_url);
         $stmt->execute();
         $idProduto = $db->insert_id;
 
@@ -27,6 +28,7 @@ class ProdutoModel {
         $stmt2->bind_param("ii", $idProduto, $dados['quantidade']);
         $stmt2->execute();
 
+        $db->close();
         return $idProduto;
     }
 
@@ -35,7 +37,9 @@ class ProdutoModel {
         $res = $db->query("SELECT p.*, e.quantidade_atual, e.quantidade_minima
                            FROM produtos_tbl p
                            LEFT JOIN estoque_tbl e ON p.id_produto = e.idProdutos_TBL");
-        return $res->fetch_all(MYSQLI_ASSOC);
+        $produtos = $res->fetch_all(MYSQLI_ASSOC);
+        $db->close();
+        return $produtos;
     }
 
     public static function editar($dados, $arquivo) {
@@ -53,24 +57,53 @@ class ProdutoModel {
         }
 
         $stmt = $db->prepare("UPDATE produtos_tbl 
-            SET nome=?, categoria=?, descricao=?, preco_unitario=?, imagem_url=? 
+            SET nome=?, categoria=?, descricao=?, preco_unitario=?, valor_compra=?, imagem_url=? 
             WHERE id_produto=?");
-        $stmt->bind_param("sssdsi", $dados['nome'], $dados['categoria'], $dados['descricao'], $dados['preco'], $imagem_url, $dados['id_produto']);
+
+        $stmt->bind_param(
+            "sssddsi", 
+            $dados['nome'], 
+            $dados['categoria'], 
+            $dados['descricao'], 
+            $dados['preco'], 
+            $dados['valor_compra'], 
+            $imagem_url, 
+            $dados['id_produto']
+        );
         $stmt->execute();
 
         $stmt2 = $db->prepare("UPDATE estoque_tbl SET quantidade_atual=? WHERE idProdutos_TBL=?");
         $stmt2->bind_param("ii", $dados['quantidade'], $dados['id_produto']);
         $stmt2->execute();
 
+        $db->close();
         return true;
     }
 
-    public static function excluir($id) {
+    public static function excluirPedidosReposicaoDoProduto($id_produto) {
         $db = conectarBanco();
-        $db->query("DELETE FROM estoque_tbl WHERE idProdutos_TBL = $id");
-        $db->query("DELETE FROM produtos_tbl WHERE id_produto = $id");
-        return true;
+        $id_produto = (int)$id_produto;
+        $db->query("DELETE FROM pedidosreposicao_tbl WHERE id_produto = $id_produto");
+        $db->close();
     }
+
+  public static function excluir($id_produto) {
+    $db = conectarBanco();
+    $id_produto = (int)$id_produto;
+
+    // 1. Excluir pedidos de reposição
+    $db->query("DELETE FROM pedidosreposicao_tbl WHERE id_produto = $id_produto");
+
+    // 2. Excluir estoque
+    $db->query("DELETE FROM estoque_tbl WHERE idProdutos_TBL = $id_produto");
+
+    // 3. Finalmente, excluir o produto
+    $db->query("DELETE FROM produtos_tbl WHERE id_produto = $id_produto");
+
+    $db->close();
+    return true;
+}
+
 
     public static function buscarFiltradoComOrdenacao($filtros) {
         $db = conectarBanco();
@@ -98,7 +131,6 @@ class ProdutoModel {
             $types .= "s";
         }
         if ($filtros['preco'] !== "" && $filtros['preco'] !== null) {
-            // aceitar números com vírgula/point: normalizar
             $preco = str_replace(',', '.', $filtros['preco']);
             if (is_numeric($preco)) {
                 $sql .= " AND p.preco_unitario = ?";
@@ -114,69 +146,62 @@ class ProdutoModel {
             }
         }
 
-        // Ordenação segura (apenas colunas permitidas)
+        // Ordenação segura
         $coluna = $filtros['ordenar_por'] ?? null;
         $ordem = strtoupper($filtros['ordem'] ?? 'ASC');
-
-        // 💡 LISTA DE COLUNAS PERMITIDAS AGORA INCLUI 'nome'
         $colunasPermitidas = ['nome', 'preco_unitario', 'quantidade_atual'];
 
         if (!empty($coluna) && in_array($coluna, $colunasPermitidas)) {
-            $ordem = ($ordem === 'DESC') ? 'DESC' : 'ASC'; // Garante apenas ASC ou DESC
-            
-            // Mapeamento para a coluna correta no SQL
-            if ($coluna === 'preco_unitario') {
-                $sql .= " ORDER BY p.preco_unitario $ordem";
-            } else if ($coluna === 'quantidade_atual') {
-                $sql .= " ORDER BY e.quantidade_atual $ordem";
-            } else if ($coluna === 'nome') {
-                // 🎯 NOVA ORDENAÇÃO POR NOME
-                $sql .= " ORDER BY p.nome $ordem";
-            }
+            $ordem = ($ordem === 'DESC') ? 'DESC' : 'ASC';
+            if ($coluna === 'preco_unitario') $sql .= " ORDER BY p.preco_unitario $ordem";
+            elseif ($coluna === 'quantidade_atual') $sql .= " ORDER BY e.quantidade_atual $ordem";
+            elseif ($coluna === 'nome') $sql .= " ORDER BY p.nome $ordem";
         } else {
-            // Se não houver ordenação, ordena por ID (neutro)
             $sql .= " ORDER BY p.id_produto ASC";
         }
 
         $stmt = $db->prepare($sql);
-        if ($stmt === false) {
-            // erro de preparação - útil pra debug
-            error_log("MySQL prepare error: " . $db->error);
-            return [];
-        }
+        if ($stmt === false) return [];
 
         if (!empty($params)) {
-            // bind_param requer referências
             $bind_names = [];
             $bind_names[] = & $types;
-            for ($i = 0; $i < count($params); $i++) {
-                $bind_names[] = & $params[$i];
-            }
+            for ($i = 0; $i < count($params); $i++) $bind_names[] = & $params[$i];
             call_user_func_array([$stmt, 'bind_param'], $bind_names);
         }
 
         $stmt->execute();
         $result = $stmt->get_result();
-        if ($result === false) {
-            error_log("MySQL get_result error: " . $stmt->error);
-            return [];
+        $produtos = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+
+        $db->close();
+        return $produtos;
+    }
+
+     public static function atualizarEstoque($idProduto, $quantidade, $tipo = 'entrada') {
+            $conn = conectarBanco();
+            $idProduto = (int)$idProduto;
+            $quantidade = (int)$quantidade;
+
+            // Pega o estoque atual do produto
+            $sql = "SELECT id_estoque, quantidade_atual FROM Estoque_TBL WHERE idProdutos_TBL = $idProduto";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows == 0) {
+                // Se não existir estoque, cria a linha
+                $conn->query("INSERT INTO Estoque_TBL (quantidade_atual, idProdutos_TBL) VALUES ($quantidade, $idProduto)");
+            } else {
+                $row = $result->fetch_assoc();
+                $novaQuantidade = $tipo === 'entrada'
+                    ? $row['quantidade_atual'] + $quantidade
+                    : $row['quantidade_atual'] - $quantidade;
+
+                $conn->query("UPDATE Estoque_TBL SET quantidade_atual = $novaQuantidade, atualizado_em = NOW() WHERE id_estoque = " . $row['id_estoque']);
+            }
+
+            $conn->close();
+            return true;
         }
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }
-    
-    public static function ordenarPor($campo, $ordem) {
-        $db = conectarBanco();
-        $campoPermitido = in_array($campo, ['preco', 'quantidade']) ? $campo : 'preco';
-        $ordemPermitida = ($ordem === 'desc') ? 'DESC' : 'ASC';
-
-        $sql = "SELECT p.id_produto AS codigo, p.nome, p.tipo, p.preco_unitario AS preco, e.quantidade_atual AS quantidade
-                FROM produtos_tbl p
-                LEFT JOIN estoque_tbl e ON p.id_produto = e.idProdutos_TBL
-                ORDER BY $campoPermitido $ordemPermitida";
-
-        $res = $db->query($sql);
-        return $res->fetch_all(MYSQLI_ASSOC);
-    }
 
 
 }

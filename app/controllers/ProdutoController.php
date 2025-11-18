@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../models/ProdutoModel.php';
 
 class ProdutoController {
+
     public static function listarProdutos() {
         return ProdutoModel::buscarComEstoque();
     }
@@ -14,57 +15,95 @@ class ProdutoController {
         return ProdutoModel::editar($dados, $arquivo);
     }
 
-    public static function excluirProduto($id) {
-        return ProdutoModel::excluir($id);
+   public static function excluirProduto($id) {
+    // primeiro apaga os pedidos de reposição relacionados
+    ProdutoModel::excluirPedidosReposicaoDoProduto($id);
+    // depois apaga o produto
+    return ProdutoModel::excluir($id);
+}
+
+
+    // no ProdutoModel.php
+public static function criarReposicao($dados) {
+    $db = conectarBanco();
+
+    $id_produto = (int)($dados['id_produto'] ?? 0);
+    $quantidade = (int)($dados['quantidade'] ?? 0);
+    $fornecedor = $db->real_escape_string($dados['fornecedor'] ?? '');
+
+    if ($id_produto <= 0 || $quantidade <= 0) {
+        return false;
     }
 
-    /**
-     * Função que recebe um array de filtros (incluindo ordenação) e retorna os produtos.
-     * Esta é a função que o AJAX deve chamar.
-     */
+    $stmt = $db->prepare("INSERT INTO pedidosreposicao_tbl (id_produto, quantidade, fornecedor, data_pedido) VALUES (?, ?, ?, NOW())");
+    $stmt->bind_param("iis", $id_produto, $quantidade, $fornecedor);
+    $stmt->execute();
+    $stmt->close();
+    $db->close();
+
+    return true;
+}
+
+
     public static function filtrarAjax($filtros) {
-        // A função buscarFiltradoComOrdenacao do Model já está preparada para lidar com todos os filtros
         return ProdutoModel::buscarFiltradoComOrdenacao($filtros);
     }
 
 }
 
-// --- ROTEAMENTO ---
+// ------------------ ROTEAMENTO ------------------
 
+// POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $acao = $_POST['acao'] ?? null;
 
-    if ($acao === 'cadastrar') {
-        ProdutoController::cadastrarProduto($_POST, $_FILES);
-    } elseif ($acao === 'editar') {
-        ProdutoController::editarProduto($_POST, $_FILES);
-    }
+    switch($acao) {
+        case 'cadastrar':
+            ProdutoController::cadastrarProduto($_POST, $_FILES);
+            header('Location: ../views/estoque.php');
+            exit;
 
-    header('Location: ../views/estoque.php');
-    exit;
+        case 'editar':
+            ProdutoController::editarProduto($_POST, $_FILES);
+            header('Location: ../views/estoque.php');
+            exit;
+
+        case 'excluir':
+            ProdutoController::excluirProduto($_POST['id_produto'] ?? 0);
+            header('Location: ../views/estoque.php');
+            exit;
+
+        case 'criar':
+            ProdutoController::criarReposicao($_POST);
+            echo "Pedido de reposição enviado com sucesso!";
+            exit;
+
+        default:
+            echo "Ação inválida.";
+            exit;
+    }
 }
 
+// GET
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['acao'])) {
     $acao = $_GET['acao'];
 
-    if ($acao === 'excluir') {
-        ProdutoController::excluirProduto($_GET['id']);
-        header('Location: ../views/estoque.php');
-        exit;
-    } 
-    
-    // 💡 ROTEAMENTO CORRIGIDO E UNIFICADO PARA FILTRO E ORDENAÇÃO
-    if ($acao === 'filtrar' || $acao === 'ordenar') { // Trata ambas as ações na mesma função
-        // Usa o array $_GET inteiro como filtros. O Model saberá o que fazer
-        // com 'ordenar_por' e 'ordem' (ou com os campos de filtro de texto).
-        $produtos = ProdutoController::filtrarAjax($_GET); 
-        
-        header('Content-Type: application/json');
-        echo json_encode($produtos);
-        exit;
+    switch($acao) {
+        case 'filtrar':
+        case 'ordenar':
+            $produtos = ProdutoController::filtrarAjax($_GET);
+            header('Content-Type: application/json');
+            echo json_encode($produtos);
+            exit;
+
+        case 'excluir':
+            ProdutoController::excluirProduto($_GET['id'] ?? 0);
+            header('Location: ../views/estoque.php');
+            exit;
+
+        default:
+            echo "Ação inválida.";
+            exit;
     }
 }
 
-// ❌ Removido o bloco if (isset($_GET['acao']) && $_GET['acao'] === 'ordenar') 
-//    porque a lógica agora é tratada no bloco unificado acima.
-// ❌ Corrigido o bloco anterior de "filtrar" que estava chamando a função errada.

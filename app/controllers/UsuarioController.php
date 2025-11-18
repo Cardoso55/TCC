@@ -1,6 +1,6 @@
 <?php
 
-require_once '../models/Usuario.php' ;
+require_once __DIR__ . '/../models/Usuario.php' ;
 
 class UsuarioController {
     private $usuario;
@@ -21,10 +21,10 @@ class UsuarioController {
 
             if ($resultado) {
                 // ✅ Redireciona para evitar reenvio do POST
-                header("Location: usuarios.php?msg=success");
+                header("Location: /TCC/index.php?pagina=usuarios&msg=success");
                 exit;
             } else {
-                header("Location: usuarios.php?msg=error");
+                header("Location: /TCC/index.php?pagina=usuarios&msg=error");
                 exit;
             }
         }
@@ -53,7 +53,7 @@ class UsuarioController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
             $id = intval($_POST['delete_id']);
             $this->usuario->deletarUsuario($id);
-            header("Location: usuarios.php");
+            header("Location: /TCC/index.php?pagina=usuarios&msg=success");
             exit;
         }
         return false;
@@ -73,8 +73,9 @@ class UsuarioController {
             $ok = $this->atualizarUsuario($id, $nome, $email, $nivel, $ativo);
 
             // redireciona para evitar reenvio do formulário
-            header("Location: usuarios.php");
+            header("Location: /TCC/index.php?pagina=usuarios&msg=success");
             exit;
+
         }
         return false;
     }

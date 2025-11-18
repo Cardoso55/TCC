@@ -107,3 +107,17 @@ CREATE TABLE Usuarios_TBL (
     FOREIGN KEY (idEstoque_TBL) REFERENCES Estoque_TBL(id_estoque),
     FOREIGN KEY (idProdutos_TBL) REFERENCES Produtos_TBL(id_produto)
  );
+
+ALTER TABLE pedidosreposicao_tbl
+ADD COLUMN idProduto_TBL INT NOT NULL,
+ADD COLUMN quantidade_solicitada INT NOT NULL;
+ALTER TABLE pedidosreposicao_tbl
+DROP COLUMN idProduto_TBL,
+DROP COLUMN quantidade_solicitada;
+
+ALTER TABLE pedidosreposicao_tbl
+ADD COLUMN id_produto INT NOT NULL,
+ADD COLUMN quantidade INT NOT NULL,
+ADD CONSTRAINT fk_pr_produto FOREIGN KEY (id_produto) REFERENCES produtos_tbl(id_produto);
+ALTER TABLE Produtos_tbl
+ADD COLUMN valor_compra DECIMAL(10,2) NOT NULL DEFAULT 0 AFTER preco_unitario;

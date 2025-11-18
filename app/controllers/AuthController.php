@@ -1,5 +1,4 @@
 <?php
-
 require_once __DIR__ . '/../models/Usuario.php';
 
 class AuthController {
@@ -7,7 +6,7 @@ class AuthController {
 
     public function __construct() {
         $this->usuarioModel = new Usuario();
-        session_start(); // inicia sessão
+        // REMOVA session_start() daqui
     }
 
     // Login
@@ -26,7 +25,7 @@ class AuthController {
                 // Atualiza último login
                 $this->usuarioModel->atualizarUltimoLogin($usuario['id_usuario']);
 
-                header("Location: ../dashboard.php"); // redireciona pro painel
+                header("Location: /TCC/index.php?pagina=dashboard");
                 exit;
             } else {
                 return "Email ou senha incorretos!";
@@ -36,18 +35,23 @@ class AuthController {
 
     // Logout
     public function logout() {
-        session_start();
+        // aqui também não precisa iniciar sessão de novo se já tiver sido iniciada
         session_unset();
         session_destroy();
-        header("Location: ../views/auth/login.php");
+        header("Location: /TCC/index.php?pagina=login");
         exit;
     }
 
     // Verifica se usuário está logado
     public static function checkAuth() {
-        session_start();
+        // aqui só inicia se a sessão ainda não estiver ativa
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
         if (!isset($_SESSION['user_id'])) {
-            header("Location: ../views/login.php");
+            header("Location: /TCC/index.php?pagina=login");
+
             exit;
         }
     }
