@@ -1,5 +1,0 @@
-É o gerenciador de dependências do Python.
-
-Lista todos os pacotes Python que a IA ou scripts precisam.
-
-Permite instalar tudo de uma vez com pip install -r requirements.txt.
