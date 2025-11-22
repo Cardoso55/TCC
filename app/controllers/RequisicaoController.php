@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once __DIR__ . "/../models/PedidoReposicao.php";
+require_once __DIR__ . "/../models/PedidoReposicaoModel.php";
 
 // Se for POST → API JSON
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit;
     }
 
-    $resultado = PedidoReposicao::criarPedido($id_produto, $quantidade, $fornecedor, $id_usuario);
+    $resultado = PedidoReposicaoModel::criarPedido($id_produto, $quantidade, $fornecedor, $id_usuario);
 
     echo json_encode(["sucesso" => $resultado]);
     exit;
@@ -36,6 +36,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 class RequisicaoController {
 
     public static function listar() {
-        return PedidoReposicao::listarPedidos();
+        return PedidoReposicaoModel::listarPedidos();
     }
 }

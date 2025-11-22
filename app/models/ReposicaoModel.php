@@ -7,25 +7,25 @@ class ReposicaoModel
     // Buscar pedido por ID
     public static function buscarPorId($id_pedido)
     {
-      $db = conectarBanco();
+        $db = conectarBanco();
 
-        $id_pedido = (int)$id_pedido;
+        $id_pedido = (int) $id_pedido;
 
         $sql = "
             SELECT pr.id_pedido,
-                   pr.id_produto,
-                   pr.quantidade,
-                   pr.fornecedor,
-                   pr.status,
-                   pr.idUsuarios_TBL,
-                   prod.nome,
-                   prod.valor_compra,
-                   e.quantidade_atual,
-                   e.quantidade_minima,
-                   e.quantidade_maxima,
-                   e.quantidade_baixo,
-                   u.id_usuario,
-                   u.nome AS usuario_nome
+                pr.id_produto,
+                pr.quantidade,
+                pr.fornecedor,
+                pr.status,
+                pr.idUsuarios_TBL,
+                prod.nome,
+                prod.valor_compra,
+                e.quantidade_atual,
+                e.quantidade_minima,
+                e.quantidade_maxima,
+                e.quantidade_baixo,
+                u.id_usuario,
+                u.nome AS usuario_nome
             FROM pedidosreposicao_tbl pr
             JOIN produtos_tbl prod ON prod.id_produto = pr.id_produto
             JOIN estoque_tbl e ON e.idProdutos_TBL = pr.id_produto
@@ -33,8 +33,19 @@ class ReposicaoModel
             WHERE pr.id_pedido = ?
         ";
 
-        return $stmt->$stmt->execute();
+        $stmt = $db->prepare($sql);
+
+        if (!$stmt) {
+            die("ERRO AO PREPARAR SQL: " . $db->error);
+        }
+
+        $stmt->bind_param("i", $id_pedido);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
     }
+
 
     // Atualizar status do pedido
     public static function atualizarStatus($id_pedido, $status)

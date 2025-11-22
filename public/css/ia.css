@@ -123,3 +123,24 @@ canvas {
     width: 100% !important;
     height: auto !important;
 }
+
+.card.reposicao-pro table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+.card.reposicao-pro th, .card.reposicao-pro td {
+    border: 1px solid #ccc;
+    padding: 6px 10px;
+    text-align: center;
+}
+.card.reposicao-pro th {
+    background-color: #4c79ff;
+    color: #fff;
+}
+.card.reposicao-pro tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+
+

@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once __DIR__ . '/../models/PedidoReposicao.php';
+require_once __DIR__ . '/../models/PedidoReposicaoModel.php';
 require_once __DIR__ . '/../models/CompraModel.php';
 
 header("Content-Type: application/json");
@@ -26,9 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
    if ($acao === 'aceitar') {
-    PedidoReposicao::aceitarPedido($idPedido);
+    PedidoReposicaoModel::aceitarPedido($idPedido);
 
-    $pedido = PedidoReposicao::buscarPedidoParaCompra($idPedido);
+    $pedido = PedidoReposicaoModel::buscarPedidoParaCompra($idPedido);
 
     if (!$pedido) {
         echo json_encode(["erro" => "Pedido não encontrado ou já processado"]);
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Cria compra e vincula pedido
     $idCompra = CompraModel::criarCompra($fornecedor, $valorTotal, $idUsuario);
-    PedidoReposicao::atualizarCompra($idPedido, $idCompra);
+    PedidoReposicaoModel::atualizarCompra($idPedido, $idCompra);
 
     // 🚀 Aqui gera os checklists automaticamente
     require_once __DIR__ . '/../controllers/ChecklistController.php';
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // NEGAR PEDIDO
     if ($acao === 'negar') {
-        PedidoReposicao::negarPedido($idPedido);
+        PedidoReposicaoModel::negarPedido($idPedido);
         echo json_encode(["sucesso" => true, "mensagem" => "Pedido negado"]);
         exit;
     }

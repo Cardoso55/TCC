@@ -63,24 +63,31 @@ function router() {
         case 'checklists':
             require __DIR__ . '/views/checklist.php';
             break;
+        
+        case 'ia_atualizarStatus':
+            require_once __DIR__ . '/controllers/IAController.php';
+            $controller = new IAController();
+            $controller->atualizarStatus();
+        exit;
+
 
       case 'checklist_confirmar':
-    require_once __DIR__ . '/controllers/ChecklistController.php';
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $idChecklist = $_POST['idChecklist'] ?? null;
-        $idUsuario = $_POST['idUsuario'] ?? null;
-        $idPedido = $_POST['idPedido'] ?? null; // precisa vir do form
+        require_once __DIR__ . '/controllers/ChecklistController.php';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $idChecklist = $_POST['idChecklist'] ?? null;
+            $idUsuario = $_POST['idUsuario'] ?? null;
+            $idPedido = $_POST['idPedido'] ?? null; // precisa vir do form
 
-        // Valida se todos os dados existem
-        if (!$idChecklist || !$idUsuario || !$idPedido) {
-            die("Erro: faltando dados para confirmar o checklist.");
+            // Valida se todos os dados existem
+            if (!$idChecklist || !$idUsuario || !$idPedido) {
+                die("Erro: faltando dados para confirmar o checklist.");
+            }
+
+            ChecklistController::confirmar($idChecklist, $idUsuario, $idPedido);
+            // A função já redireciona, então não precisa de header aqui
+            exit;
         }
-
-        ChecklistController::confirmar($idChecklist, $idUsuario, $idPedido);
-        // A função já redireciona, então não precisa de header aqui
-        exit;
-    }
-    break;
+        break;
 
 
 
@@ -94,6 +101,7 @@ function router() {
                 exit;
             }
             break;
+
 
 
         default:

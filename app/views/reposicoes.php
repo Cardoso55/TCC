@@ -1,9 +1,11 @@
 <?php
+require_once __DIR__ ."/../database/conexao.php";
 require_once __DIR__ . '/../controllers/RequisicaoController.php';
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-
+global $conn;
+$conn = conectarBanco();
 
 $pedidos = RequisicaoController::listar();
 
@@ -35,67 +37,59 @@ $pedidos = RequisicaoController::listar();
         <h2 class="subtitle">Pedidos em Aberto</h2>
 
         <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Solicitante</th>
-              <th>Solicitação em</th>
-              <th>Produto</th>
-              <th>Quantidade Atual</th>
-              <th>Status</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Solicitante</th>
+      <th>Solicitação em</th>
+      <th>Produto</th>
+      <th>Quantidade Atual</th>
+      <th>Status</th>
+      <th>Gerado pela IA</th> <!-- nova coluna -->
+      <th>Ações</th>
+    </tr>
+  </thead>
 
-          <tbody>
+  <tbody>
 
-          <?php if (!empty($pedidos)): ?>
-            <?php foreach ($pedidos as $p): ?>
+  <?php if (!empty($pedidos)): ?>
+    <?php foreach ($pedidos as $p): ?>
+      <tr>
+        <td><?= htmlspecialchars($p['id_pedido']) ?></td>
+        <td>Estoque</td>
+        <td><?= date("d/m/Y H:i", strtotime($p['data_pedido'])) ?></td>
+        <td><?= htmlspecialchars($p['nome']) ?></td>
+        <td><?= htmlspecialchars($p['quantidade_estoque'] ?? 0) ?></td>
+        <td>
+          <span class="status <?= htmlspecialchars($p['status'] ?? 'nao-definido') ?>">
+              <?= ucfirst($p['status'] ?? 'N/A') ?>
+          </span>
+        </td>
 
-              <tr>
-                <td><?= htmlspecialchars($p['id_pedido']) ?></td>
+        <!-- nova coluna "Gerado pela IA" -->
+        <td>
+          <?= $p['gerado_por_ia'] == 1 ? 'Sim' : 'Não' ?>
+        </td>
 
-                <!-- o usuário será integrado depois -->
-                <td>Estoque</td>
+       <td>
+        <?php if ($p['status'] === 'pendente' || $p['status'] === 'pendente_ia'): ?>
+            <button class="check-btn" data-id="<?= $p['id_pedido'] ?>" data-acao="aceitar">Confirmar</button>
+            <button class="deny-btn" data-id="<?= $p['id_pedido'] ?>" data-acao="negar">Recusar</button>
+        <?php endif; ?>
 
-                <td><?= date("d/m/Y H:i", strtotime($p['data_pedido'])) ?></td>
+      </td>
 
-                <td><?= htmlspecialchars($p['nome']) ?></td>
+      </tr>
+    <?php endforeach; ?>
+  <?php else: ?>
+    <tr>
+      <td colspan="8">Nenhum pedido encontrado.</td>
+    </tr>
+  <?php endif; ?>
 
-                <td><?= htmlspecialchars($p['quantidade_atual']) ?></td>
+  </tbody>
+</table>
 
-                <td>
-                  <span class="status <?= htmlspecialchars($p['status'] ?? 'nao-definido') ?>">
-                      <?= ucfirst($p['status'] ?? 'N/A') ?>
-                  </span>
-
-                </td>
-
-               <td>
-                <?php if ($p['status'] === 'pendente'): ?>
-                  <!-- Botão Aceitar -->
-                  <button class="check-btn" data-id="<?= $p['id_pedido'] ?>" data-acao="aceitar">Confirmar</button>
-
-                  <!-- Botão Negar -->
-                  <button class="deny-btn" data-id="<?= $p['id_pedido'] ?>" data-acao="negar">Recusar</button>
-                <?php endif; ?>
-              </td>
-
-
-              </tr>
-
-            <?php endforeach; ?>
-
-          <?php else: ?>
-
-            <tr>
-              <td colspan="7">Nenhum pedido encontrado.</td>
-            </tr>
-
-          <?php endif; ?>
-
-          </tbody>
-        </table>
 
       </section>
 

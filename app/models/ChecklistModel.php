@@ -24,25 +24,56 @@ class ChecklistModel {
 
     public static function criarChecklist($dados) {
         $conn = conectarBanco();
-        $tipo = $conn->real_escape_string($dados['tipo']);
+
+        $tipo     = $conn->real_escape_string($dados['tipo']);
         $conteudo = $conn->real_escape_string($dados['conteudo']);
         $idUsuario = (int)$dados['idUsuarios_TBL'];
-        $idPedido = isset($dados['idPedidosReposicao_TBL']) ? (int)$dados['idPedidosReposicao_TBL'] : null;
-        $idCompra = isset($dados['idCompra_TBL']) ? (int)$dados['idCompra_TBL'] : null;
+
+        // Valores que podem ser NULL
+        $idPedido  = isset($dados['idPedidosReposicao_TBL']) ? (int)$dados['idPedidosReposicao_TBL'] : null;
+        $idCompra  = isset($dados['idCompra_TBL']) ? (int)$dados['idCompra_TBL'] : null;
         $idProduto = isset($dados['idProduto_TBL']) ? (int)$dados['idProduto_TBL'] : null;
 
-        $query = "INSERT INTO Checklist_TBL (tipo, conteudo, status, data_criacao, idUsuarios_TBL, idPedidosReposicao_TBL, idCompra_TBL, idProduto_TBL)
-                  VALUES ('$tipo', '$conteudo', 'pendente', NOW(), $idUsuario, $idPedido, $idCompra, $idProduto)";
+        $query = "
+            INSERT INTO Checklist_TBL 
+            (tipo, conteudo, status, data_criacao, idUsuarios_TBL, idPedidosReposicao_TBL, idCompra_TBL, idProduto_TBL)
+            VALUES (?, ?, 'pendente', NOW(), ?, ?, ?, ?)
+        ";
 
-        if ($conn->query($query)) {
-            $id = $conn->insert_id;
-            $conn->close();
-            return ['sucesso' => true, 'id' => $id];
-        } else {
+        $stmt = $conn->prepare($query);
+        if (!$stmt) {
             $conn->close();
             return ['erro' => $conn->error];
         }
+
+        // Bind dos parâmetros
+        // "s" = string, "i" = integer, "s" e "i" são do tipo do parâmetro
+        // Se for NULL, passamos null mesmo
+        $stmt->bind_param(
+            "ssiiii",
+            $tipo,
+            $conteudo,
+            $idUsuario,
+            $idPedido,
+            $idCompra,
+            $idProduto
+        );
+
+        $executou = $stmt->execute();
+        if ($executou) {
+            $id = $stmt->insert_id;
+            $stmt->close();
+            $conn->close();
+            return ['sucesso' => true, 'id' => $id];
+        } else {
+            $erro = $stmt->error;
+            $stmt->close();
+            $conn->close();
+            return ['erro' => $erro];
+        }
     }
+
+
 
    public static function confirmarChecklist($idChecklist, $idUsuario, $idPedido) {
     $conn = conectarBanco();
