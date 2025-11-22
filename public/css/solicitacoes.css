@@ -1,9 +1,10 @@
+/* ===== Container principal ===== */
 .all{
     display: flex;
     flex-direction: row;
 }
 
-.main-content{
+.main-content {
     width: 80%;
     margin: 10px;
     display: flex;
@@ -12,26 +13,28 @@
     box-shadow: 10px 0 10px rgba(0,0,0,0.1);
 }
 
-.title{
+/* ===== Títulos ===== */
+.title {
     font-size: 50px;
     font-weight: bold;
-    margin: 30px 0px 10px 30px;
+    margin: 30px 0 10px 30px;
 }
 
-.subtitle{
+.subtitle {
     font-size: 30px;
     font-weight: bold;
-    margin: 20px 0px 10px 30px;
+    margin: 20px 0 10px 30px;
 }
 
-.count{
+/* ===== Cards de contagem ===== */
+.count {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     margin: 20px 30px;
 }
 
-.count-card{
+.count-card {
     width: 250px;
     height: 150px;
     border-radius: 10px;
@@ -43,38 +46,39 @@
     justify-content: center;
 }
 
-.pending{
+.pending {
     background-color: #efe5b1;
     border: 1px solid #e3d48f;
 }
 
-.approved{
+.approved {
     background-color: #b1eab1;
     border: 1px solid #8fe38f;
 }
 
-.denied{
+.denied {
     background-color: #f7a8a8;
     border: 1px solid #e38f8f;
 }
 
-.number{
+.number {
     font-size: 40px;
     font-weight: bold;
     color: #333;
 }
 
-.card-title{
+.card-title {
     font-size: 20px;
     font-weight: bold;
     color: #666;
 }
 
+/* ===== Histórico de solicitações ===== */
 .request-history {
     background-color: #fff;
     border-radius: 10px;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
     width: 100%;
     max-width: 90%;
     margin: 20px auto;
@@ -118,6 +122,7 @@
     transition: 0.2s ease;
 }
 
+/* ===== Status dos pedidos ===== */
 .status {
     font-weight: 500;
 }
@@ -134,6 +139,7 @@
     color: #f1c40f; /* Amarelo */
 }
 
+/* ===== Botões de visualização ===== */
 .view-btn {
     background: none;
     border: none;
@@ -147,5 +153,33 @@
     color: #007bff;
 }
 
+/* ===== Botões de aprovar/rejeitar ===== */
+.action-btn {
+    padding: 5px 12px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 5px;
+    transition: 0.2s;
+}
 
+.action-btn.approve {
+    background-color: #b1eab1;
+    border: 1px solid #8fe38f;
+    color: #2b662b;
+}
 
+.action-btn.approve:hover {
+    background-color: #8fe38f;
+}
+
+.action-btn.reject {
+    background-color: #f7a8a8;
+    border: 1px solid #e38f8f;
+    color: #a94444;
+}
+
+.action-btn.reject:hover {
+    background-color: #e38f8f;
+}

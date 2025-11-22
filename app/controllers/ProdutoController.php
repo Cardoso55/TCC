@@ -1,109 +1,98 @@
 <?php
+
 require_once __DIR__ . '/../models/ProdutoModel.php';
 
-class ProdutoController {
-
-    public static function listarProdutos() {
+class ProdutoController
+{
+    // LISTAGEM ============================================================
+    public static function listarProdutos()
+    {
         return ProdutoModel::buscarComEstoque();
     }
 
-    public static function cadastrarProduto($dados, $arquivo) {
+    // CADASTRO =============================================================
+    public static function cadastrarProduto($dados, $arquivo)
+    {
         return ProdutoModel::salvar($dados, $arquivo);
     }
 
-    public static function editarProduto($dados, $arquivo) {
+    // EDIÇÃO ==============================================================
+    public static function editarProduto($dados, $arquivo)
+    {
         return ProdutoModel::editar($dados, $arquivo);
     }
 
-   public static function excluirProduto($id) {
-    // primeiro apaga os pedidos de reposição relacionados
-    ProdutoModel::excluirPedidosReposicaoDoProduto($id);
-    // depois apaga o produto
-    return ProdutoModel::excluir($id);
-}
+    // EXCLUSÃO COM VERIFICAÇÃO ============================================
+    public static function excluirProduto($id_produto)
+    {
+        // 1. Verifica se tem vínculos
+        $vinculos = ProdutoModel::verificarVinculos($id_produto);
 
+        if ($vinculos['temVinculos']) {
+            // Retorna para o JS avisando que é preciso confirmar
+            return [
+                'sucesso' => false,
+                'temVinculos' => true,
+                'detalhes' => $vinculos['detalhes']
+            ];
+        }
 
-    // no ProdutoModel.php
-public static function criarReposicao($dados) {
-    $db = conectarBanco();
+        // 2. Soft delete direto
+        ProdutoModel::excluir($id_produto);
 
-    $id_produto = (int)($dados['id_produto'] ?? 0);
-    $quantidade = (int)($dados['quantidade'] ?? 0);
-    $fornecedor = $db->real_escape_string($dados['fornecedor'] ?? '');
-
-    if ($id_produto <= 0 || $quantidade <= 0) {
-        return false;
+        return ['sucesso' => true];
     }
 
-    $stmt = $db->prepare("INSERT INTO pedidosreposicao_tbl (id_produto, quantidade, fornecedor, data_pedido) VALUES (?, ?, ?, NOW())");
-    $stmt->bind_param("iis", $id_produto, $quantidade, $fornecedor);
-    $stmt->execute();
-    $stmt->close();
-    $db->close();
+    // CONFIRMAÇÃO DE EXCLUSÃO (CASCATA) ==================================
+    public static function confirmarExclusao($id_produto)
+    {
+        ProdutoModel::deletarProdutoCascata($id_produto);
+        return ['sucesso' => true];
+    }
 
-    return true;
-}
+    // CRIAR REPOSIÇÃO =====================================================
+    public static function criarReposicao($dados)
+    {
+        return ProdutoModel::criarReposicao($dados);
+    }
 
-
-    public static function filtrarAjax($filtros) {
+    // FILTRO AJAX =========================================================
+    public static function filtrarAjax($filtros)
+    {
         return ProdutoModel::buscarFiltradoComOrdenacao($filtros);
     }
 
-}
+       public static function criarPedidoSaida(array $dados) {
+        if (session_status() === PHP_SESSION_NONE) session_start();
+        $idProduto = intval($dados['id_produto'] ?? 0);
+        $quantidade = intval($dados['quantidade'] ?? 0);
+        $observacao = trim($dados['observacao'] ?? '');
 
-// ------------------ ROTEAMENTO ------------------
+        if (!$idProduto || !$quantidade) {
+            throw new Exception("Produto e quantidade são obrigatórios.");
+        }
 
-// POST
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $acao = $_POST['acao'] ?? null;
+        $idUsuario = $_SESSION['user_id'] ?? null;
+        if (!$idUsuario) {
+            throw new Exception("Usuário não autenticado.");
+        }
 
-    switch($acao) {
-        case 'cadastrar':
-            ProdutoController::cadastrarProduto($_POST, $_FILES);
-            header('Location: ../views/estoque.php');
-            exit;
+        $pdo = Conexao::getInstance(); // supondo que você tem um método singleton
+        $sql = "INSERT INTO pedidossaida_tbl 
+                (id_produto, id_usuario_solicitante, quantidade, status, origem, observacao, data_pedido, data_atualizacao)
+                VALUES (:id_produto, :id_usuario, :quantidade, 'pendente', 'interno', :observacao, NOW(), NOW())";
 
-        case 'editar':
-            ProdutoController::editarProduto($_POST, $_FILES);
-            header('Location: ../views/estoque.php');
-            exit;
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':id_produto', $idProduto, PDO::PARAM_INT);
+        $stmt->bindValue(':id_usuario', $idUsuario, PDO::PARAM_INT);
+        $stmt->bindValue(':quantidade', $quantidade, PDO::PARAM_INT);
+        $stmt->bindValue(':observacao', $observacao, PDO::PARAM_STR);
 
-        case 'excluir':
-            ProdutoController::excluirProduto($_POST['id_produto'] ?? 0);
-            header('Location: ../views/estoque.php');
-            exit;
+        if (!$stmt->execute()) {
+            throw new Exception("Falha ao criar pedido de saída.");
+        }
 
-        case 'criar':
-            ProdutoController::criarReposicao($_POST);
-            echo "Pedido de reposição enviado com sucesso!";
-            exit;
-
-        default:
-            echo "Ação inválida.";
-            exit;
-    }
-}
-
-// GET
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['acao'])) {
-    $acao = $_GET['acao'];
-
-    switch($acao) {
-        case 'filtrar':
-        case 'ordenar':
-            $produtos = ProdutoController::filtrarAjax($_GET);
-            header('Content-Type: application/json');
-            echo json_encode($produtos);
-            exit;
-
-        case 'excluir':
-            ProdutoController::excluirProduto($_GET['id'] ?? 0);
-            header('Location: ../views/estoque.php');
-            exit;
-
-        default:
-            echo "Ação inválida.";
-            exit;
+        return true;
     }
 }
 

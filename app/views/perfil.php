@@ -27,7 +27,15 @@ $nivel = $usuario['nivel'];
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+      <?php if(!empty($_SESSION['flash_success'])): ?>
+            <div class="flash-message success"><?= $_SESSION['flash_success']; unset($_SESSION['flash_success']); ?></div>
+        <?php endif; ?>
+        <?php if(!empty($_SESSION['flash_error'])): ?>
+            <div class="flash-message error"><?= $_SESSION['flash_error']; unset($_SESSION['flash_error']); ?></div>
+        <?php endif; ?>
     <div class="all">
+      
+
         <?php include __DIR__ . '/partials/sidebar.php'; ?>
 
         <div class="main-content">
@@ -52,6 +60,8 @@ $nivel = $usuario['nivel'];
                             'administrador' => 'Administrador',
                             'gerente' => 'Gerente',
                             'diretor' => 'Diretor',
+                            'setor-de-vendas' => 'Setor de Vendas',
+                            'setor-de-compras' => 'Setor de Compras',
                             default => ucfirst($nivel),
                         };
                     ?>
@@ -90,93 +100,189 @@ $nivel = $usuario['nivel'];
         </div>
 
         <!-- MODAL DE EDIÇÃO -->
-        <div id="editModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Editar Informações Pessoais</h2>
-                    <span class="close-button">&times;</span>
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Editar Informações Pessoais</h2>
+            <span class="close-button">&times;</span>
+        </div>
+
+        <form id="editForm" method="POST" action="/TCC/app/controllers/update_profile.php">
+            <div class="modal-body">
+                <div class="input-group">
+                    <label for="modal-name">Nome</label>
+                    <input type="text" id="modal-name" name="nome" value="<?= htmlspecialchars($nome) ?>">
                 </div>
 
-                <form id="editForm" method="POST" action="/TCC/app/controllers/update_profile.php">
-                    <div class="modal-body">
-                        <div class="input-group">
-                            <label for="modal-name">Nome</label>
-                            <input type="text" id="modal-name" name="nome" value="<?= htmlspecialchars($nome) ?>">
-                        </div>
+                <div class="input-group">
+                    <label for="modal-email">E-mail</label>
+                    <input type="email" id="modal-email" name="email" value="<?= htmlspecialchars($email) ?>">
+                </div>
 
-                        <div class="input-group">
-                            <label for="modal-email">E-mail</label>
-                            <input type="email" id="modal-email" name="email" value="<?= htmlspecialchars($email) ?>">
-                        </div>
+                <hr style="margin:15px 0; border:none; border-top:1px solid #ddd;">
 
-                        <hr style="margin:15px 0; border:none; border-top:1px solid #ddd;">
+                <h3 style="font-size:1rem; margin-bottom:10px;">Alterar Senha (opcional)</h3>
 
-                        <h3 style="font-size:1rem; margin-bottom:10px;">Alterar Senha (opcional)</h3>
-
-                        <div class="input-group">
-                            <label for="current_password">Senha atual</label>
-                            <div class="pwd-field">
-                                <input type="password" id="current_password" name="current_password" placeholder="Digite sua senha atual">
-                                <i class="fas fa-eye toggle-password" data-target="current_password"></i>
-                            </div>
-                        </div>
-
-                        <div class="input-group">
-                            <label for="new_password">Nova senha</label>
-                            <div class="pwd-field">
-                                <input type="password" id="new_password" name="new_password" placeholder="Nova senha (opcional)">
-                                <i class="fas fa-eye toggle-password" data-target="new_password"></i>
-                            </div>
-                        </div>
-
-                        <div class="input-group">
-                            <label for="confirm_password">Confirmar nova senha</label>
-                            <div class="pwd-field">
-                                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirmar nova senha">
-                                <i class="fas fa-eye toggle-password" data-target="confirm_password"></i>
-                            </div>
-                        </div>
+                <div class="input-group">
+                    <label for="current_password">Senha atual</label>
+                    <div class="pwd-field">
+                        <input type="password" id="current_password" name="current_password" placeholder="Digite sua senha atual">
+                        <i class="fas fa-eye toggle-password" data-target="current_password"></i>
                     </div>
+                </div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="cancel-button modal-close-btn">Cancelar</button>
-                        <button type="submit" class="save-button primary-button">Salvar Alterações</button>
+                <div class="input-group">
+                    <label for="new_password">Nova senha</label>
+                    <div class="pwd-field">
+                        <input type="password" id="new_password" name="new_password" placeholder="Nova senha (opcional)">
+                        <i class="fas fa-eye toggle-password" data-target="new_password"></i>
                     </div>
-                </form>
+                </div>
+
+                <div class="input-group">
+                    <label for="confirm_password">Confirmar <br>nova senha</label>
+                    <div class="pwd-field">
+                        <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirmar nova senha">
+                        <i class="fas fa-eye toggle-password" data-target="confirm_password"></i>
+                    </div>
+                </div>
+
+                <!-- Erros do modal -->
+                <div id="password-error" class="modal-error"></div>
+
+                <!-- Requisitos da senha -->
+                <div id="password-requirements" class="password-requirements">
+                    <p class="req-length"><span class="icon">❌</span> Pelo menos 7 caracteres</p>
+                    <p class="req-uppercase"><span class="icon">❌</span> Uma letra maiúscula</p>
+                    <p class="req-lowercase"><span class="icon">❌</span> Uma letra minúscula</p>
+                    <p class="req-number"><span class="icon">❌</span> Um número</p>
+                    <p class="req-symbol"><span class="icon">❌</span> Um símbolo</p>
+                </div>
             </div>
-        </div>
+
+            <div class="modal-footer">
+                <button type="button" class="cancel-button modal-close-btn">Cancelar</button>
+                <button type="submit" class="save-button primary-button locked" disabled>Salvar Alterações</button>
+            </div>
+        </form>
     </div>
+</div>
 
 <script>
-    const modal = document.getElementById("editModal");
-    const openBtn = document.querySelector(".edit-button");
-    const closeBtn = document.querySelector(".close-button");
-    const cancelBtn = document.querySelector(".modal-close-btn");
+const modal = document.getElementById("editModal");
+const openBtn = document.querySelector(".edit-button");
+const closeBtn = document.querySelector(".close-button");
+const cancelBtn = document.querySelector(".modal-close-btn");
+const saveBtn = document.querySelector('.save-button.primary-button');
 
-    openBtn.onclick = () => modal.style.display = "block";
-    closeBtn.onclick = () => modal.style.display = "none";
-    cancelBtn.onclick = () => modal.style.display = "none";
-    window.onclick = (e) => { if (e.target == modal) modal.style.display = "none"; };
+openBtn.onclick = () => modal.style.display = "block";
+closeBtn.onclick = () => modal.style.display = "none";
+cancelBtn.onclick = () => modal.style.display = "none";
+window.onclick = (e) => { if (e.target == modal) modal.style.display = "none"; };
 
-    document.querySelectorAll('.toggle-password').forEach(icon => {
-        icon.addEventListener('click', () => {
-            const target = document.getElementById(icon.dataset.target);
-            target.type = target.type === 'password' ? 'text' : 'password';
-            icon.classList.toggle('visible');
-        });
+// Função pra verificar senha forte
+function senhaForte(senha) {
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{7,}$/.test(senha);
+}
+
+// Toggle de visibilidade da senha
+document.querySelectorAll('.toggle-password').forEach(icon => {
+    icon.addEventListener('click', () => {
+        const target = document.getElementById(icon.dataset.target);
+        target.type = target.type === 'password' ? 'text' : 'password';
+        icon.classList.toggle('visible');
     });
+});
 
-    document.getElementById('editForm').addEventListener('submit', function(e) {
-        const newPwd = document.getElementById('new_password').value.trim();
-        const confPwd = document.getElementById('confirm_password').value.trim();
-        const currentPwd = document.getElementById('current_password').value.trim();
+// Requisitos da senha
+const newPwdInput = document.getElementById('new_password');
+const confPwdInput = document.getElementById('confirm_password');
+const requirements = {
+    length: document.querySelector('.req-length'),
+    uppercase: document.querySelector('.req-uppercase'),
+    lowercase: document.querySelector('.req-lowercase'),
+    number: document.querySelector('.req-number'),
+    symbol: document.querySelector('.req-symbol')
+};
 
-        if (newPwd || confPwd || currentPwd) {
-            if (!currentPwd) { alert('Por favor, digite sua senha atual para alterar.'); e.preventDefault(); return; }
-            if (newPwd !== confPwd) { alert('As senhas novas não coincidem!'); e.preventDefault(); return; }
-            if (newPwd.length < 6) { alert('A nova senha precisa ter pelo menos 6 caracteres.'); e.preventDefault(); return; }
+// Atualiza ícones de requisitos
+function updateReq(reqElem, condition) {
+    if (condition) {
+        reqElem.classList.add('valid');
+        reqElem.querySelector('.icon').textContent = '✅';
+    } else {
+        reqElem.classList.remove('valid');
+        reqElem.querySelector('.icon').textContent = '❌';
+    }
+}
+
+
+// Atualiza o estado do botão Salvar
+function atualizarBotaoSalvar() {
+    const val = newPwdInput.value;
+    const confVal = confPwdInput.value;
+
+    const todosRequisitos = 
+        val.length >= 7 &&
+        /[A-Z]/.test(val) &&
+        /[a-z]/.test(val) &&
+        /\d/.test(val) &&
+        /[\W_]/.test(val);
+
+    // Se campo confirmar está vazio, botão cinza
+    if (val === "" || !todosRequisitos) {
+        saveBtn.disabled = true;
+        saveBtn.classList.add('locked');
+    } else if (confVal.length === 0) {
+        saveBtn.disabled = false;  // liberado para digitar confirm password
+        saveBtn.classList.remove('locked');
+    } else {
+        saveBtn.disabled = false;
+        saveBtn.classList.remove('locked');
+    }
+}
+
+// Atualiza requisitos e botão conforme digitação
+newPwdInput.addEventListener('input', () => {
+    const val = newPwdInput.value;
+    updateReq(requirements.length, val.length >= 7);
+    updateReq(requirements.uppercase, /[A-Z]/.test(val));
+    updateReq(requirements.lowercase, /[a-z]/.test(val));
+    updateReq(requirements.number, /\d/.test(val));
+    updateReq(requirements.symbol, /[\W_]/.test(val));
+    atualizarBotaoSalvar();
+});
+
+confirmPwdInput.addEventListener('input', atualizarBotaoSalvar);
+
+// Submit do form com mensagens no topo
+document.getElementById('editForm').addEventListener('submit', function(e) {
+    const newPwd = newPwdInput.value.trim();
+    const confPwd = confirmPwdInput.value.trim();
+    const currentPwd = document.getElementById('current_password').value.trim();
+
+    let errors = [];
+
+    if (newPwd || confPwd || currentPwd) {
+        if (!currentPwd) errors.push('Digite sua senha atual.');
+        if (newPwd !== confPwd) errors.push('As senhas não coincidem.');
+        if (!senhaForte(newPwd)) errors.push('Senha precisa ter pelo menos 7 caracteres, incluindo maiúscula, minúscula, número e símbolo.');
+    }
+
+    const flashDiv = document.getElementById('flash-message');
+    if (errors.length > 0) {
+        e.preventDefault();
+        if (flashDiv) {
+            flashDiv.innerHTML = errors.map(err => `<p>${err}</p>`).join('');
+            flashDiv.className = 'flash-message error';
         }
-    });
+    } else if (flashDiv) {
+        flashDiv.innerHTML = '';
+        flashDiv.className = '';
+    }
+});
+
 </script>
+
 </body>
 </html>

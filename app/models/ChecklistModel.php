@@ -23,26 +23,34 @@ class ChecklistModel {
     }
 
     public static function criarChecklist($dados) {
-        $conn = conectarBanco();
-        $tipo = $conn->real_escape_string($dados['tipo']);
-        $conteudo = $conn->real_escape_string($dados['conteudo']);
-        $idUsuario = (int)$dados['idUsuarios_TBL'];
-        $idPedido = isset($dados['idPedidosReposicao_TBL']) ? (int)$dados['idPedidosReposicao_TBL'] : null;
-        $idCompra = isset($dados['idCompra_TBL']) ? (int)$dados['idCompra_TBL'] : null;
-        $idProduto = isset($dados['idProduto_TBL']) ? (int)$dados['idProduto_TBL'] : null;
+    $conn = conectarBanco();
 
-        $query = "INSERT INTO Checklist_TBL (tipo, conteudo, status, data_criacao, idUsuarios_TBL, idPedidosReposicao_TBL, idCompra_TBL, idProduto_TBL)
-                  VALUES ('$tipo', '$conteudo', 'pendente', NOW(), $idUsuario, $idPedido, $idCompra, $idProduto)";
+    $tipo = $conn->real_escape_string($dados['tipo']);
+    $conteudo = $conn->real_escape_string($dados['conteudo']);
+    $idUsuario = (int)$dados['idUsuarios_TBL'];
 
-        if ($conn->query($query)) {
-            $id = $conn->insert_id;
-            $conn->close();
-            return ['sucesso' => true, 'id' => $id];
-        } else {
-            $conn->close();
-            return ['erro' => $conn->error];
-        }
+    // IDs opcionais — garantimos NULL real no SQL
+    $idPedido  = !empty($dados['idPedidosReposicao_TBL']) ? (int)$dados['idPedidosReposicao_TBL'] : "NULL";
+    $idCompra  = !empty($dados['idCompra_TBL']) ? (int)$dados['idCompra_TBL'] : "NULL";
+    $idProduto = !empty($dados['idProduto_TBL']) ? (int)$dados['idProduto_TBL'] : "NULL";
+
+    $query = "
+        INSERT INTO Checklist_TBL 
+        (tipo, conteudo, status, data_criacao, idUsuarios_TBL, idPedidosReposicao_TBL, idCompra_TBL, idProduto_TBL)
+        VALUES ('$tipo', '$conteudo', 'pendente', NOW(), $idUsuario, $idPedido, $idCompra, $idProduto)
+    ";
+
+    if ($conn->query($query)) {
+        $id = $conn->insert_id;
+        $conn->close();
+        return ['sucesso' => true, 'id' => $id];
+    } else {
+        $erro = $conn->error;
+        $conn->close();
+        return ['erro' => $erro];
     }
+}
+
 
    public static function confirmarChecklist($idChecklist, $idUsuario, $idPedido) {
     $conn = conectarBanco();

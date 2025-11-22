@@ -4,7 +4,7 @@
 }
 
 .main-content{
-    width: 80%;
+    width: 85%;
     margin: 10px;
     display: flex;
     flex-direction: column;
@@ -43,11 +43,12 @@
 }
 
 .stock-management input[type="text"]:focus {
-    border-color: #b50000;
+    border-color: #01aad4;
 }
 
+
 .stock-management button {
-    background-color: #b50000;
+    background-color: #01aad4;
     color: white;
     border: none;
     padding: 8px 16px;
@@ -59,7 +60,7 @@
 }
 
 .stock-management button:hover {
-    background-color: #c2001d;
+    background-color: #0192b5;
 }
 
 .product-list {
@@ -104,7 +105,7 @@ tbody tr:nth-child(odd) {
 }
 
 th button {
-    background-color: #b50000;
+    background-color: #01aad4;
     color: white;
     border: none;
     padding: 8px 14px;
@@ -115,18 +116,19 @@ th button {
 }
 
 th button:hover {
-    background-color: #a91313;
+    background-color: #0192b5;
 }
 
 td a {
     text-decoration: none;
-    color: #b50000;
+    color: #01aad4;
     font-weight: 500;
     transition: 0.3s;
 }
 
 td a:hover {
     text-decoration: underline;
+    color: #0192b5;
 }
 
 th:last-child,
@@ -185,16 +187,17 @@ th:not(:last-child) {
 }
 
 .close {
-  position: absolute;
-  top: 20px;
-  right: 25px;
-  font-size: 24px;
-  color: #b40000;
-  cursor: pointer;
-  transition: 0.2s;
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 24px;
+    color: #01aad4;
+    cursor: pointer;
+    transition: 0.2s;
 }
+
 .close:hover {
-  color: #7a0000;
+    color: #0192b5;
 }
 
 /* ===== GRID PRINCIPAL ===== */
@@ -239,9 +242,9 @@ th:not(:last-child) {
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
-  border-color: #b40000;
-  box-shadow: 0 0 0 3px rgba(180, 0, 0, 0.15);
-  outline: none;
+    border-color: #01aad4;
+    box-shadow: 0 0 0 3px rgba(1,170,212,0.25);
+    outline: none;
 }
 
 textarea {
@@ -297,8 +300,8 @@ textarea {
 }
 
 .thumbnail.active {
-  border-color: #b40000;
-  box-shadow: 0 0 0 3px rgba(180, 0, 0, 0.15);
+    border-color: #01aad4;
+    box-shadow: 0 0 0 3px rgba(1,170,212,0.25);
 }
 
 /* ===== BOTÃO SALVAR ===== */
@@ -308,20 +311,20 @@ textarea {
 }
 
 .modal-footer button {
-  background: #b40000;
-  color: #fff;
-  font-weight: 600;
-  padding: 12px 32px;
-  border-radius: 30px;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: all 0.2s ease;
+    background: #01aad4;
+    color: #fff;
+    font-weight: 600;
+    padding: 12px 32px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s ease;
 }
 
 .modal-footer button:hover {
-  background: #8a0000;
-  transform: scale(1.03);
+    background: #0192b5;
+    transform: scale(1.03);
 }
 
 #char-count {
@@ -455,8 +458,8 @@ textarea {
 }
 
 .input-box input:focus {
-    border-color: #b40000;
-    box-shadow: 0 0 0 3px rgba(180,0,0,0.15);
+    border-color: #01aad4;
+    box-shadow: 0 0 0 3px rgba(1,170,212,0.25);
 }
 
 /* Botões */
@@ -477,15 +480,17 @@ textarea {
     transition: 0.2s ease;
 }
 
+/* Botão Confirmar (AGORA AZUL) */
 .modal-btns .confirmar {
-    background-color: #b40000;
+    background-color: #01aad4;
     color: white;
 }
 
 .modal-btns .confirmar:hover {
-    background-color: #8a0000;
+    background-color: #0192b5;
 }
 
+/* Botão Cancelar */
 .modal-btns .cancelar {
     background-color: #ddd;
     color: #222;
@@ -493,4 +498,130 @@ textarea {
 
 .modal-btns .cancelar:hover {
     background-color: #bbb;
+}
+
+/* Ícones gerais */
+.material-symbols-outlined {
+    font-size: 22px;
+    vertical-align: middle;
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+}
+
+/* Botões base */
+.edit-btn,
+.delete-btn,
+.reposicao-btn,
+.saida-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: 6px;
+    transition: 0.2s ease;
+}
+
+/* ----- CORES ----- */
+
+/* Editar = cinza escuro */
+.edit-btn .material-symbols-outlined {
+    color: #333;
+}
+
+/* Reposição = cinza escuro */
+.reposicao-btn .material-symbols-outlined {
+    color: #333;
+}
+
+/* Saída = cinza escuro */
+.saida-btn .material-symbols-outlined {
+    color: #333;
+}
+
+/* Excluir = vermelho */
+.delete-btn .material-symbols-outlined {
+    color: #b40000;
+}
+
+
+
+/* ----- HOVERS ----- */
+
+/* Hover neutros */
+.edit-btn:hover,
+.reposicao-btn:hover,
+.saida-btn:hover {
+    background: rgba(0, 0, 0, 0.08);
+}
+
+/* Hover delete (vermelho mais forte, mas sutil) */
+.delete-btn:hover {
+    background: rgba(180, 0, 0, 0.12);
+}
+
+/* --- Tabela de produtos --- */
+.product-list table td.preco,
+.product-list table td.valor-compra {
+    text-align: right;      /* coloca o preço no canto direito */
+    white-space: nowrap;     /* evita que o R$ quebre de linha */
+}
+
+/* Se você quiser separar R$ do valor */
+.product-list table td.preco span.simbolo,
+.product-list table td.valor-compra span.simbolo {
+    margin-right: 2px;
+}
+
+/* --- Inputs e textareas dos modais --- */
+.modal-content .form-group input,
+.modal-content .form-group textarea,
+.modal-content .form-group select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px 8px;
+    font-size: 1rem;
+    margin-top: 4px;
+}
+
+/* Campo de observação (textarea) */
+.modal-content textarea {
+    min-height: 80px;
+    resize: vertical; /* opcional, deixa o usuário ajustar */
+}
+
+/* --- Ajustes gerais do modal --- */
+.modal-content .form-grid {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.modal-content .form-fields {
+    flex: 2;
+}
+
+.modal-content .image-upload {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.modal-content .image-upload .image-preview {
+    width: 100%;
+    height: 150px;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.modal-content .image-upload .image-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }

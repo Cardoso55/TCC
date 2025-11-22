@@ -3,7 +3,8 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once __DIR__ . "/../models/PedidoReposicao.php";
+require_once __DIR__ . '/../models/PedidoReposicao.php';
+
 
 // Se for POST → API JSON
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -28,9 +29,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     echo json_encode(["sucesso" => $resultado]);
     exit;
+
 }
-
-
 
 // Método para listar pedidos
 class RequisicaoController {
@@ -39,3 +39,7 @@ class RequisicaoController {
         return PedidoReposicao::listarPedidos();
     }
 }
+
+
+
+

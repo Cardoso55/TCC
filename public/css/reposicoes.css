@@ -73,7 +73,7 @@ tbody tr:hover {
     text-transform: capitalize;
 }
 
-.status.ativo {
+.status.confirmado {
     color: #28a745; /* verde */
 }
 

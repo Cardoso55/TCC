@@ -38,6 +38,16 @@ class ChecklistController {
             if ($pedido) {
                 // Atualiza estoque
                 ProdutoModel::atualizarEstoque($pedido['id_produto'], $pedido['quantidade'], 'entrada');
+                ProdutoModel::criarMovimentacao(
+                    $pedido['id_produto'],
+                    $idUsuario,
+                    $pedido['quantidade'],
+                    'entrada',
+                    'reposicao_confirmada',
+                    'Movimentação gerada após confirmação do checklist'
+                );
+
+
 
                 // Atualiza status do pedido
                 $conn = conectarBanco();
@@ -58,7 +68,7 @@ class ChecklistController {
         }
 
         // Redireciona para página de checklists com sucesso
-        header("Location: /TCC/index.php?pagina=checklists&sucesso=1");
+        header("Location: /TCC/index.php?pagina=checklist&sucesso=1");
         exit;
     }
 

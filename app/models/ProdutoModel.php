@@ -19,6 +19,7 @@ class ProdutoModel {
             }
         }
 
+
         $stmt = $db->prepare("INSERT INTO produtos_tbl (codigo_produto, nome, categoria, descricao, preco_unitario, valor_compra, imagem_url) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("sssdsss", $codigo, $dados['nome'], $dados['categoria'], $dados['descricao'], $dados['preco'], $dados['valor_compra'], $imagem_url);
         $stmt->execute();
@@ -32,17 +33,59 @@ class ProdutoModel {
         return $idProduto;
     }
 
-    public static function buscarComEstoque() {
-        $db = conectarBanco();
-        $res = $db->query("SELECT p.*, e.quantidade_atual, e.quantidade_minima
-                           FROM produtos_tbl p
-                           LEFT JOIN estoque_tbl e ON p.id_produto = e.idProdutos_TBL");
-        $produtos = $res->fetch_all(MYSQLI_ASSOC);
-        $db->close();
-        return $produtos;
+   public static function buscarComEstoque() {
+    $db = conectarBanco();
+    $res = $db->query(
+        "SELECT p.*, e.quantidade_atual, e.quantidade_minima
+         FROM produtos_tbl p
+         LEFT JOIN estoque_tbl e ON p.id_produto = e.idProdutos_TBL
+         WHERE p.ativo = 1"
+    );
+    $produtos = $res->fetch_all(MYSQLI_ASSOC);
+    $db->close();
+    return $produtos;
+}
+
+
+    public static function verificarVinculos($produtoId) {
+        // Exemplo de contagem de vínculos
+        return [
+            'checklists' => self::contarChecklists($produtoId),
+            'reposicoes' => self::contarReposicoes($produtoId),
+            
+        ];
     }
 
-    public static function editar($dados, $arquivo) {
+    public static function deletarProduto($produtoId) {
+    $conn = conectarBanco();
+    $stmt = $conn->prepare("DELETE FROM produtos_tbl WHERE id_produto = ?");
+    $stmt->bind_param("i", $produtoId);
+    $res = $stmt->execute();
+    $stmt->close();
+    $conn->close();
+    return (bool)$res;
+}
+
+
+    public static function deletarProdutoCascata($produtoId) {
+        $conn = conectarBanco();
+
+        // Apaga checklists vinculadas
+        $stmt = $conn->prepare("DELETE FROM checklists WHERE produto_id = ?");
+        $stmt->execute([$produtoId]);
+
+        // Apaga pedidos de reposição vinculados
+        $stmt = $conn->prepare("DELETE FROM reposicoes WHERE produto_id = ?");
+        $stmt->execute([$produtoId]);
+
+        // Apaga compras vinculadas (se for necessário)
+        $stmt = $conn->prepare("DELETE FROM compras WHERE produto_id = ?");
+        $stmt->execute([$produtoId]);
+
+        // Apaga o próprio produto
+        self::deletarProduto($produtoId);
+    }
+     public static function editar($dados, $arquivo) {
         $db = conectarBanco();
 
         $imagem_url = $dados['imagem_atual'] ?? null;
@@ -80,6 +123,30 @@ class ProdutoModel {
         return true;
     }
 
+    
+    public static function contarChecklists($produtoId) {
+    $conn = conectarBanco();
+    $stmt = $conn->prepare("SELECT COUNT(*) as total FROM checklist_tbl WHERE idProduto_TBL = ?");
+    $stmt->bind_param("i", $produtoId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $conn->close();
+    return (int)$row['total'];
+}
+
+public static function contarReposicoes($produtoId) {
+    $conn = conectarBanco();
+    $stmt = $conn->prepare("SELECT COUNT(*) as total FROM pedidosreposicao_tbl WHERE id_produto = ?");
+    $stmt->bind_param("i", $produtoId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $conn->close();
+    return (int)$row['total'];
+}
+
+
     public static function excluirPedidosReposicaoDoProduto($id_produto) {
         $db = conectarBanco();
         $id_produto = (int)$id_produto;
@@ -87,22 +154,19 @@ class ProdutoModel {
         $db->close();
     }
 
-  public static function excluir($id_produto) {
+ public static function excluir($id_produto) {
     $db = conectarBanco();
     $id_produto = (int)$id_produto;
 
-    // 1. Excluir pedidos de reposição
-    $db->query("DELETE FROM pedidosreposicao_tbl WHERE id_produto = $id_produto");
-
-    // 2. Excluir estoque
-    $db->query("DELETE FROM estoque_tbl WHERE idProdutos_TBL = $id_produto");
-
-    // 3. Finalmente, excluir o produto
-    $db->query("DELETE FROM produtos_tbl WHERE id_produto = $id_produto");
+    $stmt = $db->prepare("UPDATE produtos_tbl SET ativo = 0 WHERE id_produto = ?");
+    $stmt->bind_param("i", $id_produto);
+    $stmt->execute();
+    $stmt->close();
 
     $db->close();
     return true;
 }
+
 
 
     public static function buscarFiltradoComOrdenacao($filtros) {
@@ -203,5 +267,32 @@ class ProdutoModel {
             return true;
         }
 
+        public static function criarMovimentacao($id_produto, $id_usuario, $quantidade, $tipo, $origem, $observacao = null) {
+            $db = conectarBanco();
 
+            $stmt = $db->prepare("
+                INSERT INTO movimentacoes_tbl
+                    (quantidade, tipo, origem, observacao, data_movimentacao, idUsuarios_TBL, idProdutos_TBL)
+                VALUES (?, ?, ?, ?, NOW(), ?, ?)
+            ");
+
+            $stmt->bind_param("isssii", 
+                $quantidade, 
+                $tipo, 
+                $origem, 
+                $observacao, 
+                $id_usuario, 
+                $id_produto
+            );
+
+            $stmt->execute();
+            $stmt->close();
+            $db->close();
+        }
 }
+
+   
+
+
+
+

@@ -18,8 +18,10 @@ $checklists = ChecklistController::listar($filtros);
 <head>
 <meta charset="UTF-8">
 <title>Checklists</title>
+<link rel="stylesheet" href="/TCC/public/css/reset.css">
 <link rel="stylesheet" href="/TCC/public/css/checklist.css">
 <link rel="stylesheet" href="/TCC/public/css/sidebar.css">
+
 </head>
 <body>
 
