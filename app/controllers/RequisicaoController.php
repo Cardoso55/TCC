@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit;
     }
 
-    $resultado = PedidoReposicao::criarPedido($id_produto, $quantidade, $fornecedor, $id_usuario);
+    $resultado = PedidoReposicaoModel::criarPedido($id_produto, $quantidade, $fornecedor, $id_usuario);
 
     echo json_encode(["sucesso" => $resultado]);
     exit;
@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 class RequisicaoController {
 
     public static function listar() {
-        return PedidoReposicao::listarPedidos();
+        return PedidoReposicaoModel::listarPedidos();
     }
 }
 

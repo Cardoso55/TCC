@@ -6,6 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 require_once __DIR__ . '/../models/PedidoReposicao.php';
 require_once __DIR__ . '/../models/ChecklistModel.php';
+require_once __DIR__ . '/../models/PedidoReposicaoModel.php';
 require_once __DIR__ . '/../models/CompraModel.php';
 
 header("Content-Type: application/json");
@@ -133,6 +134,31 @@ if ($acao === 'aceitar') {
         exit;
     }
 
+    $quantidade = $pedido['quantidade'];
+    $valorUnitario = $pedido['valor_compra'];
+    $valorTotal = $quantidade * $valorUnitario;
+    $fornecedor = $pedido['fornecedor'];
+
+    // Cria compra e vincula pedido
+    $idCompra = CompraModel::criarCompra($fornecedor, $valorTotal, $idUsuario);
+    PedidoReposicaoModel::atualizarCompra($idPedido, $idCompra);
+
+    // 🚀 Aqui gera os checklists automaticamente
+    require_once __DIR__ . '/../controllers/ChecklistController.php';
+    ChecklistController::gerarParaCompra(
+    $idCompra,
+    $idUsuario,
+    $pedido['id_produto'],
+    $quantidade,
+    $pedido['id_pedido'] // ✅ o ID do pedido que está faltando
+);
+
+
+    echo json_encode([
+        "sucesso" => true,
+        "mensagem" => "Compra criada, pedido confirmado e checklists gerados!",
+        "id_compra" => $idCompra
+    ]);
     echo json_encode(["erro" => "Nível inválido para aprovar este pedido"]);
     exit;
 }

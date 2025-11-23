@@ -52,6 +52,8 @@ class ChecklistModel {
 }
 
 
+
+
    public static function confirmarChecklist($idChecklist, $idUsuario, $idPedido) {
     $conn = conectarBanco();
     $idChecklist = (int)$idChecklist;

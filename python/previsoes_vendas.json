@@ -1,47 +1,46 @@
-{
-    "16C3B123": {
-        "nome": "Feijão Carioca",
-        "preco_unitario": 5.0,
-        "previsao": 440
-    },
-    "18FE18F4": {
-        "nome": "Monitor Acer 23.9'",
-        "preco_unitario": 899.0,
-        "previsao": 3
-    },
-    "249CFE33": {
-        "nome": "Detergente",
-        "preco_unitario": 12.0,
-        "previsao": 140
-    },
-    "628875A8": {
-        "nome": "Água Sanitária",
-        "preco_unitario": 15.0,
-        "previsao": 1573
-    },
-    "64611111": {
-        "nome": "Contra Filé",
-        "preco_unitario": 60.0,
-        "previsao": 108
-    },
-    "6A9DB927": {
-        "nome": "Redmi Buds 6 Lite",
-        "preco_unitario": 146.0,
-        "previsao": 76
-    },
-    "6B9275C7": {
-        "nome": "Sabão em Pó",
-        "preco_unitario": 15.0,
-        "previsao": 4
-    },
-    "6E89FAE2": {
-        "nome": "Arroz Branco Tipo 1",
-        "preco_unitario": 20.0,
-        "previsao": 155
-    },
-    "C85B9124": {
-        "nome": "Bolacha Tortinhas de Chocolate",
-        "preco_unitario": 7.0,
-        "previsao": 161
-    }
-}
+[
+  {
+    "id_produto": 1,
+    "nome": "Redmi Buds 6 Lite",
+    "estoque_atual": 1,
+    "incoming": 18,
+    "forecast": 47.0,
+    "vendas_historicas": 41,
+    "demanda_ajustada": 47.0,
+    "qty_to_order": 28,
+    "data_prevista_chegada": "2025-11-29 10:16:36"
+  },
+  {
+    "id_produto": 3,
+    "nome": "Monitor Acer 23.9'",
+    "estoque_atual": 1,
+    "incoming": 26,
+    "forecast": 43.0,
+    "vendas_historicas": 45,
+    "demanda_ajustada": 45,
+    "qty_to_order": 18,
+    "data_prevista_chegada": "2025-11-29 10:16:36"
+  },
+  {
+    "id_produto": 6,
+    "nome": "Sabão em Pó",
+    "estoque_atual": 1,
+    "incoming": 18,
+    "forecast": 55.0,
+    "vendas_historicas": 64,
+    "demanda_ajustada": 64,
+    "qty_to_order": 45,
+    "data_prevista_chegada": "2025-11-29 10:16:36"
+  },
+  {
+    "id_produto": 11,
+    "nome": "Contra Filé",
+    "estoque_atual": 1,
+    "incoming": 69,
+    "forecast": 55.0,
+    "vendas_historicas": 71,
+    "demanda_ajustada": 71,
+    "qty_to_order": 69,
+    "data_prevista_chegada": "2025-11-29 10:16:36"
+  }
+]

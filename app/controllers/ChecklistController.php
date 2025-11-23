@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../models/ChecklistModel.php';
 require_once __DIR__ . '/../models/ProdutoModel.php';
 require_once __DIR__ . '/../models/CompraModel.php';
-require_once __DIR__ . '/../models/PedidoReposicao.php';
+require_once __DIR__ . '/../models/PedidoReposicaoModel.php';
 
 class ChecklistController {
 
@@ -34,7 +34,7 @@ class ChecklistController {
 
         // Atualiza pedido vinculado e estoque
         if ($idPedido) {
-            $pedido = PedidoReposicao::buscarPedidoParaCompra($idPedido);
+            $pedido = PedidoReposicaoModel::buscarPedidoParaCompra($idPedido);
             if ($pedido) {
                 // Atualiza estoque
                 ProdutoModel::atualizarEstoque($pedido['id_produto'], $pedido['quantidade'], 'entrada');

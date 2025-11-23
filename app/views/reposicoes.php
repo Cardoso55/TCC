@@ -1,5 +1,4 @@
 <?php
-
 require_once __DIR__ . '/../controllers/RequisicaoController.php';
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -29,17 +28,18 @@ $pedidos = RequisicaoController::listar();
         <h2 class="subtitle">Pedidos em Aberto</h2>
 
         <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Solicitante</th>
-              <th>Solicitação em</th>
-              <th>Produto</th>
-              <th>Quantidade Atual</th>
-              <th>Status</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Solicitante</th>
+      <th>Solicitação em</th>
+      <th>Produto</th>
+      <th>Quantidade Atual</th>
+      <th>Status</th>
+      <th>Gerado pela IA</th> <!-- nova coluna -->
+      <th>Ações</th>
+    </tr>
+  </thead>
 
           <tbody>
           <?php if (!empty($pedidos)): ?>
