@@ -222,14 +222,20 @@
 }
 .cancel-button:hover {
     background-color: #d8d8d8;
+     cursor: pointer;
+      transform: scale(1.02); /* leve zoom pra feedback visual */
 }
 
 .save-button {
-    background-color: var(--color-primary); /* Seu vermelho de destaque */
+    background-color: #b50000; /* Seu vermelho de destaque */
     color: #fff;
+     cursor: pointer;
 }
 .save-button:hover {
     opacity: 0.9;
+    background-color: #7a0202;
+    cursor: pointer;
+     transform: scale(1.02); /* leve zoom pra feedback visual */
 }
 
 
@@ -263,6 +269,63 @@
     animation-name: animatetop; /* Animação para aparecer de cima */
     animation-duration: 0.4s;
 }
+
+/* Padrão: requisitos não atendidos ficam vermelhos */
+.password-requirements p {
+    color: red;
+    font-size: 0.9rem;
+    margin: 3px 0;
+    display: flex;
+    align-items: center;
+}
+
+/* Ícone dentro do <span class="icon"> */
+.password-requirements .icon {
+    display: inline-block;
+    width: 20px;
+    margin-right: 5px;
+    text-align: center;
+}
+
+/* Quando requisito atendido */
+.password-requirements p.valid {
+    color: green;
+}
+
+.save-button.locked {
+    background-color: #ccc !important;
+    cursor: not-allowed !important;
+    color: #666 !important;
+}
+
+.flash-message {
+    padding: 12px 20px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.flash-message.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+.flash-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+
+.modal-error {
+    display: none;
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+
+
+
 
 /* Animação de entrada */
 @keyframes animatetop {

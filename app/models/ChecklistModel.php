@@ -4,74 +4,57 @@ require_once __DIR__ . "/../database/conexao.php";
 class ChecklistModel {
 
     public static function listarChecklists($filtros = []) {
-        $conn = conectarBanco();
-        $query = "SELECT c.*, u.nome AS usuario_nome, p.nome AS produto_nome
-                  FROM Checklist_TBL c
-                  LEFT JOIN Usuarios_TBL u ON c.idUsuarios_TBL = u.id_usuario
-                  LEFT JOIN Produtos_TBL p ON c.idProduto_TBL = p.id_produto
-                  WHERE 1=1";
+    $conn = conectarBanco();
+    $query = "SELECT c.*, u.nome AS usuario_nome, p.nome AS produto_nome
+              FROM Checklist_TBL c
+              LEFT JOIN Usuarios_TBL u ON c.idUsuarios_TBL = u.id_usuario
+              LEFT JOIN Produtos_TBL p ON c.idProduto_TBL = p.id_produto
+              WHERE 1=1";
 
-        if (!empty($filtros['tipo'])) $query .= " AND c.tipo = '".$conn->real_escape_string($filtros['tipo'])."'";
-        if (!empty($filtros['idProduto_TBL'])) $query .= " AND c.idProduto_TBL = ".(int)$filtros['idProduto_TBL'];
-        if (!empty($filtros['idCompra_TBL'])) $query .= " AND c.idCompra_TBL = ".(int)$filtros['idCompra_TBL'];
-        if (!empty($filtros['idPedidosReposicao_TBL'])) $query .= " AND c.idPedidosReposicao_TBL = ".(int)$filtros['idPedidosReposicao_TBL'];
+    if (!empty($filtros['tipo'])) $query .= " AND c.tipo = '".$conn->real_escape_string($filtros['tipo'])."'";
+    if (!empty($filtros['idProduto_TBL'])) $query .= " AND c.idProduto_TBL = ".(int)$filtros['idProduto_TBL'];
+    if (!empty($filtros['idCompra_TBL'])) $query .= " AND c.idCompra_TBL = ".(int)$filtros['idCompra_TBL'];
+    if (!empty($filtros['idPedidosReposicao_TBL'])) $query .= " AND c.idPedidosReposicao_TBL = ".(int)$filtros['idPedidosReposicao_TBL'];
 
-        $res = $conn->query($query);
-        $checklists = $res->fetch_all(MYSQLI_ASSOC);
-        $conn->close();
-        return $checklists;
-    }
+    // Adiciona ordenação pelos mais recentes primeiro
+    $query .= " ORDER BY c.data_criacao DESC";
+
+    $res = $conn->query($query);
+    $checklists = $res->fetch_all(MYSQLI_ASSOC);
+    $conn->close();
+    return $checklists;
+}
+
 
     public static function criarChecklist($dados) {
-        $conn = conectarBanco();
+    $conn = conectarBanco();
 
-        $tipo     = $conn->real_escape_string($dados['tipo']);
-        $conteudo = $conn->real_escape_string($dados['conteudo']);
-        $idUsuario = (int)$dados['idUsuarios_TBL'];
+    $tipo = $conn->real_escape_string($dados['tipo']);
+    $conteudo = $conn->real_escape_string($dados['conteudo']);
+    $idUsuario = (int)$dados['idUsuarios_TBL'];
 
-        // Valores que podem ser NULL
-        $idPedido  = isset($dados['idPedidosReposicao_TBL']) ? (int)$dados['idPedidosReposicao_TBL'] : null;
-        $idCompra  = isset($dados['idCompra_TBL']) ? (int)$dados['idCompra_TBL'] : null;
-        $idProduto = isset($dados['idProduto_TBL']) ? (int)$dados['idProduto_TBL'] : null;
+    // IDs opcionais — garantimos NULL real no SQL
+    $idPedido  = !empty($dados['idPedidosReposicao_TBL']) ? (int)$dados['idPedidosReposicao_TBL'] : "NULL";
+    $idCompra  = !empty($dados['idCompra_TBL']) ? (int)$dados['idCompra_TBL'] : "NULL";
+    $idProduto = !empty($dados['idProduto_TBL']) ? (int)$dados['idProduto_TBL'] : "NULL";
 
-        $query = "
-            INSERT INTO Checklist_TBL 
-            (tipo, conteudo, status, data_criacao, idUsuarios_TBL, idPedidosReposicao_TBL, idCompra_TBL, idProduto_TBL)
-            VALUES (?, ?, 'pendente', NOW(), ?, ?, ?, ?)
-        ";
+    $query = "
+        INSERT INTO Checklist_TBL 
+        (tipo, conteudo, status, data_criacao, idUsuarios_TBL, idPedidosReposicao_TBL, idCompra_TBL, idProduto_TBL)
+        VALUES ('$tipo', '$conteudo', 'pendente', NOW(), $idUsuario, $idPedido, $idCompra, $idProduto)
+    ";
 
-        $stmt = $conn->prepare($query);
-        if (!$stmt) {
-            $conn->close();
-            return ['erro' => $conn->error];
-        }
-
-        // Bind dos parâmetros
-        // "s" = string, "i" = integer, "s" e "i" são do tipo do parâmetro
-        // Se for NULL, passamos null mesmo
-        $stmt->bind_param(
-            "ssiiii",
-            $tipo,
-            $conteudo,
-            $idUsuario,
-            $idPedido,
-            $idCompra,
-            $idProduto
-        );
-
-        $executou = $stmt->execute();
-        if ($executou) {
-            $id = $stmt->insert_id;
-            $stmt->close();
-            $conn->close();
-            return ['sucesso' => true, 'id' => $id];
-        } else {
-            $erro = $stmt->error;
-            $stmt->close();
-            $conn->close();
-            return ['erro' => $erro];
-        }
+    if ($conn->query($query)) {
+        $id = $conn->insert_id;
+        $conn->close();
+        return ['sucesso' => true, 'id' => $id];
+    } else {
+        $erro = $conn->error;
+        $conn->close();
+        return ['erro' => $erro];
     }
+}
+
 
 
 

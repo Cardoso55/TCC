@@ -1,212 +1,363 @@
 <?php
 require_once __DIR__ . "/../database/conexao.php";
 
-class PedidoReposicaoModel {
+/**
+ * PedidoReposicaoModel (UNIFICADO E CONSERTADO)
+ *
+ * Fluxo:
+ *  - Operário cria -> status = 'aguardando_aprovacao' (vai para supervisor)
+ *  - Supervisor cria -> status = 'pendente' (vai direto p/ compras)
+ *  - Supervisor aprova -> vira 'pendente'
+ *  - Compras aceita -> vira 'a_caminho'
+ *  - Checklist confirmado -> atualiza estoque e conclui compra
+ *
+ * Status: aguardando_aprovacao, pendente, a_caminho, negado, confirmado, em_compra
+ */
+class PedidoReposicaoModel
+{
+    // ---------------------------------------------------------------------
+    // 1) CRIAÇÃO — assinatura antiga corrigida
+    // ---------------------------------------------------------------------
+    public static function criarPedido(
+    $id_produto,
+    $quantidade,
+    $fornecedor,
+    $cargo_usuario,
+    $id_usuario
+) {
+    $db = conectarBanco();
 
-    /* ============================================================
-        🔥 1) CRIAR PEDIDO NORMAL (manual)
-    ============================================================ */
-    public static function criarPedido($id_produto, $quantidade, $fornecedor, $id_usuario) {
-        $conn = conectarBanco();
-
-        $sql = "INSERT INTO pedidosreposicao_tbl 
-                (id_produto, quantidade, fornecedor, status, data_pedido, idUsuarios_TBL, gerado_por_ia)
-                VALUES (?, ?, ?, 'pendente', NOW(), ?, 0)";
-
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("iisi", $id_produto, $quantidade, $fornecedor, $id_usuario);
-
-        $stmt->execute();
-
-        // DEBUG opcional
-        // echo "<pre>ERRO MYSQL: " . $stmt->error . "</pre>";
-
-        return $stmt->affected_rows > 0;
+    // Definir nível e status
+    if ($cargo_usuario === 'operario') {
+        $nivel = 'supervisor';
+        $status = 'aguardando_aprovacao';
+    } else {
+        $nivel = 'setor-de-compras';
+        $status = 'pendente';
     }
 
-    /* ============================================================
-        🔥 2) CRIAR PEDIDO GERADO PELA IA
-    ============================================================ */
-    public static function criarPedidoIA($id_produto, $quantidade, $id_usuario, $data_prevista_chegada = null) {
-        $conn = conectarBanco();
+    $sql = "INSERT INTO pedidosreposicao_tbl
+            (id_produto, quantidade, fornecedor, nivel_aprovacao, status, idUsuarios_TBL, data_pedido)
+            VALUES (?, ?, ?, ?, ?, ?, NOW())";
 
-        $sql = "INSERT INTO pedidosreposicao_tbl 
-                (id_produto, quantidade, fornecedor, status, data_pedido, 
-                 idUsuarios_TBL, gerado_por_ia, data_prevista_chegada)
-                VALUES (?, ?, NULL, 'pendente_ia', NOW(), ?, 1, ?)";
+    $stmt = $db->prepare($sql);
 
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("iiis", $id_produto, $quantidade, $id_usuario, $data_prevista_chegada);
-
-        $stmt->execute();
-
-        return $stmt->affected_rows > 0;
+    if (!$stmt) {
+        return [
+            'success' => false,
+            'error' => 'Erro ao preparar statement: ' . $db->error
+        ];
     }
 
-    /* ============================================================
-        🔥 3) LISTAR TODOS OS PEDIDOS (uso geral)
-    ============================================================ */
-    public static function listarPedidos() {
-        $conn = conectarBanco();
+    $stmt->bind_param(
+        "issssi",   // tipos
+        $id_produto,
+        $quantidade,
+        $fornecedor,
+        $nivel,
+        $status,
+        $id_usuario
+    );
 
-        $sql = "SELECT 
-                    p.id_pedido,
-                    p.quantidade AS quantidade_pedida,
-                    e.quantidade_atual AS quantidade_estoque,
-                    p.status,
-                    p.data_pedido,
-                    pd.nome,
-                    p.gerado_por_ia
-                FROM pedidosreposicao_tbl p
-                INNER JOIN produtos_tbl pd 
-                    ON pd.id_produto = p.id_produto
-                INNER JOIN estoque_tbl e 
-                    ON e.idProdutos_TBL = p.id_produto
-                ORDER BY p.data_pedido DESC";
+    if ($stmt->execute()) {
+        return [
+            'success' => true,
+            'message' => 'Pedido criado com sucesso',
+            'nivel_aprovacao' => $nivel
+        ];
+    }
 
-        $result = $conn->query($sql);
+    return [
+        'success' => false,
+        'error' => 'Erro ao executar: ' . $stmt->error
+    ];
+}
 
-        $pedidos = [];
+    // ---------------------------------------------------------------------
+    // 1b) CRIAÇÃO via array (usada pelo router)
+    // ---------------------------------------------------------------------
+    public static function criarPedidoFromArray(array $dados, string $cargo_usuario = 'operario')
+    {
+        $id_produto = (int)($dados['id_produto'] ?? 0);
+        $quantidade = (int)($dados['quantidade'] ?? 0);
+        $fornecedor = $dados['fornecedor'] ?? null;
+        $id_usuario = (int)($dados['id_usuario'] ?? $dados['idUsuarios_TBL'] ?? 0);
 
-        if ($result && $result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $pedidos[] = $row;
-            }
+        if (!$id_produto || !$quantidade || !$id_usuario) {
+            return ['success' => false, 'error' => 'Dados insuficientes'];
         }
 
-        return $pedidos;
+        return self::criarPedido($id_produto, $quantidade, $fornecedor, $cargo_usuario, $id_usuario);
     }
 
+    // ---------------------------------------------------------------------
+    // 2) CRIAÇÃO IA
+    // ---------------------------------------------------------------------
+    public static function criarPedidoIA($id_produto, $quantidade, $id_usuario, $data_prevista_chegada = null)
+    {
+        $db = conectarBanco();
 
-    /* ============================================================
-        🔥 4) LISTAR APENAS PEDIDOS GERADOS PELA IA
-    ============================================================ */
-    public static function listarPedidosIA() {
-        $conn = conectarBanco();
+        $sql = "INSERT INTO pedidosreposicao_tbl
+                (id_produto, quantidade, fornecedor, status, data_pedido,
+                 idUsuarios_TBL, gerado_por_ia, data_prevista_chegada)
+                VALUES (?, ?, NULL, 'pendente', NOW(), ?, 1, ?)";
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("iiis", $id_produto, $quantidade, $id_usuario, $data_prevista_chegada);
+
+        $ok = $stmt->execute();
+        $stmt->close();
+        return $ok;
+    }
+
+    // ---------------------------------------------------------------------
+    // 3) LISTAR TODOS
+    // ---------------------------------------------------------------------
+    public static function listarPedidos()
+    {
+        $db = conectarBanco();
 
         $sql = "SELECT 
                     p.*,
-                    pd.nome
+                    prod.nome,
+                    est.quantidade_atual
                 FROM pedidosreposicao_tbl p
-                INNER JOIN produtos_tbl pd 
-                    ON pd.id_produto = p.id_produto
-                WHERE p.gerado_por_ia = 1
+                LEFT JOIN produtos_tbl prod ON prod.id_produto = p.id_produto
+                LEFT JOIN estoque_tbl est ON est.idProdutos_TBL = p.id_produto
                 ORDER BY p.data_pedido DESC";
 
-        $result = $conn->query($sql);
+        $res = $db->query($sql);
+        return $res ? $res->fetch_all(MYSQLI_ASSOC) : [];
+    }
 
-        $rows = [];
+    // ---------------------------------------------------------------------
+    // 4) LISTAR IA
+    // ---------------------------------------------------------------------
+    public static function listarPedidosIA()
+    {
+        $db = conectarBanco();
+        $sql = "SELECT p.*, prod.nome
+                FROM pedidosreposicao_tbl p
+                LEFT JOIN produtos_tbl prod ON prod.id_produto = p.id_produto
+                WHERE p.gerado_por_ia = 1
+                ORDER BY p.data_pedido DESC";
+        $res = $db->query($sql);
+        return $res ? $res->fetch_all(MYSQLI_ASSOC) : [];
+    }
 
-        if ($result && $result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $rows[] = $row;
-            }
+    // ---------------------------------------------------------------------
+    // 5) BUSCAR POR ID
+    // ---------------------------------------------------------------------
+    public static function buscarPorId($id_pedido)
+    {
+        $db = conectarBanco();
+        $id_pedido = (int)$id_pedido;
+
+        $sql = "SELECT pr.*,
+                       prod.nome AS nome_produto,
+                       prod.valor_compra,
+                       est.quantidade_atual,
+                       est.quantidade_minima,
+                       u.id_usuario, u.nome AS usuario_nome
+                FROM pedidosreposicao_tbl pr
+                LEFT JOIN produtos_tbl prod ON prod.id_produto = pr.id_produto
+                LEFT JOIN estoque_tbl est ON est.idProdutos_TBL = pr.id_produto
+                LEFT JOIN usuarios_tbl u ON u.id_usuario = pr.idUsuarios_TBL
+                WHERE pr.id_pedido = ?";
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $id_pedido);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        return $res ? $res->fetch_assoc() : null;
+    }
+
+    // ---------------------------------------------------------------------
+    // 6) BUSCAR POR NÍVEL (solicitações para aprovação)
+    // ---------------------------------------------------------------------
+    public static function buscarPorNivel($nivel)
+    {
+        $db = conectarBanco();
+
+        $sql = "SELECT p.id_pedido, p.id_produto, p.quantidade, p.status,
+                       p.data_pedido, p.nivel_aprovacao, prod.nome
+                FROM pedidosreposicao_tbl p
+                INNER JOIN produtos_tbl prod ON prod.id_produto = p.id_produto
+                WHERE p.nivel_aprovacao = ? AND p.status = 'aguardando_aprovacao'
+                ORDER BY p.data_pedido DESC";
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("s", $nivel);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    // ---------------------------------------------------------------------
+    // 7) APROVAR PEDIDO — supervisor aceita
+    // ---------------------------------------------------------------------
+    public static function aprovarPedido($id_pedido)
+    {
+        $db = conectarBanco();
+
+        $sql = "UPDATE pedidosreposicao_tbl
+                SET status = 'pendente',
+                    nivel_aprovacao = 'setor-de-compras',
+                    data_aprovacao = NOW()
+                WHERE id_pedido = ? AND status = 'aguardando_aprovacao'";
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $id_pedido);
+
+        return $stmt->execute();
+    }
+
+    // ---------------------------------------------------------------------
+    // 8) NEGAR
+    // ---------------------------------------------------------------------
+    public static function negarPedido($id_pedido)
+    {
+        $db = conectarBanco();
+        $sql = "UPDATE pedidosreposicao_tbl
+                SET status = 'negado', data_aprovacao = NOW()
+                WHERE id_pedido = ?";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $id_pedido);
+        return $stmt->execute();
+    }
+
+    // ---------------------------------------------------------------------
+    // 9) COMPRAS ACEITA → A CAMINHO
+    // ---------------------------------------------------------------------
+    public static function marcarAcaminho($id_pedido)
+    {
+        $db = conectarBanco();
+        $sql = "UPDATE pedidosreposicao_tbl
+                SET status = 'a_caminho', data_aprovacao = NOW()
+                WHERE id_pedido = ?";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $id_pedido);
+        return $stmt->execute();
+    }
+
+    // ---------------------------------------------------------------------
+    // 10) Vincular compra
+    // ---------------------------------------------------------------------
+    public static function atualizarCompra($id_pedido, $id_compra)
+    {
+        $db = conectarBanco();
+        $sql = "UPDATE pedidosreposicao_tbl
+                SET id_compra = ?, status = 'em_compra'
+                WHERE id_pedido = ?";
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("ii", $id_compra, $id_pedido);
+        return $stmt->execute();
+    }
+
+    // ---------------------------------------------------------------------
+    // 11) CHECKLIST FINALIZADO → atualizar estoque e concluir compra
+    // ---------------------------------------------------------------------
+    public static function confirmarChecklist($id_produto, $quantidade_recebida, $id_compra)
+    {
+        $db = conectarBanco();
+
+        // Verifica / atualiza estoque
+        $sql = "SELECT quantidade_atual FROM estoque_tbl WHERE idProdutos_TBL = ?";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $id_produto);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $existe = $result->fetch_assoc();
+        $stmt->close();
+
+        if ($existe) {
+            $sql = "UPDATE estoque_tbl SET quantidade_atual = quantidade_atual + ? 
+                    WHERE idProdutos_TBL = ?";
+            $stmt = $db->prepare($sql);
+            $stmt->bind_param("ii", $quantidade_recebida, $id_produto);
+        } else {
+            $sql = "INSERT INTO estoque_tbl (idProdutos_TBL, quantidade_atual, quantidade_minima)
+                    VALUES (?, ?, 0)";
+            $stmt = $db->prepare($sql);
+            $stmt->bind_param("ii", $id_produto, $quantidade_recebida);
         }
 
-        return $rows;
-    }
-
-    /* ============================================================
-        🔥 5) ACEITAR PEDIDO (IA OU MANUAL)
-    ============================================================ */
-    public static function aceitarPedido($id_pedido) {
-        $db = conectarBanco();
-        $stmt = $db->prepare("UPDATE pedidosreposicao_tbl 
-                              SET status = 'a-caminho', 
-                                  data_aprovacao = NOW(),
-                                  nivel_aprovacao = 1
-                              WHERE id_pedido = ?");
-        $stmt->bind_param("i", $id_pedido);
-        $res = $stmt->execute();
-
+        $ok1 = $stmt->execute();
         $stmt->close();
-        $db->close();
-        return $res;
-    }
 
-    /* ============================================================
-        🔥 6) REJEITAR PEDIDO (IA OU MANUAL)
-    ============================================================ */
-    public static function negarPedido($id_pedido) {
-        $db = conectarBanco();
-        $stmt = $db->prepare("UPDATE pedidosreposicao_tbl 
-                              SET status = 'negado',
-                                  data_aprovacao = NOW(),
-                                  nivel_aprovacao = 2
-                              WHERE id_pedido = ?");
-        $stmt->bind_param("i", $id_pedido);
-        $res = $stmt->execute();
-
+        // Concluir compra
+        $sql = "UPDATE compras_tbl SET status = 'concluida' WHERE id_compra = ?";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $id_compra);
+        $ok2 = $stmt->execute();
         $stmt->close();
-        $db->close();
-        return $res;
+
+        return $ok1 && $ok2;
     }
 
-    /* ============================================================
-        🔥 7) BUSCAR PEDIDO PARA CRIAR COMPRA
-    ============================================================ */
-    public static function buscarPedidoParaCompra($idPedido) {
+    // ---------------------------------------------------------------------
+    // 12) Buscar pedido para criar compra
+    // ---------------------------------------------------------------------
+    public static function buscarPedidoParaCompra($idPedido)
+    {
         $db = conectarBanco();
 
         $sql = "SELECT 
-                    p.id_pedido,
-                    p.id_produto,
-                    p.quantidade,
-                    p.fornecedor,
-                    p.idUsuarios_TBL,
-                    pr.valor_compra
+                    p.*, prod.valor_compra, prod.nome
                 FROM pedidosreposicao_tbl p
-                INNER JOIN produtos_tbl pr
-                    ON pr.id_produto = p.id_produto
+                INNER JOIN produtos_tbl prod ON prod.id_produto = p.id_produto
                 WHERE p.id_pedido = ?";
 
         $stmt = $db->prepare($sql);
         $stmt->bind_param("i", $idPedido);
         $stmt->execute();
-
-        $res = $stmt->get_result();
-        return $res->fetch_assoc();
+        return $stmt->get_result()->fetch_assoc();
     }
 
-    /* ============================================================
-        🔥 8) VINCULAR UM PEDIDO A UMA COMPRA
-    ============================================================ */
-    public static function atualizarCompra($idPedido, $idCompra) {
+    // ---------------------------------------------------------------------
+    // 13) Atualizar status manualmente
+    // ---------------------------------------------------------------------
+    public static function atualizarStatus($id_pedido, $status)
+    {
         $db = conectarBanco();
-        $stmt = $db->prepare("UPDATE pedidosreposicao_tbl 
-                              SET id_compra = ?
-                              WHERE id_pedido = ?");
-        $stmt->bind_param("ii", $idCompra, $idPedido);
-        $stmt->execute();
+        $sql = "UPDATE pedidosreposicao_tbl SET status = ? WHERE id_pedido = ?";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("si", $status, $id_pedido);
+        return $stmt->execute();
     }
 
-    public function getPedidosIA() {
-        $conn = conectarBanco();
+   public static function atualizarAprovacao($id_pedido, $novoNivel, $novoStatus)
+{
+    $db = conectarBanco();
 
-        $sql = "
-            SELECT 
-                p.*,
-                pr.nome AS nome_produto
-            FROM pedidosreposicao_tbl p
-            LEFT JOIN produtos_tbl pr ON pr.id_produto = p.id_produto
-            WHERE p.gerado_por_ia = 1
-            ORDER BY p.data_pedido DESC
-        ";
+    $sql = "UPDATE pedidosreposicao_tbl
+            SET nivel_aprovacao = ?, status = ?, data_aprovacao = NOW()
+            WHERE id_pedido = ?";
 
-        $result = $conn->query($sql);
-        return $result->fetch_all(MYSQLI_ASSOC);
+    $stmt = $db->prepare($sql);
+
+    if (!$stmt) {
+        return ['success' => false, 'error' => $db->error];
     }
 
-    public function atualizarStatus($id, $status, $user_id) {
-        $conn = conectarBanco();
+    $stmt->bind_param("ssi", $novoNivel, $novoStatus, $id_pedido);
 
-        $stmt = $conn->prepare("
-            UPDATE pedidosreposicao_tbl
-            SET status = ?, nivel_aprovacao = 1, data_aprovacao = NOW(), idUsuarios_TBL = ?
-            WHERE id_pedido = ?
-        ");
-
-        return $stmt->execute([$status, $user_id, $id]);
+    if ($stmt->execute()) {
+        return ['success' => true];
     }
+
+    return ['success' => false, 'error' => $stmt->error];
+}
+public static function rejeitarPedido($id_pedido) {
+    $db = conectarBanco();
+    $sql = "UPDATE pedidosreposicao_tbl 
+            SET status = 'negado', data_aprovacao = NOW()
+            WHERE id_pedido = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param("i", $id_pedido);
+    return $stmt->execute();
+}
+
+
 
 }

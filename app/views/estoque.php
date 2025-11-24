@@ -1,8 +1,23 @@
 <?php
+// arquivo: /TCC/app/views/estoque.php
+if (session_status() === PHP_SESSION_NONE) session_start();
+
 require_once __DIR__ . '/../controllers/ProdutoController.php';
 $produtos = ProdutoController::listarProdutos();
-?>
 
+// nível do usuário logado
+$userLevel = $_SESSION['user_level'] ?? '';
+
+// permissões
+$temPermissaoCompleta = in_array($userLevel, [
+    'diretor',
+    'gerente',
+    'supervisor',
+    'operario'
+]);
+
+$setorVendas = ($userLevel === 'setor-de-vendas');
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -12,6 +27,7 @@ $produtos = ProdutoController::listarProdutos();
     <link rel="stylesheet" href="/TCC/public/css/reset.css">
     <link rel="stylesheet" href="/TCC/public/css/sidebar.css">
     <link rel="stylesheet" href="/TCC/public/css/estoque.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 <body>
 <div class="all">
@@ -27,77 +43,134 @@ $produtos = ProdutoController::listarProdutos();
             <input type="text" id="filtroPreco" placeholder="Preço específico">
             <input type="text" id="filtroQuantidade" placeholder="Quantidade específica">
         </div>
-                
-     <div class="product-list">
-    <table>
-        <thead>
-            <tr>
-                <th>Código</th>
-                <th>Nome
-                    <span class="sort" data-campo="nome" data-ordem="null">↕</span>
-                </th>
-                <th>Tipo</th>
-                <th>
-                    Preço Unitário 
-                    <span class="sort" data-campo="preco" data-ordem="asc">▲</span>
-                </th>
-                <th>
-                    Valor Compra
-                </th>
-                <th>
-                    Quantidade 
-                    <span class="sort" data-campo="quantidade" data-ordem="asc">▲</span>
-                </th>
-                <th><button id="btnAdd">Adicionar</button></th>
-            </tr>
-        </thead>
-        <tbody id="tabela-estoque">
-            <?php if (!empty($produtos) && is_array($produtos)): ?>
-                <?php foreach ($produtos as $p): ?>
-                    <?php
+
+        <div class="product-list">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nome <span class="sort" data-campo="nome" data-ordem="null">↕</span></th>
+                        <th>Tipo</th>
+                        <th>Preço Unitário <span class="sort" data-campo="preco" data-ordem="asc">▲</span></th>
+                        <th>Valor Compra</th>
+                        <th>Quantidade <span class="sort" data-campo="quantidade" data-ordem="asc">▲</span></th>
+                        <th>
+                            <?php if ($temPermissaoCompleta): ?>
+                                <button id="btnAdd">Adicionar</button>
+                            <?php elseif ($setorVendas): ?>
+                                Saída
+                            <?php else: ?>
+                                Ações
+                            <?php endif; ?>
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody id="tabela-estoque">
+                <?php if (!empty($produtos) && is_array($produtos)): ?>
+                    <?php foreach ($produtos as $p): 
                         $dataset = [
                             'id_produto' => $p['id_produto'] ?? $p['idProdutos_TBL'] ?? null,
                             'codigo_produto' => $p['codigo_produto'] ?? '',
                             'nome' => $p['nome'] ?? '',
                             'categoria' => $p['categoria'] ?? '',
                             'preco_unitario' => $p['preco_unitario'] ?? $p['preco'] ?? 0,
-                            'valor_compra' => $p['valor_compra'] ?? 0, // <-- adiciona aqui
+                            'valor_compra' => $p['valor_compra'] ?? 0,
                             'quantidade_atual' => $p['quantidade_atual'] ?? 0,
                             'quantidade_minima' => $p['quantidade_minima'] ?? null,
                             'quantidade_maxima' => $p['quantidade_maxima'] ?? null,
                             'quantidade_baixo' => $p['quantidade_baixo'] ?? null,
                             'imagem_url' => $p['imagem_url'] ?? $p['imagem'] ?? null,
+                            'descricao' => $p['descricao'] ?? ''
                         ];
                     ?>
-                    <tr data-produto='<?= htmlspecialchars(json_encode($dataset), ENT_QUOTES, 'UTF-8') ?>'>
+                    <tr data-produto='<?= htmlspecialchars(json_encode($dataset), ENT_QUOTES, "UTF-8") ?>'>
                         <td><?= htmlspecialchars($dataset['codigo_produto']) ?></td>
                         <td><?= htmlspecialchars($dataset['nome']) ?></td>
                         <td><?= htmlspecialchars($dataset['categoria']) ?></td>
                         <td>R$ <?= number_format($dataset['preco_unitario'], 2, ',', '.') ?></td>
-                        <td>R$ <?= number_format($dataset['valor_compra'], 2, ',', '.') ?></td> <!-- coluna valor compra -->
+                        <td>R$ <?= number_format($dataset['valor_compra'], 2, ',', '.') ?></td>
                         <td><?= $dataset['quantidade_atual'] ?></td>
                         <td>
-                            <button class="edit-btn" type="button" title="Editar">✏️</button>
-                            <button class="delete-btn" type="button" title="Excluir">🗑️</button>
-                            <button class="reposicao-btn" type="button" title="Repor">📦</button>
+                            <?php if ($userLevel === 'operario'): ?>
+                                <button class="reposicao-btn" type="button" title="Repor">
+                                    <span class="material-symbols-outlined">inventory_2</span>
+                                </button>
+                            <?php elseif (in_array($userLevel, ['supervisor', 'gerente', 'diretor'])): ?>
+                                <button class="edit-btn" type="button" title="Editar">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </button>
+
+                                <button class="delete-btn" type="button" title="Excluir">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </button>
+
+                                <button class="reposicao-btn" type="button" title="Repor">
+                                    <span class="material-symbols-outlined">inventory_2</span>
+                                </button>
+                            <?php endif; ?>
+
+                            <?php if ($setorVendas): ?>
+                                <button class="saida-btn" type="button" title="Saída">
+                                    <span class="material-symbols-outlined">sell</span>
+                                </button>
+                            <?php endif; ?>
                         </td>
                     </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <tr><td colspan="7">Nenhum produto encontrado.</td></tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
-</div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr><td colspan="7">Nenhum produto encontrado.</td></tr>
+                <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
 
+        <!-- MODAL SAÍDA (para setor de vendas) -->
+        <?php if ($setorVendas): ?>
+        <!-- MODAL SAÍDA -->
+        <div id="modal-saida" class="modal" style="display:none;">
+            <div class="modal-content">
+                <span class="close" onclick="hideModal(modalSaida)">&times;</span>
+                <h2>Registrar Saída</h2>
+                <form id="form-saida">
+                    <input type="hidden" id="saida-id_produto" name="id_produto">
+                    <div class="modal-row">
+                        <label>Produto:</label>
+                        <span id="saida-nome"></span>
+                    </div>
+                    <div class="modal-row">
+                        <label>Estoque atual:</label>
+                        <span id="saida-quantidade-atual"></span>
+                    </div>
+                    <div class="modal-row">
+                        <label>Quantidade:</label>
+                        <input type="number" id="saida-quantidade" name="quantidade" min="1" required>
+                    </div>
+                    <div class="modal-row">
+                        <label>Observação:</label>
+                        <textarea id="saida-observacao" name="observacao"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit">Enviar Pedido</button>
+                        <button type="button" onclick="hideModal(modalSaida)">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <?php endif; ?>
 
         <!-- MODAL CADASTRAR -->
-        <div id="modal-add" class="modal" aria-hidden="true" style="display:none;">
+        <?php if ($temPermissaoCompleta): ?>
+        <div id="modal-add" class="modal" style="display:none;">
             <div class="modal-content">
-                <button class="close" aria-label="Fechar">&times;</button>
+                <button class="close">&times;</button>
                 <h2>Cadastrar Produto</h2>
-                <form id="form-add" action="../controllers/ProdutoController.php" method="POST" enctype="multipart/form-data">
+
+                <!-- ACTION: sempre enviar para o router -->
+                <form id="form-add" action="/TCC/index.php?pagina=produto" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="acao" value="cadastrar">
+
                     <div class="form-grid">
                         <div class="form-fields">
                             <div class="form-group">
@@ -114,7 +187,6 @@ $produtos = ProdutoController::listarProdutos();
                                 <label>Valor de Compra (R$)</label>
                                 <input type="number" step="0.01" name="valor_compra" required>
                             </div>
-
 
                             <div class="form-group">
                                 <label>Categoria</label>
@@ -141,15 +213,20 @@ $produtos = ProdutoController::listarProdutos();
                 </form>
             </div>
         </div>
+        <?php endif; ?>
 
         <!-- MODAL EDITAR -->
-        <div id="modal-edit" class="modal" aria-hidden="true" style="display:none;">
+        <?php if ($temPermissaoCompleta): ?>
+        <div id="modal-edit" class="modal" style="display:none;">
             <div class="modal-content">
-                <button class="close-edit" aria-label="Fechar">&times;</button>
+                <button class="close">&times;</button>
                 <h2>Editar Produto</h2>
-                <form id="form-edit" action="../controllers/ProdutoController.php" method="POST" enctype="multipart/form-data">
+
+                <!-- ACTION: enviar para router (mesma rota, acao=editar) -->
+                <form id="form-edit" action="/TCC/index.php?pagina=produto" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="acao" value="editar">
                     <input type="hidden" name="id_produto" id="edit-id_produto">
+
                     <div class="form-grid">
                         <div class="form-fields">
                             <div class="form-group">
@@ -198,211 +275,267 @@ $produtos = ProdutoController::listarProdutos();
                 </form>
             </div>
         </div>
+        <?php endif; ?>
 
-       <!-- MODAL DE REPOSIÇÃO -->
-    <div id="modal-reposicao" class="modal">
-        <div class="modal-content">
-            <span class="close" id="close-reposicao">&times;</span>
+        <!-- MODAL REPOSIÇÃO (somente quem tem permissão) -->
+        <?php if ($temPermissaoCompleta): ?>
+        <div id="modal-reposicao" class="modal">
+            <div class="modal-content">
+                <span class="close" id="close-reposicao">&times;</span>
 
-            <h2 class="modal-title">Solicitar Reposição</h2>
+                <h2 class="modal-title">Solicitar Reposição</h2>
 
-            <form id="form-reposicao">
-                <input type="hidden" id="rep-id" name="id_produto">
+                <form id="form-reposicao">
+                    <input type="hidden" id="rep-id" name="id_produto">
 
-                <div class="modal-row">
-                    <label>Produto:</label>
-                    <span id="rep-nome" class="modal-info"></span>
-                </div>
+                    <div class="modal-row"><label>Produto:</label><span id="rep-nome"></span></div>
+                    <div class="modal-row"><label>Estoque atual:</label><span id="rep-atual"></span></div>
+                    <div class="modal-row"><label>Estoque mínimo:</label><span id="rep-min"></span></div>
+                    <div class="modal-row"><label>Estoque baixo:</label><span id="rep-baixo"></span></div>
+                    <div class="modal-row"><label>Estoque máximo:</label><span id="rep-max"></span></div>
 
-                <div class="modal-row">
-                    <label>Estoque atual:</label>
-                    <span id="rep-atual" class="modal-info"></span>
-                </div>
+                    <div class="modal-inputs">
+                        <div class="input-box">
+                            <label>Quantidade desejada:</label>
+                            <input type="number" id="rep-quantidade" name="quantidade" min="1" required>
+                        </div>
 
-                <div class="modal-row">
-                    <label>Estoque mínimo:</label>
-                    <span id="rep-min" class="modal-info"></span>
-                </div>
-
-                <div class="modal-row">
-                    <label>Estoque baixo:</label>
-                    <span id="rep-baixo" class="modal-info"></span>
-                </div>
-
-                <div class="modal-row">
-                    <label>Estoque máximo:</label>
-                    <span id="rep-max" class="modal-info"></span>
-                </div>
-
-                <div class="modal-inputs">
-                    <div class="input-box">
-                        <label for="rep-quantidade">Quantidade desejada:</label>
-                        <input type="number" id="rep-quantidade" name="quantidade" min="1" required>
+                        <div class="input-box">
+                            <label>Fornecedor:</label>
+                            <input type="text" id="rep-fornecedor" name="fornecedor" required>
+                        </div>
                     </div>
 
-                    <div class="input-box">
-                        <label for="rep-fornecedor">Fornecedor:</label>
-                        <input type="text" id="rep-fornecedor" name="fornecedor">
+                    <div class="modal-btns">
+                        <button type="submit" class="btn confirmar">Enviar pedido</button>
+                        <button type="button" class="btn cancelar" id="cancelar-reposicao">Cancelar</button>
                     </div>
-                </div>
-
-                <div class="modal-btns">
-                    <button type="submit" class="btn confirmar">Enviar pedido</button>
-                    <button type="button" class="btn cancelar" id="cancelar-reposicao">Cancelar</button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
-
+        <?php endif; ?>
 
     </div>
 </div>
 
+<!-- ======================
+     JS (inline aqui pra facilitar teste)
+     ====================== -->
 <script>
-// helper: safe query selector
-const $ = sel => document.querySelector(sel);
-const $$ = sel => Array.from(document.querySelectorAll(sel));
+const USER_LEVEL = '<?= $_SESSION['user_level'] ?? '' ?>';
+const SETOR_VENDAS = <?= ($userLevel === 'setor-de-vendas') ? 'true' : 'false' ?>;
 
-// Modal helpers
-function showModal(el) {
-    if (!el) return;
-    el.style.display = 'block';
-    el.setAttribute('aria-hidden', 'false');
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+
+function showModal(el){
+    if(el){
+        el.style.display='block';
+        el.setAttribute('aria-hidden','false');
+    }
 }
-function hideModal(el) {
-    if (!el) return;
-    el.style.display = 'none';
-    el.setAttribute('aria-hidden', 'true');
+function hideModal(el){
+    if(el){
+        el.style.display='none';
+        el.setAttribute('aria-hidden','true');
+    }
 }
 
-// Open/close basic modals (Add / Edit)
+function escapeHtml(str){
+    if (str===null || str===undefined) return '';
+    return String(str)
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;')
+        .replaceAll("'","&#039;");
+}
+
+function htmlspecialchars_js(s){
+    return escapeHtml(s)
+        .replaceAll('"','&quot;')
+        .replaceAll("'",'&#039;');
+}
+document.addEventListener('DOMContentLoaded', () => {
+// --- Modais ---
 const modalAdd = $('#modal-add');
 const modalEdit = $('#modal-edit');
 const modalReposicao = $('#modal-reposicao');
+const modalSaida = $('#modal-saida');
 
-const btnAdd = $('#btnAdd');
-if (btnAdd && modalAdd) btnAdd.addEventListener('click', () => showModal(modalAdd));
+// Abrir modal adicionar
+$('#btnAdd')?.addEventListener('click', ()=> showModal(modalAdd));
+modalAdd?.querySelector('.close')?.addEventListener('click', ()=> hideModal(modalAdd));
 
-const closeAdd = modalAdd ? modalAdd.querySelector('.close') : null;
-if (closeAdd) closeAdd.addEventListener('click', () => hideModal(modalAdd));
+// Fechar modais editar, reposição
+modalEdit?.querySelector('.close')?.addEventListener('click', ()=> hideModal(modalEdit));
+modalReposicao?.querySelector('.close')?.addEventListener('click', ()=> hideModal(modalReposicao));
+$('#cancelar-reposicao')?.addEventListener('click', ()=> hideModal(modalReposicao));
 
-const closeEdit = modalEdit ? modalEdit.querySelector('.close-edit') : null;
-if (closeEdit) closeEdit.addEventListener('click', () => hideModal(modalEdit));
+// Fechar modal saída
+$('#close-saida')?.addEventListener('click', () => hideModal(modalSaida));
+$('#cancelar-saida')?.addEventListener('click', () => hideModal(modalSaida));
 
-const closeReposicao = modalReposicao ? modalReposicao.querySelector('.close-reposicao') : null;
-if (closeReposicao) closeReposicao.addEventListener('click', () => hideModal(modalReposicao));
-
-const repCancel = $('#rep-cancel');
-if (repCancel) repCancel.addEventListener('click', () => hideModal(modalReposicao));
-
-// Close modals when click outside
-window.addEventListener('click', (e) => {
-    if (e.target === modalAdd) hideModal(modalAdd);
-    if (e.target === modalEdit) hideModal(modalEdit);
-    if (e.target === modalReposicao) hideModal(modalReposicao);
+window.addEventListener('click', e => {
+    if (e.target===modalAdd) hideModal(modalAdd);
+    if (e.target===modalEdit) hideModal(modalEdit);
+    if (e.target===modalReposicao) hideModal(modalReposicao);
+    if (e.target===modalSaida) hideModal(modalSaida);
 });
 
-// Delegation: handle clicks inside the table body
+// --- Tabela e delegação ---
 const tabelaBody = $('#tabela-estoque');
-if (tabelaBody) {
-    tabelaBody.addEventListener('click', (e) => {
-        const btn = e.target.closest('button');
-        if (!btn) return;
 
-        const tr = btn.closest('tr');
-        if (!tr) return;
+tabelaBody?.addEventListener('click', async (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
 
-        let data;
-        try {
-            data = JSON.parse(tr.getAttribute('data-produto') || '{}');
-        } catch (err) {
-            console.error('Erro ao parsear data-produto:', err);
-            data = {};
-        }
+    const tr = btn.closest('tr');
+    if (!tr) return;
 
-        if (btn.classList.contains('edit-btn')) {
-            $('#edit-id_produto').value = data.id_produto ?? '';
-            $('#edit-nome').value = data.nome ?? '';
-            $('#edit-preco').value = data.preco_unitario ?? '';
-            $('#edit-categoria').value = data.categoria ?? '';
-            $('#edit-quantidade').value = data.quantidade_atual ?? '';
-            $('#edit-descricao').value = data.descricao ?? '';
-            $('#preview-edit').src = data.imagem_url ? `/TCC/app/${data.imagem_url}` : "/TCC/public/img/img-placeholder.png";
-            $('#edit-valor_compra').value = data.valor_compra ?? '';
-            showModal(modalEdit);
-            return;
-        }
+    let data;
+    try {
+        data = JSON.parse(tr.getAttribute('data-produto') || '{}');
+    } catch {
+        console.error("Erro parse data-produto");
+        data = {};
+    }
 
-        if (btn.classList.contains('delete-btn')) {
-            if (confirm(`Tem certeza que deseja excluir o produto "${data.nome}"?`)) {
+    // --- EDITAR ---
+    if (btn.classList.contains('edit-btn')) {
+        $('#edit-id_produto').value = data.id_produto ?? '';
+        $('#edit-nome').value = data.nome ?? '';
+        $('#edit-preco').value = data.preco_unitario ?? '';
+        $('#edit-categoria').value = data.categoria ?? '';
+        $('#edit-quantidade').value = data.quantidade_atual ?? '';
+        $('#edit-descricao').value = data.descricao ?? '';
+        $('#preview-edit').src = data.imagem_url ? `/TCC/app/${data.imagem_url}` : "/TCC/public/img/img-placeholder.png";
+        $('#edit-valor_compra').value = data.valor_compra ?? '';
+        showModal(modalEdit);
+        return;
+    }
 
-                // 🌟 CORRIGIDO — Caminho absoluto
-                window.location.href = `/TCC/app/controllers/ProdutoController.php?acao=excluir&id=${encodeURIComponent(data.id_produto)}`;
-            }
-            return;
-        }
-
-        if (btn.classList.contains('reposicao-btn')) {
-            $('#rep-id').value = data.id_produto ?? '';
-            $('#rep-nome').textContent = data.nome ?? '';
-            $('#rep-atual').textContent = data.quantidade_atual ?? '-';
-            $('#rep-min').textContent = data.quantidade_minima ?? '-';
-            $('#rep-baixo').textContent = data.quantidade_baixo ?? '-';
-            $('#rep-max').textContent = data.quantidade_maxima ?? '-';
-            $('#rep-quantidade').value = '';
-            $('#rep-fornecedor').value = '';
-            showModal(modalReposicao);
-            return;
-        }
-    });
-}
-
-// FORM: reposição
-const formReposicao = $('#form-reposicao');
-if (formReposicao) {
-    formReposicao.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const idProduto = $('#rep-id').value;
-        const quantidade = $('#rep-quantidade').value;
-        const fornecedor = $('#rep-fornecedor').value;
-
-        if (!idProduto || !quantidade || quantidade <= 0) {
-            alert('Preencha uma quantidade válida.');
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('acao', 'criar');
-        formData.append('id_produto', idProduto);
-        formData.append('quantidade', quantidade);
-        formData.append('fornecedor', fornecedor);
+    // --- EXCLUIR ---
+    if (btn.classList.contains('delete-btn')) {
+        if (!confirm(`Tem certeza que deseja excluir "${data.nome}"?`)) return;
 
         try {
-
-            // 🌟 CORRIGIDO — Caminho absoluto
-           const resp = await fetch(`index.php?pagina=requisicao`, {
-                method: 'POST',
-                body: formData,
-                credentials: 'include'
+            const resp = await fetch(`/TCC/index.php?pagina=produto&acao=excluir&id_produto=${encodeURIComponent(data.id_produto)}`, {
+                method: 'GET',
+                headers: { 'Accept': 'application/json' }
             });
 
-            const text = await resp.text();
-            alert(text);
-            hideModal(modalReposicao);
-            location.reload();
+            const raw = await resp.text();
+            const clean = raw.trim();
+            let json;
+            try { json = JSON.parse(clean); } catch (e) {
+                console.error("Resposta inválida:", raw);
+                alert("O servidor retornou uma resposta inesperada.");
+                return;
+            }
+
+            if (json.sucesso) { alert("Produto excluído com sucesso!"); location.reload(); return; }
+            if (json.temVinculos) {
+                alert(`O produto não pode ser excluído porque possui vínculos:\nChecklists: ${json.detalhes.checklists}\nReposições: ${json.detalhes.reposicoes}`);
+                return;
+            }
+            alert("Não foi possível excluir o produto.");
 
         } catch (err) {
-            console.error('Erro ao criar pedido de reposição:', err);
-            alert('Erro ao criar pedido. Veja console.');
+            console.error(err);
+            alert("Erro de comunicação com o servidor.");
         }
-    });
+
+        return;
+    }
+
+    // --- REPOSIÇÃO ---
+    if (btn.classList.contains('reposicao-btn')) {
+        $('#rep-id').value = data.id_produto ?? '';
+        $('#rep-nome').textContent = data.nome ?? '';
+        $('#rep-atual').textContent = data.quantidade_atual ?? '-';
+        $('#rep-min').textContent = data.quantidade_minima ?? '-';
+        $('#rep-baixo').textContent = data.quantidade_baixo ?? '-';
+        $('#rep-max').textContent = data.quantidade_maxima ?? '-';
+        $('#rep-quantidade').value = '';
+        $('#rep-fornecedor').value = '';
+        showModal(modalReposicao);
+        return;
+    }
+
+    // --- SAÍDA ---
+    if (btn.classList.contains('saida-btn')) {
+    $('#saida-id_produto').value = data.id_produto ?? '';
+    $('#saida-nome').textContent = data.nome ?? '';
+    $('#saida-quantidade-atual').textContent = data.quantidade_atual ?? '';
+    $('#saida-quantidade').value = ''; // limpa o campo de entrada
+    $('#saida-observacao').value = ''; // limpa observação
+    showModal(modalSaida);
+    return;
 }
 
-// ==============================
-// BUSCA / FILTRO / ORDENAÇÃO
-// ==============================
+});
 
-async function buscarProdutos(isOrderChange = false, newSortField = null, newSortOrder = null) {
+// --- FORM SAÍDA ---
+$('#form-saida')?.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const idProduto = $('#saida-id_produto')?.value;
+    const quantidade = $('#saida-quantidade')?.value; // corrigido o ID
+    const observacao = $('#saida-observacao')?.value || '';
+
+    if (!idProduto || !quantidade || quantidade <= 0) {
+        alert("Preencha a quantidade corretamente.");
+        return;
+    }
+
+    const formData = new FormData();
+        formData.append('acao', 'criar_saida');
+        formData.append('id_produto', idProduto);
+        formData.append('quantidade', quantidade);
+        formData.append('observacao', observacao);
+
+
+    try {
+        const resp = await fetch('/TCC/index.php?pagina=produto', { method:'POST', body: formData });
+        const txt = await resp.text();
+        alert(txt || "Solicitação enviada com sucesso.");
+        hideModal(modalSaida);
+        location.reload();
+    } catch (err) {
+        console.error(err);
+        alert("Erro ao enviar solicitação.");
+    }
+});
+
+// --- FORM REPOSIÇÃO ---
+$('#form-reposicao')?.addEventListener('submit', async e => {
+    e.preventDefault();
+    const idProduto = $('#rep-id').value;
+    const quantidade = $('#rep-quantidade').value;
+
+    if (!idProduto || !quantidade || quantidade <= 0) { alert("Preencha a quantidade corretamente."); return; }
+
+    const formData = new FormData();
+    formData.append('acao', 'criar');
+    formData.append('id_produto', idProduto);
+    formData.append('quantidade', quantidade);
+    formData.append('fornecedor', $('#rep-fornecedor').value);
+
+    try {
+        const r = await fetch('/TCC/index.php?pagina=produto', { method: 'POST', body: formData });
+        const txt = await r.text();
+        alert(txt || "Pedido criado com sucesso.");
+        hideModal(modalReposicao);
+        location.reload();
+    } catch (err) {
+        console.error(err);
+        alert("Erro ao criar reposição.");
+    }
+});
+});
+// --- FILTROS E ORDENAÇÃO ---
+async function buscarProdutos(isOrderChange=false, newSortField=null, newSortOrder=null) {
     const filtros = {
         codigo: $('#filtroCodigo')?.value || '',
         nome: $('#filtroNome')?.value || '',
@@ -412,150 +545,102 @@ async function buscarProdutos(isOrderChange = false, newSortField = null, newSor
         acao: 'filtrar'
     };
 
-    let campoOrdenacao = null;
-    let ordem = null;
-
     if (newSortField && newSortOrder && newSortOrder !== 'null') {
-        campoOrdenacao = newSortField;
-        ordem = newSortOrder;
-    } else if (!isOrderChange) {
+        filtros.ordenar_por =
+            newSortField === 'preco' ? 'preco_unitario'
+            : newSortField === 'quantidade' ? 'quantidade_atual'
+            : newSortField;
+        filtros.ordem = newSortOrder;
+    } else {
         const activeSort = document.querySelector('.sort[data-ordem="asc"], .sort[data-ordem="desc"]');
-        if (activeSort) {
-            campoOrdenacao = activeSort.dataset.campo;
-            ordem = activeSort.dataset.ordem;
-        }
-    }
-
-    if (campoOrdenacao) {
-        const dbColumn = campoOrdenacao === 'preco' ? 'preco_unitario' :
-                         campoOrdenacao === 'quantidade' ? 'quantidade_atual' :
-                         campoOrdenacao;
-        filtros.ordenar_por = dbColumn;
-        filtros.ordem = ordem;
+        if (activeSort) { filtros.ordenar_por = activeSort.dataset.campo; filtros.ordem = activeSort.dataset.ordem; }
     }
 
     const params = new URLSearchParams(filtros).toString();
 
     try {
-
-        // 🌟 CORRIGIDO — Caminho absoluto
-        const res = await fetch(`/TCC/app/controllers/ProdutoController.php?${params}`);
+        const res = await fetch(`/TCC/index.php?pagina=produto&${params}`);
         const data = await res.json();
-        atualizarTabela(data);
+        const tbody = $('#tabela-estoque');
 
-    } catch (err) {
-        console.error('Erro na busca (Filtro/Ordenação):', err);
-    }
-}
+        if (!Array.isArray(data) || data.length === 0) { tbody.innerHTML = '<tr><td colspan="7">Nenhum produto encontrado.</td></tr>'; return; }
 
-function atualizarTabela(produtos) {
-    const tbody = $('#tabela-estoque');
-    if (!tbody) return;
+        tbody.innerHTML = '';
 
-    tbody.innerHTML = '';
+        data.forEach(produto => {
+            const ds = {
+                id_produto: produto.id_produto ?? produto.idProdutos_TBL ?? produto.id,
+                codigo_produto: produto.codigo_produto ?? produto.codigo ?? '',
+                nome: produto.nome ?? produto.titulo ?? '',
+                categoria: produto.categoria ?? '',
+                preco_unitario: Number(produto.preco_unitario ?? produto.preco ?? 0),
+                valor_compra: produto.valor_compra ?? 0,
+                quantidade_atual: produto.quantidade_atual ?? 0,
+                quantidade_minima: produto.quantidade_minima ?? null,
+                quantidade_maxima: produto.quantidade_maxima ?? null,
+                quantidade_baixo: produto.quantidade_baixo ?? null,
+                imagem_url: produto.imagem_url ?? null,
+                descricao: produto.descricao ?? ''
+            };
 
-    if (!Array.isArray(produtos) || produtos.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6">Nenhum produto encontrado.</td></tr>';
-        return;
-    }
+            const precoFormatado = ds.preco_unitario.toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
+            const dataJson = htmlspecialchars_js(JSON.stringify(ds));
 
-    produtos.forEach(produto => {
-        const dataset = {
-            id_produto: produto.id_produto ?? produto.idProdutos_TBL ?? produto.id,
-            codigo_produto: produto.codigo_produto ?? produto.codigo ?? '',
-            nome: produto.nome ?? produto.titulo ?? '',
-            categoria: produto.categoria ?? '',
-            preco_unitario: produto.preco_unitario ?? produto.preco ?? 0,
-            valor_compra: produto.valor_compra ?? 0,
-            quantidade_atual: produto.quantidade_atual ?? 0,
-            quantidade_minima: produto.quantidade_minima ?? null,
-            quantidade_maxima: produto.quantidade_maxima ?? null,
-            quantidade_baixo: produto.quantidade_baixo ?? null,
-            imagem_url: produto.imagem_url ?? null,
-            descricao: produto.descricao ?? ''
-        };
+            let botoes = '';
+            if (USER_LEVEL === 'operario') {
+                botoes = `<button class="reposicao-btn" title="Repor"><span class="material-symbols-outlined">inventory_2</span></button>`;
+            } else if (['supervisor','gerente','diretor'].includes(USER_LEVEL)) {
+                botoes = `
+                    <button class="edit-btn" title="Editar"><span class="material-symbols-outlined">edit</span></button>
+                    <button class="delete-btn" title="Excluir"><span class="material-symbols-outlined">delete</span></button>
+                    <button class="reposicao-btn" title="Repor"><span class="material-symbols-outlined">inventory_2</span></button>
+                `;
+            }
+            if (SETOR_VENDAS) {
+                botoes += `<button class="saida-btn" title="Registrar saída"><span class="material-symbols-outlined">logout</span></button>`;
+            }
 
-        const dataJson = htmlspecialchars_js(JSON.stringify(dataset));
-        const precoFormatado = (dataset.preco_unitario || 0).toLocaleString('pt-BR', { 
-            style: 'currency', currency: 'BRL' 
+            tbody.insertAdjacentHTML('beforeend', `
+                <tr data-produto='${dataJson}'>
+                    <td>${escapeHtml(ds.codigo_produto)}</td>
+                    <td>${escapeHtml(ds.nome)}</td>
+                    <td>${escapeHtml(ds.categoria)}</td>
+                    <td>${precoFormatado}</td>
+                    <td>${(ds.valor_compra||0).toLocaleString('pt-BR',{style:'currency', currency:'BRL'})}</td>
+                    <td>${ds.quantidade_atual}</td>
+                    <td>${botoes}</td>
+                </tr>
+            `);
         });
 
-        tbody.insertAdjacentHTML('beforeend', `
-            <tr data-produto='${dataJson}'>
-                <td>${escapeHtml(dataset.codigo_produto)}</td>
-                <td>${escapeHtml(dataset.nome)}</td>
-                <td>${escapeHtml(dataset.categoria)}</td>
-                <td>${precoFormatado}</td>
-                 <td>${(dataset.valor_compra || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
-                <td>${dataset.quantidade_atual}</td>
-                <td>
-                    <button class="edit-btn" type="button" title="Editar">✏️</button>
-                    <button class="delete-btn" type="button" title="Excluir">🗑️</button>
-                    <button class="reposicao-btn" type="button" title="Repor">📦</button>
-                </td>
-            </tr>
-        `);
-    });
-}
-
-function escapeHtml(str) {
-    if (str === null || str === undefined) return '';
-    return String(str)
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;')
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#039;');
-}
-
-function htmlspecialchars_js(s) {
-    return escapeHtml(s)
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#039;');
+    } catch (err) {
+        console.error("Erro buscarProdutos", err);
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     ['filtroCodigo','filtroNome','filtroCategoria','filtroPreco','filtroQuantidade'].forEach(id => {
         const el = document.getElementById(id);
-        if (el) {
-            el.addEventListener('input', () => buscarProdutos(false));
-            el.addEventListener('change', () => buscarProdutos(false));
-        }
+        if (el) { el.addEventListener('input', () => buscarProdutos(false)); el.addEventListener('change', () => buscarProdutos(false)); }
     });
 
     document.querySelectorAll('.sort').forEach(s => {
-        s.addEventListener('click', function() {
+        s.addEventListener('click', function () {
             const campoAtual = this.dataset.campo;
-            let ordemAtual = this.dataset.ordem || 'null';
-
-            let proximaOrdem, proximoSimbolo;
-
-            if (ordemAtual === 'null' || ordemAtual === 'desc') {
-                proximaOrdem = 'asc'; 
-                proximoSimbolo = '▲';
-            } else {
-                proximaOrdem = 'desc'; 
-                proximoSimbolo = '▼';
-            }
-
-            document.querySelectorAll('.sort').forEach(x => {
-                if (x !== this) { 
-                    x.dataset.ordem = 'null'; 
-                    x.textContent = '↕'; 
-                }
-            });
-
-            this.dataset.ordem = proximaOrdem;
-            this.textContent = proximoSimbolo;
-
-            buscarProdutos(true, campoAtual, proximaOrdem);
+            const ordemAtual = this.dataset.ordem || 'null';
+            const proxima = (ordemAtual === 'null' || ordemAtual === 'desc') ? 'asc' : 'desc';
+            const simbolo = proxima === 'asc' ? '▲' : '▼';
+            document.querySelectorAll('.sort').forEach(x => { if (x !== this) { x.dataset.ordem = 'null'; x.textContent = '↕'; } });
+            this.dataset.ordem = proxima;
+            this.textContent = simbolo;
+            buscarProdutos(true, campoAtual, proxima);
         });
     });
 });
-
 </script>
 
 
 
 </body>
 </html>
+

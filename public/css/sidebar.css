@@ -1,21 +1,18 @@
 /* ===== Sidebar ===== */
 .sidebar {
-    width: 15%;
-    background-color: #fff;  /* branco */
-    max-height: 100vh;
+    width: 200px; /* MENOR */
+    background: #ffffff;
+    color: #bdbdbd;
+    height: 112vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    box-shadow: 3px 0 20px rgba(0,0,0,0.08);
-    padding: 1rem;
-    align-items: center;
-    border-right: 1px solid #eee;
+    padding: 30px;
 }
 
 /* ===== Logo ===== */
-.sidebar-logo {
-    text-align: center;
-    margin-bottom: 2rem;
+.sidebar-logo img {
+    width: 140px;
+    cursor: pointer;
 }
 
 .sidebar-logo img {
@@ -32,8 +29,8 @@
 
 .menu-btn {
     padding: 0.9rem 1.5rem;
-    color: #374151;
-    background-color: #e7e7e7;
+    color: #7e7e7e;
+    background-color: transparent;
     text-decoration: none;
     border-radius: 14px;
     font-weight: 600;
@@ -41,23 +38,41 @@
     margin-bottom: 10px;
     min-width: 140px;
     text-align: center;
+    display: block;
 }
 
 .menu-btn:hover {
-    background-color: #a31d1c;
+    background-color: #01aad4;
     color: #fff;
     transform: translateY(-2px);
 }
 
+/* ACTIVE correto */
+.menu-btn.active,
+.menu-btn[href*="<?php echo $_GET['pagina'] ?? '' ?>"] {
+    background: #4AA3FF !important;
+    color: #0A1A2F !important;
+    font-weight: 600;
+}
+
+/* DIVISÓRIAS tipo YouTube */
+.menu-section {
+    border-top: 1px solid #ccc; /* cinza suave */
+    margin: 10px 0;
+    padding-top: 10px;
+}
+
 /* ===== Botão vermelho ===== */
 .sidebar-bottom {
-    padding: 1rem 1.5rem;
+    padding: 1rem 0; /* remove o padding lateral */
+    display: flex;
+    justify-content: center; /* centraliza horizontalmente */
 }
 
 .logout-btn {
-    padding: 0.9rem 1.5rem;
-    background-color: #a31d1c;
-    color: #fff;
+   
+    background-color: transparent; /* removido */
+    color: #a31d1c; /* vermelho */
     text-align: center;
     border-radius: 14px;
     text-decoration: none;
@@ -66,8 +81,9 @@
 }
 
 .logout-btn:hover {
-    background-color: #741212;
+    color: white;
     transform: translateY(-2px);
+    background-color: #a31d1c;
 }
 
 /* Header da sidebar (logo + botão) */
@@ -84,7 +100,7 @@
 /* 🔔 BOTÃO DO SINO BRABO */
 /* ========================================= */
 .btn-alertas {
-    background: #8f1919;
+    background: #01aad4;
     color: #fff;
     padding: 10px 14px;
     font-size: 20px;
@@ -95,14 +111,15 @@
     align-items: center;
     gap: 8px;
     transition: 0.22s ease;
-    box-shadow: 0 6px 15px rgba(76, 121, 255, 0.3);
+    box-shadow: 0 6px 15px rgba(1, 170, 212, 0.3);
 }
 
 .btn-alertas:hover {
-    background: #cc3636;
+    background: #0188ab; /* azul mais escuro */
     transform: translateY(-3px);
-    box-shadow: 0 10px 22px rgba(76, 121, 255, 0.4);
+    box-shadow: 0 10px 22px rgba(1, 170, 212, 0.4);
 }
+
 
 /* Badge */
 .badge {
@@ -153,7 +170,7 @@
 
 /* Header */
 .alertas-header {
-    background: linear-gradient(135deg, #7a0c0c, #c42222);
+    background: linear-gradient(135deg, #0188ab, #01aad4);
     padding: 14px 18px;
     color: #fff;
     border-radius: 18px 18px 0 0;
@@ -187,7 +204,7 @@
 /* ========================================= */
 .alerta-card {
     background: #ffffffcc;
-    border-left: 5px solid #8f1919;
+    border-left: 5px solid #01aad4;
     padding: 14px;
     border-radius: 12px;
     margin-bottom: 12px;
@@ -200,7 +217,7 @@
 }
 
 .alerta-card:hover {
-    background: #f3f6ff;
+    background: #e9f9ff; /* blue-ish hover */
     transform: translateX(8px);
     box-shadow: 0 6px 18px rgba(0,0,0,0.07);
 }
@@ -227,7 +244,7 @@
 
 .botao-visto {
   margin-left: auto;
-  background: #8f1919;
+  background: #0188ab;
   color: #fff;
   border: none;
   padding: 10px 0;               /* mais alto */
@@ -244,7 +261,7 @@
 }
 
 .botao-visto:hover {
-  background: #cc3636;
+  background: #01aad4;
   transform: translateY(-2px);
 }
 

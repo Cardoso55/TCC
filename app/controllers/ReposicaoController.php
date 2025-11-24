@@ -4,10 +4,10 @@ class ReposicaoController
     public static function confirmarPedido($id_pedido)
     {
         require_once 'app/models/CompraModel.php';
-        require_once 'app/models/ReposicaoModel.php';
+        require_once 'app/models/PedidoReposicaoModel.php';
 
         // 1. Buscar dados do pedido
-        $pedido = ReposicaoModel::buscarPorId($id_pedido);
+        $pedido = PedidoReposicaoModel::buscarPorId($id_pedido);
 
         if (!$pedido) {
             die("Pedido não encontrado");
@@ -26,7 +26,7 @@ class ReposicaoController
         CompraModel::vincularPedidosACompra($id_compra, $id_pedido);
 
         // 4. Atualizar status do pedido para “Confirmado”
-        ReposicaoModel::atualizarStatus($id_pedido, "Confirmado");
+        PedidoReposicaoModel::atualizarStatus($id_pedido, "Confirmado");
 
         return $id_compra;
     }

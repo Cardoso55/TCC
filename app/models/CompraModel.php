@@ -146,25 +146,28 @@ class CompraModel
        6. ATUALIZAR VALOR TOTAL DA COMPRA
           -> soma apenas itens confirmados
     =============================== */
-    public static function atualizarValorTotal($id_compra)
-    {
-        $db = conectarBanco();
+   public static function atualizarValorTotal($id_compra)
+        {
+            $db = conectarBanco();
 
-        $sql = "UPDATE compras_tbl c
-                JOIN (
-                    SELECT 
-                        id_compra, 
-                        SUM(quantidade * valor_unitario) AS total_confirmado
-                    FROM pedidosreposicao_tbl
-                    WHERE status = 'confirmado'
-                    AND id_compra = ?
-                ) t ON c.id_compra = t.id_compra
-                SET c.valor_total = IFNULL(t.total_confirmado, 0)";
+            $sql = "UPDATE compras_tbl c
+                    JOIN (
+                        SELECT pr.id_compra, SUM(pr.quantidade * p.valor_compra) AS total_confirmado
+                        FROM pedidosreposicao_tbl pr
+                        JOIN produtos_tbl p ON pr.id_produto = p.id_produto
+                        WHERE pr.status = 'confirmado'
+                        AND pr.id_compra = ?
+                        GROUP BY pr.id_compra
+                    ) t ON c.id_compra = t.id_compra
+                    SET c.valor_total = IFNULL(t.total_confirmado, 0)";
 
-        $stmt = $db->prepare($sql);
-        $stmt->bind_param("i", $id_compra);
-        return $stmt->execute();
-    }
+            $stmt = $db->prepare($sql);
+            $stmt->bind_param("i", $id_compra);
+
+            return $stmt->execute();
+        }
+
+
     /* ===============================
     7. ATUALIZAR STATUS DA COMPRA
     =============================== */

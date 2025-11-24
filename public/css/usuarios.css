@@ -283,5 +283,32 @@
 .cancel:hover {
     background: #e0e0e0;
 }
+.password-requirements p {
+    margin: 2px 0;
+    color: #888; /* cinza padrão */
+    font-weight: bold;
+}
+
+.password-requirements .invalid {
+    color: red;
+}
+
+.password-requirements .valid {
+    color: green;
+}
+
+button:disabled {
+    background-color: #ccc !important;
+    cursor: not-allowed !important;
+    opacity: 0.6;
+}
+.feedback {
+    margin-top: 10px;
+    font-weight: bold;
+}
+.feedback.success { color: green; }
+.feedback.error { color: red; }
+
+
 
 

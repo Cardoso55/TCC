@@ -1,109 +1,116 @@
 <?php
+
+require_once __DIR__ . '/../models/PedidoReposicaoModel.php';
 require_once __DIR__ . '/../models/ProdutoModel.php';
 
-class ProdutoController {
-
-    public static function listarProdutos() {
+class ProdutoController
+{
+    // LISTAGEM ============================================================
+    public static function listarProdutos()
+    {
         return ProdutoModel::buscarComEstoque();
     }
 
-    public static function cadastrarProduto($dados, $arquivo) {
+    // CADASTRO =============================================================
+    public static function cadastrarProduto($dados, $arquivo)
+    {
         return ProdutoModel::salvar($dados, $arquivo);
     }
 
-    public static function editarProduto($dados, $arquivo) {
+    // EDIÇÃO ==============================================================
+    public static function editarProduto($dados, $arquivo)
+    {
         return ProdutoModel::editar($dados, $arquivo);
     }
 
-   public static function excluirProduto($id) {
-    // primeiro apaga os pedidos de reposição relacionados
-    ProdutoModel::excluirPedidosReposicaoDoProduto($id);
-    // depois apaga o produto
-    return ProdutoModel::excluir($id);
-}
+    // EXCLUSÃO ============================================================
+    public static function excluirProduto($id_produto)
+    {
+        $vinculos = ProdutoModel::verificarVinculos($id_produto);
 
+        // Checa se a chave existe e se há vínculos
+        if (!empty($vinculos['temVinculos'])) {
+            return [
+                'sucesso' => false,
+                'temVinculos' => true,
+                'detalhes' => $vinculos['detalhes'] ?? []
+            ];
+        }
 
-    // no ProdutoModel.php
-public static function criarReposicao($dados) {
-    $db = conectarBanco();
+        // Se não houver vínculos, exclui normalmente
+        ProdutoModel::excluir($id_produto);
 
-    $id_produto = (int)($dados['id_produto'] ?? 0);
-    $quantidade = (int)($dados['quantidade'] ?? 0);
-    $fornecedor = $db->real_escape_string($dados['fornecedor'] ?? '');
-
-    if ($id_produto <= 0 || $quantidade <= 0) {
-        return false;
+        return ['sucesso' => true];
     }
 
-    $stmt = $db->prepare("INSERT INTO pedidosreposicao_tbl (id_produto, quantidade, fornecedor, data_pedido) VALUES (?, ?, ?, NOW())");
-    $stmt->bind_param("iis", $id_produto, $quantidade, $fornecedor);
-    $stmt->execute();
-    $stmt->close();
-    $db->close();
-
-    return true;
-}
-
-
-    public static function filtrarAjax($filtros) {
-        return ProdutoModel::buscarFiltradoComOrdenacao($filtros);
+    public static function confirmarExclusao($id_produto)
+    {
+        ProdutoModel::deletarProdutoCascata($id_produto);
+        return ['sucesso' => true];
     }
 
-}
+    // CRIAR REPOSIÇÃO =====================================================
+    public static function criarReposicao($dados)
+    {
+        if (session_status() === PHP_SESSION_NONE) session_start();
 
-// ------------------ ROTEAMENTO ------------------
+        $idUsuario = $_SESSION['user_id'] ?? null;
+        $cargo = $_SESSION['user_level'] ?? null;
 
-// POST
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $acao = $_POST['acao'] ?? null;
+        if (!$idUsuario) {
+            throw new Exception("Usuário não autenticado.");
+        }
 
-    switch($acao) {
-        case 'cadastrar':
-            ProdutoController::cadastrarProduto($_POST, $_FILES);
-            header('Location: ../views/estoque.php');
-            exit;
+        // Dados necessários
+        $idProduto = intval($dados['id_produto'] ?? 0);
+        $quantidade = intval($dados['quantidade'] ?? 0);
+        $descricao  = trim($dados['descricao'] ?? '');
+        $fornecedor = trim($dados['fornecedor'] ?? '');
 
-        case 'editar':
-            ProdutoController::editarProduto($_POST, $_FILES);
-            header('Location: ../views/estoque.php');
-            exit;
+        return PedidoReposicaoModel::criarPedido(
+            $idProduto,
+            $quantidade,
+            $fornecedor,
+            $cargo,
+            $idUsuario
+        );
 
-        case 'excluir':
-            ProdutoController::excluirProduto($_POST['id_produto'] ?? 0);
-            header('Location: ../views/estoque.php');
-            exit;
-
-        case 'criar':
-            ProdutoController::criarReposicao($_POST);
-            echo "Pedido de reposição enviado com sucesso!";
-            exit;
-
-        default:
-            echo "Ação inválida.";
-            exit;
     }
-}
 
-// GET
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['acao'])) {
-    $acao = $_GET['acao'];
+    // SAÍDA ================================================================
+    public static function criarPedidoSaida(array $dados)
+    {
+        if (session_status() === PHP_SESSION_NONE) session_start();
 
-    switch($acao) {
-        case 'filtrar':
-        case 'ordenar':
-            $produtos = ProdutoController::filtrarAjax($_GET);
-            header('Content-Type: application/json');
-            echo json_encode($produtos);
-            exit;
+        $idProduto   = intval($dados['id_produto'] ?? 0);
+        $quantidade  = intval($dados['quantidade'] ?? 0);
+        $observacao  = trim($dados['observacao'] ?? '');
 
-        case 'excluir':
-            ProdutoController::excluirProduto($_GET['id'] ?? 0);
-            header('Location: ../views/estoque.php');
-            exit;
+        if (!$idProduto || !$quantidade) {
+            throw new Exception("Produto e quantidade são obrigatórios.");
+        }
 
-        default:
-            echo "Ação inválida.";
-            exit;
+        $idUsuario = $_SESSION['user_id'] ?? null;
+        if (!$idUsuario) {
+            throw new Exception("Usuário não autenticado.");
+        }
+
+        $pdo = Conexao::getInstance();
+        $sql = "INSERT INTO pedidossaida_tbl 
+                (id_produto, id_usuario_solicitante, quantidade, status, origem, observacao, data_pedido, data_atualizacao)
+                VALUES (:id_produto, :id_usuario, :quantidade, 'pendente', 'interno', :observacao, NOW(), NOW())";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':id_produto', $idProduto, PDO::PARAM_INT);
+        $stmt->bindValue(':id_usuario', $idUsuario, PDO::PARAM_INT);
+        $stmt->bindValue(':quantidade', $quantidade, PDO::PARAM_INT);
+        $stmt->bindValue(':observacao', $observacao, PDO::PARAM_STR);
+
+        if (!$stmt->execute()) {
+            throw new Exception("Falha ao criar pedido de saída.");
+        }
+
+        return true;
     }
 }
 
