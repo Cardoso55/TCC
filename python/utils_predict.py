@@ -18,7 +18,7 @@ def get_produtos():
         conn.close()
         return produtos
     except Exception as e:
-        print("❌ Erro ao buscar produtos:", e)
+        print("Erro ao buscar produtos:", e)
         return []
 
 # ============================
@@ -36,7 +36,7 @@ def get_historico_vendas():
         conn.close()
         return df
     except Exception as e:
-        print("❌ Erro ao buscar histórico de vendas:", e)
+        print("Erro ao buscar histórico de vendas:", e)
         return pd.DataFrame(columns=['id_produto', 'data', 'quantidade'])
 
 # ============================
@@ -50,9 +50,9 @@ def limpar_previsoes():
         conn.commit()
         cursor.close()
         conn.close()
-        print("🗑️ Todas as previsões antigas foram removidas")
+        print("Todas as previsões antigas foram removidas")
     except Exception as e:
-        print("❌ Erro ao limpar previsões:", e)
+        print("Erro ao limpar previsões:", e)
 
 # ============================
 # INSERIR PREVISÃO NO BANCO
@@ -88,9 +88,9 @@ def inserir_previsao(df_previsao, tipo_previsao="diario"):
         conn.commit()
         cursor.close()
         conn.close()
-        print(f"✅ Previsão {tipo_previsao} inserida no banco")
+        print(f"Previsão {tipo_previsao} inserida no banco")
     except Exception as e:
-        print("❌ Erro ao inserir previsões:", e)
+        print("Erro ao inserir previsões:", e)
 
 # ============================
 # CARREGAR MODELO
@@ -99,7 +99,7 @@ def carregar_modelo(caminho_modelo="modelo/modelo_demanda.pkl"):
     try:
         return joblib.load(caminho_modelo)
     except Exception as e:
-        print("❌ Erro ao carregar modelo:", e)
+        print("Erro ao carregar modelo:", e)
         return None
 
 # ============================

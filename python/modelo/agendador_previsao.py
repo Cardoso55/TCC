@@ -1,15 +1,17 @@
-# python/agendador_previsao.py
 import subprocess
 from datetime import datetime
+import os
 
 def rodar_script(caminho_script):
     try:
-        print(f"\n🚀 Rodando script: {caminho_script} | {datetime.now()}")
+        print(f"\nRodando script: {caminho_script} | {datetime.now()}")
         subprocess.run(["python", caminho_script], check=True)
-        print(f"✅ Script {caminho_script} finalizado com sucesso!")
+        print(f"Script {caminho_script} finalizado com sucesso!")
     except subprocess.CalledProcessError as e:
-        print(f"❌ Erro ao rodar {caminho_script}: {e}")
+        print(f"Erro ao rodar {caminho_script}: {e}")
 
 if __name__ == "__main__":
-    # Rodar apenas o novo script de previsões
-    rodar_script("modelo/predict_previsoes.py")
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    predict_script = os.path.join(BASE_DIR, "predict_previsoes.py")
+
+    rodar_script(predict_script)

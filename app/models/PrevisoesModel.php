@@ -1,5 +1,5 @@
 <?php
-require_once 'app/database/conexao.php';
+require_once __DIR__ . "/../database/conexao.php";
 
 class PrevisoesModel{
     public function getUltimasPrevisoes() {

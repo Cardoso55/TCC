@@ -1,0 +1,784 @@
+Python 3.13.1
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py", line 15, in <module>
+    rodar_script("modelo/predict_previsoes.py")
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py", line 7, in rodar_script
+    print(f"\n\U0001f680 Rodando script: {caminho_script} | {datetime.now()}")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\U0001f680' in position 2: character maps to <undefined>
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+python: can't open file 'C:\\laragon\\www\\TCC\\app\\controllers\\modelo\\predict_previsoes.py': [Errno 2] No such file or directory
+
+ Rodando script: modelo/predict_previsoes.py | 2025-11-22 11:39:51.084456
+ Erro ao rodar modelo/predict_previsoes.py: Command '['python', 'modelo/predict_previsoes.py']' returned non-zero exit status 2.
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\modelo\predict_previsoes.py", line 23, in <module>
+    print("\U0001f9f9 Limpando previsões antigas...")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\U0001f9f9' in position 0: character maps to <undefined>
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 11:41:08.996742
+Erro ao rodar C:\laragon\www\TCC\python\modelo\predict_previsoes.py: Command '['python', 'C:\\laragon\\www\\TCC\\python\\modelo\\predict_previsoes.py']' returned non-zero exit status 1.
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\utils_predict.py", line 53, in limpar_previsoes
+    print("\U0001f5d1\ufe0f Todas as previsões antigas foram removidas")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 0-1: character maps to <undefined>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\modelo\predict_previsoes.py", line 24, in <module>
+    limpar_previsoes()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\utils_predict.py", line 55, in limpar_previsoes
+    print("\u274c Erro ao limpar previsões:", e)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u274c' in position 0: character maps to <undefined>
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 11:42:48.990383
+Erro ao rodar C:\laragon\www\TCC\python\modelo\predict_previsoes.py: Command '['python', 'C:\\laragon\\www\\TCC\\python\\modelo\\predict_previsoes.py']' returned non-zero exit status 1.
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\utils_predict.py", line 53, in limpar_previsoes
+    print("\U0001f5d1\ufe0f Todas as previsões antigas foram removidas")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 0-1: character maps to <undefined>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\modelo\predict_previsoes.py", line 24, in <module>
+    limpar_previsoes()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\utils_predict.py", line 55, in limpar_previsoes
+    print("\u274c Erro ao limpar previsões:", e)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u274c' in position 0: character maps to <undefined>
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 11:43:43.853373
+Erro ao rodar C:\laragon\www\TCC\python\modelo\predict_previsoes.py: Command '['python', 'C:\\laragon\\www\\TCC\\python\\modelo\\predict_previsoes.py']' returned non-zero exit status 1.
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 11:44:58.286949
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 11:45:06.456047
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 11:45:34.821245
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 11:47:03.477473
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 11:47:08.321118
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 11:47:59.588227
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 11:48:19.580212
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 12:38:55.082573
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 12:40:53.881879
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 12:42:17.235696
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 12:43:02.440369
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 12:43:47.725535
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 12:51:19.894967
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 12:52:30.118438
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 12:55:00.981014
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 12:57:00.804576
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 12:59:45.099535
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 13:00:38.112035
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 13:01:09.098592
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 13:02:50.220686
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 13:02:54.457911
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 13:10:32.923742
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 13:11:20.700426
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 13:12:09.883276
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 13:15:45.706726
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 13:17:42.052017
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Erro ao limpar previsões: 'Engine' object has no attribute 'cursor'
+Carregando histórico de vendas e produtos...
+Erro ao buscar histórico de vendas: 'Engine' object has no attribute 'cursor'
+Erro ao buscar produtos: 'Engine' object has no attribute 'cursor'
+Sem dados suficientes para gerar previsões.
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 13:39:05.463988
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Erro ao limpar previsões: 'Engine' object has no attribute 'cursor'
+Carregando histórico de vendas e produtos...
+Erro ao buscar histórico de vendas: 'Engine' object has no attribute 'cursor'
+Erro ao buscar produtos: 'Engine' object has no attribute 'cursor'
+Sem dados suficientes para gerar previsões.
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 13:39:08.041635
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Erro ao limpar previsões: 'Engine' object has no attribute 'cursor'
+Carregando histórico de vendas e produtos...
+Erro ao buscar histórico de vendas: 'Engine' object has no attribute 'cursor'
+Erro ao buscar produtos: 'Engine' object has no attribute 'cursor'
+Sem dados suficientes para gerar previsões.
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 13:39:14.010341
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 13:40:02.048472
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 13:40:06.561425
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 13:44:24.520959
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 13:46:31.615794
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 15:13:09.148531
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 15:18:32.852533
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 15:20:18.222363
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 15:20:28.165480
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 16:41:49.732685
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 16:48:09.798958
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 18:52:49.392846
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+Limpando previsões antigas...
+Todas as previsões antigas foram removidas
+Carregando histórico de vendas e produtos...
+Gerando previsões: diario
+Previsão diario inserida no banco
+Gerando previsões: semanal
+Previsão semanal inserida no banco
+Gerando previsões: mensal
+Previsão mensal inserida no banco
+Todas as previsões master geradas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-22 18:52:51.987798
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+

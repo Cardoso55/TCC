@@ -9,6 +9,7 @@ $conn = conectarBanco();
 
 $pedidos = RequisicaoController::listar();
 
+
 ?>
 
 <!DOCTYPE html>
@@ -20,6 +21,24 @@ $pedidos = RequisicaoController::listar();
   <link rel="stylesheet" href="/TCC/public/css/reset.css">
   <link rel="stylesheet" href="/TCC/public/css/sidebar.css">
   <link rel="stylesheet" href="/TCC/public/css/reposicoes.css">
+  <style>
+    .gerar-btn {
+      background: linear-gradient(135deg, #4c79ff, #6b8bff);
+      color: white;
+      padding: 12px 22px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-bottom: 20px;
+      transition: 0.2s ease-in-out;
+    }
+
+    .gerar-btn:hover {
+      opacity: 0.85;
+      transform: scale(1.03);
+    }
+  </style>
 </head>
 <body>
 
@@ -32,6 +51,10 @@ $pedidos = RequisicaoController::listar();
     <main class="main-content">
 
       <h1 class="title">Pedidos de Reposição</h1>
+      <button id="gerar-decisoes-btn" class="gerar-btn">
+        🔮 Gerar Decisões da IA
+      </button>
+
 
       <section class="tabela-container">
         <h2 class="subtitle">Pedidos em Aberto</h2>
@@ -43,9 +66,9 @@ $pedidos = RequisicaoController::listar();
       <th>Solicitante</th>
       <th>Solicitação em</th>
       <th>Produto</th>
-      <th>Quantidade Atual</th>
+      <th>Quantidade a Repor</th>
       <th>Status</th>
-      <th>Gerado pela IA</th> <!-- nova coluna -->
+      <th>Gerado pela IA</th>
       <th>Ações</th>
     </tr>
   </thead>
@@ -59,7 +82,7 @@ $pedidos = RequisicaoController::listar();
         <td>Estoque</td>
         <td><?= date("d/m/Y H:i", strtotime($p['data_pedido'])) ?></td>
         <td><?= htmlspecialchars($p['nome']) ?></td>
-        <td><?= htmlspecialchars($p['quantidade_estoque'] ?? 0) ?></td>
+        <td><?= htmlspecialchars($p['quantidade_pedida'] ?? 0) ?></td>
         <td>
           <span class="status <?= htmlspecialchars($p['status'] ?? 'nao-definido') ?>">
               <?= ucfirst($p['status'] ?? 'N/A') ?>
@@ -138,5 +161,25 @@ document.addEventListener('click', async (e) => {
     }
 });
 </script>
+<script>
+document.getElementById('gerar-decisoes-btn').addEventListener('click', async () => {
+    if (!confirm("Deseja gerar novas decisões de reposição usando a IA?")) return;
+
+    try {
+        const resp = await fetch('/TCC/python/rerun_replenishment.php');
+        const texto = await resp.text();
+
+        alert(texto);
+
+        // recarrega a página automaticamente
+        setTimeout(() => location.reload(), 800);
+
+    } catch (error) {
+        console.error(error);
+        alert("Erro ao gerar decisões da IA.");
+    }
+});
+</script>
+
 </body>
 </html>

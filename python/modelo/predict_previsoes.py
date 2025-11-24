@@ -20,18 +20,18 @@ import calendar
 # ============================
 # LIMPAR PREVISÕES ANTIGAS
 # ============================
-print("🧹 Limpando previsões antigas...")
+print("Limpando previsões antigas...")
 limpar_previsoes()
 
 # ============================
 # CARREGAR HISTÓRICO DE VENDAS
 # ============================
-print("📦 Carregando histórico de vendas e produtos...")
+print("Carregando histórico de vendas e produtos...")
 df_vendas = get_historico_vendas()
 produtos = get_produtos()
 
 if df_vendas.empty or not produtos:
-    print("❌ Sem dados suficientes para gerar previsões.")
+    print("Sem dados suficientes para gerar previsões.")
     exit()
 
 # ============================
@@ -57,7 +57,7 @@ def proxima_data(tipo):
 tipos = ["diario", "semanal", "mensal"]
 
 for tipo in tipos:
-    print(f"⚡ Gerando previsões: {tipo}")
+    print(f"Gerando previsões: {tipo}")
 
     # Preparar features (última linha de cada produto)
     df_features = preparar_features(df_vendas)
@@ -79,4 +79,4 @@ for tipo in tipos:
     # Inserir previsão no banco
     inserir_previsao(df_features, tipo_previsao=tipo)
 
-print("🚀 Todas as previsões master geradas com sucesso!")
+print("Todas as previsões master geradas com sucesso!")

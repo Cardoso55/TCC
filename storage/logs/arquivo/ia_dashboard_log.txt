@@ -1,0 +1,840 @@
+[2025-11-22 15:52:37]
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 232, in <module>
+    main()  # continua rodando o resto do main
+    ~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 200, in main
+    from utils.db import conectar_engine
+ImportError: cannot import name 'conectar_engine' from 'utils.db' (C:\laragon\www\TCC\python\utils\db.py)
+
+
+[2025-11-22 19:44:05]
+C:\laragon\www\TCC\python\ia_main.py:13: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:25: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql(query, engine, parse_dates=["validade"])
+Alertas gerados: 5
+CRITICO: Produto vencido: Redmi Buds 6 Lite — validade 2025-11-19
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+CRITICO: Produto vencido: Detergente — validade 2025-11-19
+CRITICO: Produto vencido: Sabão em Pó — validade 2025-11-17
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-06
+
+
+[2025-11-22 20:26:44]
+C:\laragon\www\TCC\python\ia_main.py:13: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:25: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql(query, engine, parse_dates=["validade"])
+Alertas gerados: 2
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+
+
+[2025-11-22 20:32:30]
+C:\laragon\www\TCC\python\ia_main.py:17: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:28: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql(query, engine, parse_dates=["validade"])
+Traceback (most recent call last):
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'nome_produto'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 118, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 101, in executar_alertas
+    alertas_estoque_baixo = gerar_alertas_estoque_baixo(estoque_df)
+  File "C:\laragon\www\TCC\python\ia_main.py", line 68, in gerar_alertas_estoque_baixo
+    'mensagem': f"Estoque baixo: {row['nome_produto']} — atual {row['quantidade_atual']}, mínimo {row['quantidade_minima']}",
+                                  ~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\series.py", line 1121, in __getitem__
+    return self._get_value(key)
+           ~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\series.py", line 1237, in _get_value
+    loc = self.index.get_loc(label)
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'nome_produto'
+
+
+[2025-11-22 20:41:51]
+C:\laragon\www\TCC\python\ia_main.py:17: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:28: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql(query, engine, parse_dates=["validade"])
+Traceback (most recent call last):
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'nome_produto'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 118, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 101, in executar_alertas
+    alertas_estoque_baixo = gerar_alertas_estoque_baixo(estoque_df)
+  File "C:\laragon\www\TCC\python\ia_main.py", line 68, in gerar_alertas_estoque_baixo
+    'mensagem': f"Estoque baixo: {row['nome_produto']} — atual {row['quantidade_atual']}, mínimo {row['quantidade_minima']}",
+                                  ~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\series.py", line 1121, in __getitem__
+    return self._get_value(key)
+           ~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\series.py", line 1237, in _get_value
+    loc = self.index.get_loc(label)
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'nome_produto'
+
+
+[2025-11-22 20:42:18]
+C:\laragon\www\TCC\python\ia_main.py:17: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:28: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql(query, engine, parse_dates=["validade"])
+Traceback (most recent call last):
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'nome_produto'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 118, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 101, in executar_alertas
+    alertas_estoque_baixo = gerar_alertas_estoque_baixo(estoque_df)
+  File "C:\laragon\www\TCC\python\ia_main.py", line 68, in gerar_alertas_estoque_baixo
+    'mensagem': f"Estoque baixo: {row['nome_produto']} — atual {row['quantidade_atual']}, mínimo {row['quantidade_minima']}",
+                                  ~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\series.py", line 1121, in __getitem__
+    return self._get_value(key)
+           ~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\series.py", line 1237, in _get_value
+    loc = self.index.get_loc(label)
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'nome_produto'
+
+
+[2025-11-22 20:42:44]
+C:\laragon\www\TCC\python\ia_main.py:17: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:28: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql(query, engine, parse_dates=["validade"])
+Traceback (most recent call last):
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'nome'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 118, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 101, in executar_alertas
+    alertas_estoque_baixo = gerar_alertas_estoque_baixo(estoque_df)
+  File "C:\laragon\www\TCC\python\ia_main.py", line 68, in gerar_alertas_estoque_baixo
+    'mensagem': f"Estoque baixo: {row['nome']} — atual {row['quantidade_atual']}, mínimo {row['quantidade_minima']}",
+                                  ~~~^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\series.py", line 1121, in __getitem__
+    return self._get_value(key)
+           ~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\series.py", line 1237, in _get_value
+    loc = self.index.get_loc(label)
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'nome'
+
+
+[2025-11-22 20:45:32]
+C:\laragon\www\TCC\python\ia_main.py:17: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:28: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql(query, engine, parse_dates=["validade"])
+Traceback (most recent call last):
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'nome_produto'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 118, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 101, in executar_alertas
+    alertas_estoque_baixo = gerar_alertas_estoque_baixo(estoque_df)
+  File "C:\laragon\www\TCC\python\ia_main.py", line 68, in gerar_alertas_estoque_baixo
+    'mensagem': f"Estoque baixo: {row['nome_produto']} — atual {row['quantidade_atual']}, mínimo {row['quantidade_minima']}",
+                                  ~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\series.py", line 1121, in __getitem__
+    return self._get_value(key)
+           ~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\series.py", line 1237, in _get_value
+    loc = self.index.get_loc(label)
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'nome_produto'
+
+
+[2025-11-22 20:46:43]
+C:\laragon\www\TCC\python\ia_main.py:17: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:28: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql(query, engine, parse_dates=["validade"])
+Traceback (most recent call last):
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'nome'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 118, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 101, in executar_alertas
+    alertas_estoque_baixo = gerar_alertas_estoque_baixo(estoque_df)
+  File "C:\laragon\www\TCC\python\ia_main.py", line 68, in gerar_alertas_estoque_baixo
+    'mensagem': f"Estoque baixo: {row['nome']} — atual {row['quantidade_atual']}, mínimo {row['quantidade_minima']}",
+                                  ~~~^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\series.py", line 1121, in __getitem__
+    return self._get_value(key)
+           ~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\series.py", line 1237, in _get_value
+    loc = self.index.get_loc(label)
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'nome'
+
+
+[2025-11-22 20:48:21]
+C:\laragon\www\TCC\python\ia_main.py:17: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:28: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql(query, engine, parse_dates=["validade"])
+Traceback (most recent call last):
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'produto'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 118, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 101, in executar_alertas
+    alertas_estoque_baixo = gerar_alertas_estoque_baixo(estoque_df)
+  File "C:\laragon\www\TCC\python\ia_main.py", line 68, in gerar_alertas_estoque_baixo
+    'mensagem': f"Estoque baixo: {row['produto']} — atual {row['quantidade_atual']}, mínimo {row['quantidade_minima']}",
+                                  ~~~^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\series.py", line 1121, in __getitem__
+    return self._get_value(key)
+           ~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\series.py", line 1237, in _get_value
+    loc = self.index.get_loc(label)
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'produto'
+
+
+[2025-11-22 21:46:25]
+C:\laragon\www\TCC\python\ia_main.py:17: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:28: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql(query, engine, parse_dates=["validade"])
+Traceback (most recent call last):
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'produto'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 118, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 101, in executar_alertas
+    alertas_estoque_baixo = gerar_alertas_estoque_baixo(estoque_df)
+  File "C:\laragon\www\TCC\python\ia_main.py", line 68, in gerar_alertas_estoque_baixo
+    'mensagem': f"Estoque baixo: {row['produto']} — atual {row['quantidade_atual']}, mínimo {row['quantidade_minima']}",
+                                  ~~~^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\series.py", line 1121, in __getitem__
+    return self._get_value(key)
+           ~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\series.py", line 1237, in _get_value
+    loc = self.index.get_loc(label)
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'produto'
+
+
+[2025-11-22 21:48:37]
+C:\laragon\www\TCC\python\ia_main.py:17: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:28: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql(query, engine, parse_dates=["validade"])
+Traceback (most recent call last):
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'produto'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 118, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 101, in executar_alertas
+    alertas_estoque_baixo = gerar_alertas_estoque_baixo(estoque_df)
+  File "C:\laragon\www\TCC\python\ia_main.py", line 68, in gerar_alertas_estoque_baixo
+    'mensagem': f"Estoque baixo: {row['produto']} — atual {row['quantidade_atual']}, mínimo {row['quantidade_minima']}",
+                                  ~~~^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\series.py", line 1121, in __getitem__
+    return self._get_value(key)
+           ~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\series.py", line 1237, in _get_value
+    loc = self.index.get_loc(label)
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'produto'
+
+
+[2025-11-22 21:55:10]
+C:\laragon\www\TCC\python\ia_main.py:17: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:28: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql(query, engine, parse_dates=["validade"])
+Traceback (most recent call last):
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'nome'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 119, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 102, in executar_alertas
+    alertas_estoque_baixo = gerar_alertas_estoque_baixo(estoque_df)
+  File "C:\laragon\www\TCC\python\ia_main.py", line 68, in gerar_alertas_estoque_baixo
+    'mensagem': f"Estoque baixo: {row['nome']} — atual {row['quantidade_atual']}, mínimo {row['quantidade_minima']}",
+                                  ~~~^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\series.py", line 1121, in __getitem__
+    return self._get_value(key)
+           ~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\series.py", line 1237, in _get_value
+    loc = self.index.get_loc(label)
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'nome'
+
+
+[2025-11-22 21:58:32]
+C:\laragon\www\TCC\python\ia_main.py:17: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:89: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql("SELECT id_produto, nome, validade FROM produtos_tbl", engine, parse_dates=["validade"])
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 119, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 90, in executar_alertas
+    estoque_df = estoque_df.merge(produtos_df, left_on="codigo_produto", right_on="id_produto", how="left")
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\frame.py", line 10832, in merge
+    return merge(
+        self,
+    ...<11 lines>...
+        validate=validate,
+    )
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\reshape\merge.py", line 170, in merge
+    op = _MergeOperation(
+        left_df,
+    ...<10 lines>...
+        validate=validate,
+    )
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\reshape\merge.py", line 807, in __init__
+    self._maybe_coerce_merge_keys()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\reshape\merge.py", line 1508, in _maybe_coerce_merge_keys
+    raise ValueError(msg)
+ValueError: You are trying to merge on object and int64 columns for key 'codigo_produto'. If you wish to proceed you should use pd.concat
+
+
+[2025-11-22 22:01:18]
+C:\laragon\www\TCC\python\ia_main.py:17: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:28: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql(query, engine, parse_dates=["validade"])
+C:\laragon\www\TCC\python\ia_main.py:101: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql("SELECT id_produto, nome FROM produtos_tbl", engine)
+[ERRO] Falha ao salvar alerta: 1265 (01000): Data truncated for column 'idProdutos_TBL' at row 1
+Alertas gerados: 7
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 2 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 4 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: nan — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: nan — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: nan — atual 1, mínimo 225
+
+
+[2025-11-22 22:04:26]
+C:\laragon\www\TCC\python\ia_main.py:17: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:99: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql("SELECT id_produto, nome FROM produtos_tbl", engine)
+C:\laragon\www\TCC\python\ia_main.py:28: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql(query, engine, parse_dates=["validade"])
+Alertas gerados: 7
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 2 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 4 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Produto desconhecido — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Produto desconhecido — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Produto desconhecido — atual 1, mínimo 225
+
+
+[2025-11-22 22:21:32]
+C:\laragon\www\TCC\python\ia_main.py:17: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:27: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql("SELECT id_produto, nome, validade FROM produtos_tbl", engine, parse_dates=["validade"])
+[ERRO] Falha ao salvar alerta: 1265 (01000): Data truncated for column 'idProdutos_TBL' at row 1
+Alertas gerados: 7
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 2 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 4 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: N/A — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: N/A — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: N/A — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES INSANAS DA IA ===
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 142, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 136, in executar_alertas
+    print(f"{r['codigo_produto']}: {r['recomendacao']}")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\U0001f4a1' in position 3: character maps to <undefined>
+
+
+[2025-11-22 22:24:36]
+C:\laragon\www\TCC\python\ia_main.py:22: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:104: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql("SELECT id_produto, nome FROM produtos_tbl", engine)
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 136, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 105, in executar_alertas
+    estoque_df = estoque_df.merge(produtos_df, left_on="codigo_produto", right_on="id_produto", how="left")
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\frame.py", line 10832, in merge
+    return merge(
+        self,
+    ...<11 lines>...
+        validate=validate,
+    )
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\reshape\merge.py", line 170, in merge
+    op = _MergeOperation(
+        left_df,
+    ...<10 lines>...
+        validate=validate,
+    )
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\reshape\merge.py", line 807, in __init__
+    self._maybe_coerce_merge_keys()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\reshape\merge.py", line 1508, in _maybe_coerce_merge_keys
+    raise ValueError(msg)
+ValueError: You are trying to merge on object and int64 columns for key 'codigo_produto'. If you wish to proceed you should use pd.concat
+
+
+[2025-11-22 22:27:45]
+C:\laragon\www\TCC\python\ia_main.py:22: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:95: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql("SELECT id_produto, nome FROM produtos_tbl", engine)
+C:\laragon\www\TCC\python\ia_main.py:32: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql("SELECT id_produto, nome, validade FROM produtos_tbl", engine, parse_dates=["validade"])
+[ERRO] Falha ao salvar alerta: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`macawsystems`.`alertas_tbl`, CONSTRAINT `alertas_tbl_ibfk_3` FOREIGN KEY (`idProdutos_TBL`) REFERENCES `produtos_tbl` (`id_produto`))
+Alertas gerados: 7
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 2 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 4 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: nan — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: nan — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: nan — atual 1, mínimo 225
+
+
+[2025-11-22 22:37:10]
+C:\laragon\www\TCC\python\ia_main.py:22: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:32: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql(
+Alertas gerados: 7
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 2 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 4 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: N/A — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: N/A — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: N/A — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES INSANAS DA IA ===
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 156, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 150, in executar_alertas
+    print(f"{r['codigo_produto']}: {r['recomendacao']}")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\U0001f4a1' in position 3: character maps to <undefined>
+
+
+[2025-11-22 22:41:12]
+C:\laragon\www\TCC\python\ia_main.py:22: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:65: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql(
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 169, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 146, in executar_alertas
+    alertas_estoque_baixo = gerar_alertas_estoque_baixo(estoque_df)
+TypeError: gerar_alertas_estoque_baixo() missing 1 required positional argument: 'engine'
+
+
+[2025-11-22 22:43:25]
+C:\laragon\www\TCC\python\ia_main.py:22: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:62: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql(
+C:\laragon\www\TCC\python\ia_main.py:33: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql("SELECT id_produto, nome FROM produtos_tbl", engine)
+Alertas gerados: 7
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 2 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 4 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Produto desconhecido — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Produto desconhecido — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Produto desconhecido — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES INSANAS DA IA ===
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 169, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 163, in executar_alertas
+    print(f"{r['codigo_produto']}: {r['recomendacao']}")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\U0001f4a1' in position 3: character maps to <undefined>
+
+
+[2025-11-22 22:51:02]
+C:\laragon\www\TCC\python\ia_main.py:22: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:32: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql(
+C:\laragon\www\TCC\python\ia_main.py:68: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql("SELECT id_produto, nome FROM produtos_tbl", engine)
+Traceback (most recent call last):
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'id_produto'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 170, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 147, in executar_alertas
+    alertas_estoque_baixo = gerar_alertas_estoque_baixo(estoque_df, engine)  # <-- PASSA O ENGINE AQUI
+  File "C:\laragon\www\TCC\python\ia_main.py", line 74, in gerar_alertas_estoque_baixo
+    codigo_produto_raw = row['id_produto']
+                         ~~~^^^^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\series.py", line 1121, in __getitem__
+    return self._get_value(key)
+           ~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\series.py", line 1237, in _get_value
+    loc = self.index.get_loc(label)
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'id_produto'
+
+
+[2025-11-22 22:53:19]
+C:\laragon\www\TCC\python\ia_main.py:22: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:32: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql(
+C:\laragon\www\TCC\python\ia_main.py:71: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql("SELECT id_produto, nome FROM produtos_tbl", engine)
+Alertas gerados: 7
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 2 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 4 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Produto desconhecido (18FE18F4) — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Produto desconhecido (6E89FAE2) — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Produto desconhecido (C85B9124) — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES INSANAS DA IA ===
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 174, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 168, in executar_alertas
+    print(f"{r['codigo_produto']}: {r['recomendacao']}")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\U0001f4a1' in position 3: character maps to <undefined>
+
+
+[2025-11-22 22:58:58]
+C:\laragon\www\TCC\python\ia_main.py:22: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:32: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql(
+C:\laragon\www\TCC\python\ia_main.py:68: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql("SELECT id_produto, nome FROM produtos_tbl", engine)
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 177, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 154, in executar_alertas
+    alertas_estoque_baixo = gerar_alertas_estoque_baixo(estoque_df, engine)  # <-- PASSA O ENGINE AQUI
+  File "C:\laragon\www\TCC\python\ia_main.py", line 83, in gerar_alertas_estoque_baixo
+    codigo_produto = int(codigo_produto_raw)
+ValueError: invalid literal for int() with base 10: '18FE18F4'
+
+
+[2025-11-22 23:00:37]
+C:\laragon\www\TCC\python\ia_main.py:22: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:32: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql(
+C:\laragon\www\TCC\python\ia_main.py:68: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql("SELECT id_produto, nome FROM produtos_tbl", engine)
+[ERRO] Falha ao salvar alerta: 1265 (01000): Data truncated for column 'idProdutos_TBL' at row 1
+Alertas gerados: 7
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 2 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 4 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Produto (18FE18F4) — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Produto (6E89FAE2) — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Produto (C85B9124) — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES INSANAS DA IA ===
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 170, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 164, in executar_alertas
+    print(f"{r['codigo_produto']}: {r['recomendacao']}")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\U0001f4a1' in position 3: character maps to <undefined>
+
+
+[2025-11-22 23:12:55]
+C:\laragon\www\TCC\python\ia_main.py:22: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:32: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql(
+C:\laragon\www\TCC\python\ia_main.py:68: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql("SELECT id_produto, codigo_produto, nome FROM produtos_tbl", engine)
+Alertas gerados: 7
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 2 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 4 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES INSANAS DA IA ===
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 176, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 170, in executar_alertas
+    print(f"{r['codigo_produto']}: {r['recomendacao']}")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\U0001f4a1' in position 3: character maps to <undefined>
+
+
+[2025-11-22 23:28:02]
+C:\laragon\www\TCC\python\ia_main.py:22: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:32: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql(
+C:\laragon\www\TCC\python\ia_main.py:68: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql("SELECT id_produto, codigo_produto, nome FROM produtos_tbl", engine)
+Alertas gerados: 7
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 2 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 4 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES INSANAS DA IA ===
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 176, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 170, in executar_alertas
+    print(f"{r['codigo_produto']}: {r['recomendacao']}")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\U0001f4a1' in position 3: character maps to <undefined>
+
+

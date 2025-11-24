@@ -7,7 +7,7 @@ from sklearn.ensemble import HistGradientBoostingRegressor
 import pickle
 
 def carregar_vendas():
-    print("📦 Carregando vendas do banco...")
+    print("Carregando vendas do banco...")
 
     conn = pymysql.connect(
         host="localhost",
@@ -31,7 +31,7 @@ def carregar_vendas():
     return df
 
 def preparar_dataset(df):
-    print("🔧 Preparando dataset (features avançadas)...")
+    print("Preparando dataset (features avançadas)...")
 
     df["data"] = pd.to_datetime(df["data_venda"])
     df["ano"] = df["data"].dt.year
@@ -94,9 +94,9 @@ def treinar_modelo():
     rmse = mean_squared_error(y_test, preds, squared=False)
     mape = np.mean(np.abs((y_test - preds) / y_test)) * 100
 
-    print(f"📊 MAE: {mae:.2f}")
-    print(f"📊 RMSE: {rmse:.2f}")
-    print(f"📊 MAPE: {mape:.2f}%")
+    print(f"MAE: {mae:.2f}")
+    print(f"RMSE: {rmse:.2f}")
+    print(f"MAPE: {mape:.2f}%")
 
     with open("modelo/modelo_demanda.pkl", "wb") as f:
         pickle.dump(model, f)

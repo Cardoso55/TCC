@@ -27,7 +27,7 @@ def validar_usuario_no_banco(user_id):
 user_env = os.environ.get("USER_ID")
 
 if not user_env:
-    print("\n❌ ERRO: USER_ID não foi definido!")
+    print("\nERRO: USER_ID não foi definido!")
     print("➡ Execute assim pelo PHP ou via terminal:")
     print("   USER_ID=6 python export_replenishment_json.py\n")
     sys.exit(1)
@@ -35,14 +35,14 @@ if not user_env:
 try:
     created_by = int(user_env)
 except ValueError:
-    print("❌ ERRO: USER_ID precisa ser um número inteiro!")
+    print("ERRO: USER_ID precisa ser um número inteiro!")
     sys.exit(1)
 
 # ---------------------------------------------------------
 # 2) VALIDA SE O USUÁRIO EXISTE NO BANCO
 # ---------------------------------------------------------
 if not validar_usuario_no_banco(created_by):
-    print(f"\n❌ ERRO: O usuário com ID {created_by} não existe no banco!")
+    print(f"\nERRO: O usuário com ID {created_by} não existe no banco!")
     print(f"➡ IDs válidos: 4, 6, 9, 10, 11, 12\n")
     sys.exit(1)
 
