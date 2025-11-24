@@ -21,56 +21,66 @@ class ChecklistController {
 
     // Confirmar checklist
     public static function confirmar($idChecklist, $idUsuario, $idPedido = null) {
-        $idChecklist = (int)$idChecklist;
-        $idUsuario = (int)$idUsuario;
-        $idPedido = $idPedido !== null ? (int)$idPedido : null;
+    $idChecklist = (int)$idChecklist;
+    $idUsuario = (int)$idUsuario;
+    $idPedido = $idPedido !== null ? (int)$idPedido : null;
 
-        // Pega detalhes do checklist
-        $checklist = ChecklistModel::detalhesChecklist($idChecklist);
-        if (!$checklist) die("Checklist não encontrado!");
+    // Pega detalhes do checklist
+    $checklist = ChecklistModel::detalhesChecklist($idChecklist);
+    if (!$checklist) die("Checklist não encontrado!");
 
-        // Atualiza status do checklist
-        ChecklistModel::confirmarChecklist($idChecklist, $idUsuario, $idPedido);
-
-        // Atualiza pedido vinculado e estoque
-        if ($idPedido) {
-            $pedido = PedidoReposicaoModel::buscarPedidoParaCompra($idPedido);
-            if ($pedido) {
-                // Atualiza estoque
-                ProdutoModel::atualizarEstoque($pedido['id_produto'], $pedido['quantidade'], 'entrada');
-                ProdutoModel::criarMovimentacao(
-                    $pedido['id_produto'],
-                    $idUsuario,
-                    $pedido['quantidade'],
-                    'entrada',
-                    'reposicao_confirmada',
-                    'Movimentação gerada após confirmação do checklist'
-                );
-
-
-
-                // Atualiza status do pedido
-                $conn = conectarBanco();
-                $stmt = $conn->prepare("UPDATE pedidosreposicao_tbl SET status='confirmado', data_recebimento=NOW() WHERE id_pedido=?");
-                $stmt->bind_param("i", $idPedido);
-                $stmt->execute();
-                $stmt->close();
-                $conn->close();
-            }
-        }
-
-        // Atualiza status da compra se todos checklists confirmados
-        if (!empty($checklist['idCompra_TBL'])) {
-            $todosConfirmados = ChecklistModel::todosConfirmadosPara($checklist['idCompra_TBL']);
-            if ($todosConfirmados) {
-                CompraModel::atualizarStatus($checklist['idCompra_TBL'], 'confirmado');
-            }
-        }
-
-        // Redireciona para página de checklists com sucesso
-        header("Location: /TCC/index.php?pagina=checklist&sucesso=1");
+    // 🚫 Impede dupla confirmação por clique rápido / requests simultâneos
+    if ($checklist['status'] === 'confirmado') {
+        header("Location: /TCC/index.php?pagina=checklist&ja_confirmado=1");
         exit;
     }
+
+       
+    // Atualiza status do checklist
+    ChecklistModel::confirmarChecklist($idChecklist, $idUsuario, $idPedido);
+
+    // Atualiza pedido vinculado e estoque
+    if ($idPedido) {
+        $pedido = PedidoReposicaoModel::buscarPedidoParaCompra($idPedido);
+        if ($pedido) {
+            // Atualiza estoque
+            ProdutoModel::atualizarEstoque($pedido['id_produto'], $pedido['quantidade'], 'entrada');
+            ProdutoModel::criarMovimentacao(
+                $pedido['id_produto'],
+                $idUsuario,
+                $pedido['quantidade'],
+                'entrada',
+                'reposicao_confirmada',
+                'Movimentação gerada após confirmação do checklist'
+            );
+
+            // Atualiza status do pedido
+            $conn = conectarBanco();
+            $stmt = $conn->prepare("UPDATE pedidosreposicao_tbl SET status='confirmado', data_recebimento=NOW() WHERE id_pedido=?");
+            $stmt->bind_param("i", $idPedido);
+            $stmt->execute();
+            $stmt->close();
+            $conn->close();
+
+            // 🚀 Atualiza valor_total da compra após confirmação do pedido
+            if (!empty($pedido['id_compra'])) {
+                CompraModel::atualizarValorTotal($pedido['id_compra']);
+            }
+        }
+    }
+
+    // Atualiza status da compra se todos checklists confirmados
+    if (!empty($checklist['idCompra_TBL'])) {
+        $todosConfirmados = ChecklistModel::todosConfirmadosPara($checklist['idCompra_TBL']);
+        if ($todosConfirmados) {
+            CompraModel::atualizarStatus($checklist['idCompra_TBL'], 'confirmado');
+        }
+    }
+
+    // Redireciona para página de checklists com sucesso
+    header("Location: /TCC/index.php?pagina=checklist&sucesso=1");
+    exit;
+}
 
     // Gerar checklist automaticamente para compra
     public static function gerarParaCompra($idCompra, $idUsuario, $idProduto, $quantidade, $idPedido) {

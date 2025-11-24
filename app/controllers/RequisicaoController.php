@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once __DIR__ . '/../models/PedidoReposicao.php';
+require_once __DIR__ . '/../models/PedidoReposicaoModel.php';
 
 
 // Se for POST → API JSON
@@ -25,7 +25,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit;
     }
 
-    $resultado = PedidoReposicaoModel::criarPedido($id_produto, $quantidade, $fornecedor, $id_usuario);
+    $resultado = PedidoReposicaoModel::criarPedido(
+    $id_produto,
+    $quantidade,
+    $fornecedor,
+    $_SESSION['user_level'],// cargo
+    $id_usuario           // id_user
+);
+
 
     echo json_encode(["sucesso" => $resultado]);
     exit;

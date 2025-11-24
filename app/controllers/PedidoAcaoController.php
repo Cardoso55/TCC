@@ -4,7 +4,6 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once __DIR__ . '/../models/PedidoReposicao.php';
 require_once __DIR__ . '/../models/ChecklistModel.php';
 require_once __DIR__ . '/../models/PedidoReposicaoModel.php';
 require_once __DIR__ . '/../models/CompraModel.php';
@@ -45,7 +44,14 @@ if ($acao === 'criar') {
         exit;
     }
 
-    $sucesso = PedidoReposicao::criarPedido($idProduto, $quantidade, $fornecedor, $userId);
+    $sucesso = PedidoReposicaoModel::criarPedido(
+    $idProduto,
+    $quantidade,
+    $fornecedor,
+    $_SESSION['user_level'],   // cargo do usuário
+    $userId               // id do usuário
+);
+
 
     echo json_encode(
         $sucesso
@@ -64,7 +70,7 @@ if (!$idPedido) {
     exit;
 }
 
-$pedido = PedidoReposicao::buscarPorId($idPedido);
+$pedido = PedidoReposicaoModel::buscarPorId($idPedido);
 
 if (!$pedido) {
     echo json_encode(["erro" => "Pedido não encontrado"]);
@@ -89,11 +95,12 @@ if ($acao === 'aceitar') {
             exit;
         }
 
-        // Atualiza nível para setor de compras e mantém status pendente
-        PedidoReposicao::atualizarAprovacao($idPedido, 'setor-de-compras', 'pendente');
+        // Atualiza nível para setor de compras e status para pendente
+        PedidoReposicaoModel::atualizarAprovacao($idPedido, 'setor-de-compras', 'pendente');
 
         echo json_encode(["sucesso" => "Pedido aprovado pelo supervisor e enviado ao setor de compras!"]);
         exit;
+    }
     }
 
     // -------------------------
@@ -110,12 +117,18 @@ if ($acao === 'aceitar') {
         // 1. Criar compra
         $idCompra = CompraModel::criarCompra(
             $pedido['fornecedor'], // fornecedor do pedido
-            0,                     // valor_total inicial
+            0,                     // valor_total inicial (será atualizado)
             $userId
         );
 
         // 2. Vincular pedido à compra
         CompraModel::vincularPedidosACompra($idCompra, $idPedido);
+
+        // 2.1 Recalcular valor total da compra
+        $valorTotal = $pedido['quantidade'] * $pedido['valor_compra'];
+
+        // 2.2 Atualiza a compra com o valor total
+        CompraModel::atualizarValorTotal($idCompra, $valorTotal);
 
         // 3. Criar checklist vinculado à compra
         ChecklistModel::criarChecklist([
@@ -127,44 +140,12 @@ if ($acao === 'aceitar') {
             'idProduto_TBL' => $pedido['id_produto'] ?? null
         ]);
 
-        // 4. Atualizar status do pedido (não mexe no nível)
-        PedidoReposicao::atualizarAprovacao($idPedido, 'setor-de-compras', 'a-caminho');
+        // 4. Atualizar status do pedido para 'a-caminho'
+        PedidoReposicaoModel::atualizarStatus($idPedido, 'a-caminho');
 
         echo json_encode(["sucesso" => "Pedido aprovado e enviado!"]);
         exit;
     }
-
-    $quantidade = $pedido['quantidade'];
-    $valorUnitario = $pedido['valor_compra'];
-    $valorTotal = $quantidade * $valorUnitario;
-    $fornecedor = $pedido['fornecedor'];
-
-    // Cria compra e vincula pedido
-    $idCompra = CompraModel::criarCompra($fornecedor, $valorTotal, $idUsuario);
-    PedidoReposicaoModel::atualizarCompra($idPedido, $idCompra);
-
-    // 🚀 Aqui gera os checklists automaticamente
-    require_once __DIR__ . '/../controllers/ChecklistController.php';
-    ChecklistController::gerarParaCompra(
-    $idCompra,
-    $idUsuario,
-    $pedido['id_produto'],
-    $quantidade,
-    $pedido['id_pedido'] // ✅ o ID do pedido que está faltando
-);
-
-
-    echo json_encode([
-        "sucesso" => true,
-        "mensagem" => "Compra criada, pedido confirmado e checklists gerados!",
-        "id_compra" => $idCompra
-    ]);
-    echo json_encode(["erro" => "Nível inválido para aprovar este pedido"]);
-    exit;
-}
-
-
-
 
 // ==========================
 // REJEITAR PEDIDO
@@ -178,7 +159,7 @@ if ($acao === 'negar') {
         ($userLevel === 'setor-de-compras' && $nivelAtual === 'setor-de-compras')
     ) {
 
-        PedidoReposicao::rejeitarPedido($idPedido);
+        PedidoReposicaoModel::rejeitarPedido($idPedido);
 
         echo json_encode(["sucesso" => true, "mensagem" => "Pedido rejeitado com sucesso!"]);
         exit;

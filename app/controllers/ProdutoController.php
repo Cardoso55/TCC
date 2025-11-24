@@ -1,5 +1,6 @@
 <?php
 
+require_once __DIR__ . '/../models/PedidoReposicaoModel.php';
 require_once __DIR__ . '/../models/ProdutoModel.php';
 
 class ProdutoController
@@ -22,28 +23,26 @@ class ProdutoController
         return ProdutoModel::editar($dados, $arquivo);
     }
 
-    // EXCLUSÃO COM VERIFICAÇÃO ============================================
+    // EXCLUSÃO ============================================================
     public static function excluirProduto($id_produto)
     {
-        // 1. Verifica se tem vínculos
         $vinculos = ProdutoModel::verificarVinculos($id_produto);
 
-        if ($vinculos['temVinculos']) {
-            // Retorna para o JS avisando que é preciso confirmar
+        // Checa se a chave existe e se há vínculos
+        if (!empty($vinculos['temVinculos'])) {
             return [
                 'sucesso' => false,
                 'temVinculos' => true,
-                'detalhes' => $vinculos['detalhes']
+                'detalhes' => $vinculos['detalhes'] ?? []
             ];
         }
 
-        // 2. Soft delete direto
+        // Se não houver vínculos, exclui normalmente
         ProdutoModel::excluir($id_produto);
 
         return ['sucesso' => true];
     }
 
-    // CONFIRMAÇÃO DE EXCLUSÃO (CASCATA) ==================================
     public static function confirmarExclusao($id_produto)
     {
         ProdutoModel::deletarProdutoCascata($id_produto);
@@ -53,20 +52,39 @@ class ProdutoController
     // CRIAR REPOSIÇÃO =====================================================
     public static function criarReposicao($dados)
     {
-        return ProdutoModel::criarReposicao($dados);
-    }
-
-    // FILTRO AJAX =========================================================
-    public static function filtrarAjax($filtros)
-    {
-        return ProdutoModel::buscarFiltradoComOrdenacao($filtros);
-    }
-
-       public static function criarPedidoSaida(array $dados) {
         if (session_status() === PHP_SESSION_NONE) session_start();
+
+        $idUsuario = $_SESSION['user_id'] ?? null;
+        $cargo = $_SESSION['user_level'] ?? null;
+
+        if (!$idUsuario) {
+            throw new Exception("Usuário não autenticado.");
+        }
+
+        // Dados necessários
         $idProduto = intval($dados['id_produto'] ?? 0);
         $quantidade = intval($dados['quantidade'] ?? 0);
-        $observacao = trim($dados['observacao'] ?? '');
+        $descricao  = trim($dados['descricao'] ?? '');
+        $fornecedor = trim($dados['fornecedor'] ?? '');
+
+        return PedidoReposicaoModel::criarPedido(
+            $idProduto,
+            $quantidade,
+            $fornecedor,
+            $cargo,
+            $idUsuario
+        );
+
+    }
+
+    // SAÍDA ================================================================
+    public static function criarPedidoSaida(array $dados)
+    {
+        if (session_status() === PHP_SESSION_NONE) session_start();
+
+        $idProduto   = intval($dados['id_produto'] ?? 0);
+        $quantidade  = intval($dados['quantidade'] ?? 0);
+        $observacao  = trim($dados['observacao'] ?? '');
 
         if (!$idProduto || !$quantidade) {
             throw new Exception("Produto e quantidade são obrigatórios.");
@@ -77,7 +95,7 @@ class ProdutoController
             throw new Exception("Usuário não autenticado.");
         }
 
-        $pdo = Conexao::getInstance(); // supondo que você tem um método singleton
+        $pdo = Conexao::getInstance();
         $sql = "INSERT INTO pedidossaida_tbl 
                 (id_produto, id_usuario_solicitante, quantidade, status, origem, observacao, data_pedido, data_atualizacao)
                 VALUES (:id_produto, :id_usuario, :quantidade, 'pendente', 'interno', :observacao, NOW(), NOW())";

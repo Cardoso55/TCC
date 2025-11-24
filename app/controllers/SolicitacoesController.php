@@ -3,7 +3,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once __DIR__ . '/../models/PedidoReposicao.php';
+require_once __DIR__ . '/../models/PedidoReposicaoModel.php';
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -22,6 +22,6 @@ class SolicitacoesController {
 
     // Lista os pedidos que precisam de aprovação do usuário logado
     public static function listarSolicitacoes($nivelUsuario) {
-        return PedidoReposicao::buscarPorNivel($nivelUsuario);
+        return PedidoReposicaoModel::buscarPorNivel($nivelUsuario);
     }
 }

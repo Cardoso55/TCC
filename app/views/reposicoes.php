@@ -34,7 +34,7 @@ $pedidos = RequisicaoController::listar();
       <th>Solicitante</th>
       <th>Solicitação em</th>
       <th>Produto</th>
-      <th>Quantidade Atual</th>
+      <th>Quantidade Solicitada</th>
       <th>Status</th>
       <th>Gerado pela IA</th> <!-- nova coluna -->
       <th>Ações</th>
@@ -49,13 +49,13 @@ $pedidos = RequisicaoController::listar();
                 <td>Estoque</td>
                 <td><?= date("d/m/Y H:i", strtotime($p['data_pedido'])) ?></td>
                 <td><?= htmlspecialchars($p['nome']) ?></td>
-                <td><?= htmlspecialchars($p['quantidade_atual']) ?></td>
-
+                <td><?= htmlspecialchars($p['quantidade']) ?></td>
                 <td>
                   <span class="status <?= htmlspecialchars($p['status']) ?>">
                       <?= ucfirst($p['status']) ?>
                   </span>
                 </td>
+                <td></td>
 
                 <td>
                   <?php if ($p['status'] === 'pendente'

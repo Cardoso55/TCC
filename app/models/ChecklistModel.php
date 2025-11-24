@@ -4,23 +4,27 @@ require_once __DIR__ . "/../database/conexao.php";
 class ChecklistModel {
 
     public static function listarChecklists($filtros = []) {
-        $conn = conectarBanco();
-        $query = "SELECT c.*, u.nome AS usuario_nome, p.nome AS produto_nome
-                  FROM Checklist_TBL c
-                  LEFT JOIN Usuarios_TBL u ON c.idUsuarios_TBL = u.id_usuario
-                  LEFT JOIN Produtos_TBL p ON c.idProduto_TBL = p.id_produto
-                  WHERE 1=1";
+    $conn = conectarBanco();
+    $query = "SELECT c.*, u.nome AS usuario_nome, p.nome AS produto_nome
+              FROM Checklist_TBL c
+              LEFT JOIN Usuarios_TBL u ON c.idUsuarios_TBL = u.id_usuario
+              LEFT JOIN Produtos_TBL p ON c.idProduto_TBL = p.id_produto
+              WHERE 1=1";
 
-        if (!empty($filtros['tipo'])) $query .= " AND c.tipo = '".$conn->real_escape_string($filtros['tipo'])."'";
-        if (!empty($filtros['idProduto_TBL'])) $query .= " AND c.idProduto_TBL = ".(int)$filtros['idProduto_TBL'];
-        if (!empty($filtros['idCompra_TBL'])) $query .= " AND c.idCompra_TBL = ".(int)$filtros['idCompra_TBL'];
-        if (!empty($filtros['idPedidosReposicao_TBL'])) $query .= " AND c.idPedidosReposicao_TBL = ".(int)$filtros['idPedidosReposicao_TBL'];
+    if (!empty($filtros['tipo'])) $query .= " AND c.tipo = '".$conn->real_escape_string($filtros['tipo'])."'";
+    if (!empty($filtros['idProduto_TBL'])) $query .= " AND c.idProduto_TBL = ".(int)$filtros['idProduto_TBL'];
+    if (!empty($filtros['idCompra_TBL'])) $query .= " AND c.idCompra_TBL = ".(int)$filtros['idCompra_TBL'];
+    if (!empty($filtros['idPedidosReposicao_TBL'])) $query .= " AND c.idPedidosReposicao_TBL = ".(int)$filtros['idPedidosReposicao_TBL'];
 
-        $res = $conn->query($query);
-        $checklists = $res->fetch_all(MYSQLI_ASSOC);
-        $conn->close();
-        return $checklists;
-    }
+    // Adiciona ordenação pelos mais recentes primeiro
+    $query .= " ORDER BY c.data_criacao DESC";
+
+    $res = $conn->query($query);
+    $checklists = $res->fetch_all(MYSQLI_ASSOC);
+    $conn->close();
+    return $checklists;
+}
+
 
     public static function criarChecklist($dados) {
     $conn = conectarBanco();
