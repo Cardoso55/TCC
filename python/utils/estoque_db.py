@@ -8,7 +8,9 @@ def carregar_estoque_produtos(engine):
             e.id_estoque,
             e.quantidade_atual,
             e.quantidade_minima,
-            p.codigo_produto
+            p.codigo_produto,
+            p.id_produto,
+            e.idProdutos_TBL
         FROM estoque_tbl e
         JOIN produtos_tbl p ON e.idProdutos_TBL = p.id_produto
         """

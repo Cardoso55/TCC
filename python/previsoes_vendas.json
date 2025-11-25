@@ -1,46 +1,46 @@
 [
   {
+    "id_produto": 1,
+    "nome": "Redmi Buds 6 Lite",
+    "estoque_atual": 46,
+    "incoming": 0,
+    "forecast": 48.0,
+    "vendas_historicas": 41,
+    "demanda_ajustada": 48.0,
+    "qty_to_order": 18,
+    "data_prevista_chegada": "2025-12-01 23:15:07"
+  },
+  {
     "id_produto": 3,
     "nome": "Monitor Acer 23.9'",
     "estoque_atual": 1,
     "incoming": 0,
-    "forecast": 45.0,
+    "forecast": 43.0,
     "vendas_historicas": 45,
-    "demanda_ajustada": 45.0,
+    "demanda_ajustada": 45,
     "qty_to_order": 44,
-    "data_prevista_chegada": "2025-11-29 18:53:40"
+    "data_prevista_chegada": "2025-12-01 23:15:07"
   },
   {
     "id_produto": 7,
     "nome": "Arroz Branco Tipo 1",
     "estoque_atual": 1,
     "incoming": 0,
-    "forecast": 68.0,
+    "forecast": 74.0,
     "vendas_historicas": 82,
     "demanda_ajustada": 82,
     "qty_to_order": 81,
-    "data_prevista_chegada": "2025-11-29 18:53:40"
-  },
-  {
-    "id_produto": 8,
-    "nome": "Feijão Carioca",
-    "estoque_atual": 1,
-    "incoming": 0,
-    "forecast": 74.0,
-    "vendas_historicas": 98,
-    "demanda_ajustada": 98,
-    "qty_to_order": 111,
-    "data_prevista_chegada": "2025-11-29 18:53:41"
+    "data_prevista_chegada": "2025-12-01 23:15:07"
   },
   {
     "id_produto": 9,
     "nome": "Bolacha Tortinhas de Chocolate",
     "estoque_atual": 1,
     "incoming": 0,
-    "forecast": 40.0,
+    "forecast": 38.0,
     "vendas_historicas": 60,
     "demanda_ajustada": 60,
     "qty_to_order": 225,
-    "data_prevista_chegada": "2025-11-29 18:53:41"
+    "data_prevista_chegada": "2025-12-01 23:15:07"
   }
 ]

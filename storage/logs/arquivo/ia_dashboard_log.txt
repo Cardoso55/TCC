@@ -838,3 +838,779 @@ Traceback (most recent call last):
 UnicodeEncodeError: 'charmap' codec can't encode character '\U0001f4a1' in position 3: character maps to <undefined>
 
 
+[2025-11-24 18:38:32]
+C:\laragon\www\TCC\python\ia_main.py:22: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:32: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql(
+C:\laragon\www\TCC\python\ia_main.py:68: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql("SELECT id_produto, codigo_produto, nome FROM produtos_tbl", engine)
+Alertas gerados: 8
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 0 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 2 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 6 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES INSANAS DA IA ===
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 205, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 195, in executar_alertas
+    print(f"{r['codigo_produto']}: {r['recomendacao']}")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\U0001f4a1' in position 3: character maps to <undefined>
+
+
+[2025-11-24 19:01:36]
+C:\laragon\www\TCC\python\ia_main.py:22: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+C:\laragon\www\TCC\python\utils\estoque_db.py:15: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(query, engine)
+C:\laragon\www\TCC\python\ia_main.py:32: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql(
+C:\laragon\www\TCC\python\ia_main.py:68: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  produtos_df = pd.read_sql("SELECT id_produto, codigo_produto, nome FROM produtos_tbl", engine)
+Alertas gerados: 8
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 0 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 2 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 6 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES INSANAS DA IA ===
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 205, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 195, in executar_alertas
+    print(f"{r['codigo_produto']}: {r['recomendacao']}")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\U0001f4a1' in position 3: character maps to <undefined>
+
+
+[2025-11-24 19:20:49]
+Alertas gerados: 8
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 0 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 2 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 6 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES INSANAS DA IA ===
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 208, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 198, in executar_alertas
+    print(f"{r['codigo_produto']}: {r['recomendacao']}")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\U0001f4a1' in position 3: character maps to <undefined>
+
+
+[2025-11-24 19:30:08]
+Alertas gerados: 8
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 0 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 2 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 6 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES DA IA ===
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 208, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 198, in executar_alertas
+    print(f"{r['codigo_produto']}: {r['recomendacao']}")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\U0001f4a1' in position 3: character maps to <undefined>
+
+
+[2025-11-24 19:31:23]
+Alertas gerados: 8
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 0 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 2 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 6 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES DA IA ===
+1: Faça uma promoção relâmpago para vender rápido
+1: Remanejar para áreas com mais saída
+3: Produto vencido, remover do estoque e notificar responsável
+5: Faça uma promoção relâmpago para vender rápido
+5: Remanejar para áreas com mais saída
+6: Faça uma promoção relâmpago para vender rápido
+6: Remanejar para áreas com mais saída
+7: Produto vencido, remover do estoque e notificar responsável
+3: Estoque crítico, priorizar venda e reforçar pedido de reposição
+3: Avisar equipe de compras e avaliar fornecedor alternativo
+7: Estoque crítico, priorizar venda e reforçar pedido de reposição
+7: Avisar equipe de compras e avaliar fornecedor alternativo
+9: Estoque crítico, priorizar venda e reforçar pedido de reposição
+9: Avisar equipe de compras e avaliar fornecedor alternativo
+
+
+[2025-11-24 19:34:37]
+Alertas gerados: 8
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 0 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 2 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 6 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 208, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 193, in executar_alertas
+    recomendacoes = gerar_recomendacoes_alertas(alertas)
+  File "C:\laragon\www\TCC\python\ia_main.py", line 103, in gerar_recomendacoes_alertas
+    codigo = a['id_produto']
+             ~^^^^^^^^^^^^^^
+KeyError: 'id_produto'
+
+
+[2025-11-24 19:41:35]
+Alertas gerados: 8
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 0 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 2 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 6 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES DA IA ===
+1: Faça uma promoção relâmpago para vender rápido
+1: Remanejar para áreas com mais saída
+3: Produto vencido, remover do estoque e notificar responsável
+5: Faça uma promoção relâmpago para vender rápido
+5: Remanejar para áreas com mais saída
+6: Faça uma promoção relâmpago para vender rápido
+6: Remanejar para áreas com mais saída
+7: Produto vencido, remover do estoque e notificar responsável
+3: Estoque crítico, priorizar venda e reforçar pedido de reposição
+3: Avisar equipe de compras e avaliar fornecedor alternativo
+7: Estoque crítico, priorizar venda e reforçar pedido de reposição
+7: Avisar equipe de compras e avaliar fornecedor alternativo
+9: Estoque crítico, priorizar venda e reforçar pedido de reposição
+9: Avisar equipe de compras e avaliar fornecedor alternativo
+
+
+[2025-11-24 19:48:05]
+[ERRO] Falha ao salvar alerta: 'id_produto'
+Alertas gerados: 11
+CRITICO: Estoque crítico: 3 — estoque atual 1, deve acabar em ~1 dias.
+CRITICO: Estoque crítico: 7 — estoque atual 1, deve acabar em ~1 dias.
+CRITICO: Estoque crítico: 9 — estoque atual 1, deve acabar em ~2 dias.
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 0 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 2 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 6 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 208, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 193, in executar_alertas
+    recomendacoes = gerar_recomendacoes_alertas(alertas)
+  File "C:\laragon\www\TCC\python\ia_main.py", line 103, in gerar_recomendacoes_alertas
+    codigo = a['codigo_produto']
+             ~^^^^^^^^^^^^^^^^^^
+KeyError: 'codigo_produto'
+
+
+[2025-11-24 19:48:33]
+[ERRO] Falha ao salvar alerta: 'id_produto'
+Alertas gerados: 11
+CRITICO: Estoque crítico: 3 — estoque atual 1, deve acabar em ~1 dias.
+CRITICO: Estoque crítico: 7 — estoque atual 1, deve acabar em ~1 dias.
+CRITICO: Estoque crítico: 9 — estoque atual 1, deve acabar em ~2 dias.
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 0 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 2 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 6 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 208, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 193, in executar_alertas
+    recomendacoes = gerar_recomendacoes_alertas(alertas)
+  File "C:\laragon\www\TCC\python\ia_main.py", line 103, in gerar_recomendacoes_alertas
+    codigo = a['codigo_produto']
+             ~^^^^^^^^^^^^^^^^^^
+KeyError: 'codigo_produto'
+
+
+[2025-11-24 19:49:19]
+Alertas gerados: 8
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 0 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 2 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 6 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES DA IA ===
+1: Faça uma promoção relâmpago para vender rápido
+1: Remanejar para áreas com mais saída
+3: Produto vencido, remover do estoque e notificar responsável
+5: Faça uma promoção relâmpago para vender rápido
+5: Remanejar para áreas com mais saída
+6: Faça uma promoção relâmpago para vender rápido
+6: Remanejar para áreas com mais saída
+7: Produto vencido, remover do estoque e notificar responsável
+3: Estoque crítico, priorizar venda e reforçar pedido de reposição
+3: Avisar equipe de compras e avaliar fornecedor alternativo
+7: Estoque crítico, priorizar venda e reforçar pedido de reposição
+7: Avisar equipe de compras e avaliar fornecedor alternativo
+9: Estoque crítico, priorizar venda e reforçar pedido de reposição
+9: Avisar equipe de compras e avaliar fornecedor alternativo
+
+
+[2025-11-24 19:51:40]
+[ERRO] Falha ao salvar alerta: 'codigo_produto'
+Alertas gerados: 8
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 0 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 2 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 6 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES DA IA ===
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 208, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 198, in executar_alertas
+    print(f"{r['codigo_produto']}: {r['recomendacao']}")
+             ~^^^^^^^^^^^^^^^^^^
+KeyError: 'codigo_produto'
+
+
+[2025-11-24 19:52:52]
+Alertas gerados: 11
+CRITICO: Estoque crítico: 3 — estoque atual 1, deve acabar em ~1 dias.
+CRITICO: Estoque crítico: 7 — estoque atual 1, deve acabar em ~1 dias.
+CRITICO: Estoque crítico: 9 — estoque atual 1, deve acabar em ~2 dias.
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 0 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 2 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 6 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES DA IA ===
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 208, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 198, in executar_alertas
+    print(f"{r['codigo_produto']}: {r['recomendacao']}")
+             ~^^^^^^^^^^^^^^^^^^
+KeyError: 'codigo_produto'
+
+
+[2025-11-24 19:53:36]
+Alertas gerados: 11
+CRITICO: Estoque crítico: 3 — estoque atual 1, deve acabar em ~1 dias.
+CRITICO: Estoque crítico: 7 — estoque atual 1, deve acabar em ~1 dias.
+CRITICO: Estoque crítico: 9 — estoque atual 1, deve acabar em ~2 dias.
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 0 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 2 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 6 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES DA IA ===
+1: Faça uma promoção relâmpago para vender rápido
+1: Remanejar para áreas com mais saída
+3: Produto vencido, remover do estoque e notificar responsável
+5: Faça uma promoção relâmpago para vender rápido
+5: Remanejar para áreas com mais saída
+6: Faça uma promoção relâmpago para vender rápido
+6: Remanejar para áreas com mais saída
+7: Produto vencido, remover do estoque e notificar responsável
+3: Estoque crítico, priorizar venda e reforçar pedido de reposição
+3: Avisar equipe de compras e avaliar fornecedor alternativo
+7: Estoque crítico, priorizar venda e reforçar pedido de reposição
+7: Avisar equipe de compras e avaliar fornecedor alternativo
+9: Estoque crítico, priorizar venda e reforçar pedido de reposição
+9: Avisar equipe de compras e avaliar fornecedor alternativo
+Traceback (most recent call last):
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\mysql\connector\connection_cext.py", line 772, in cmd_query
+    self._cmysql.query(
+    ~~~~~~~~~~~~~~~~~~^
+        query,
+        ^^^^^^
+    ...<3 lines>...
+        query_attrs=self.query_attrs,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+_mysql_connector.MySQLInterfaceError: Column 'codigo_produto' cannot be null
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 208, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 201, in executar_alertas
+    salvar_recomendacoes_no_db(engine, recomendacoes)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 142, in salvar_recomendacoes_no_db
+    cursor.execute(sql, (codigo, nome, rec, agora))
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\mysql\connector\cursor_cext.py", line 353, in execute
+    self._connection.cmd_query(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self._stmt_partition["mappable_stmt"],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        raw_as_string=self._raw_as_string,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\mysql\connector\opentelemetry\context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\mysql\connector\connection_cext.py", line 781, in cmd_query
+    raise get_mysql_exception(
+        err.errno, msg=err.msg, sqlstate=err.sqlstate
+    ) from err
+mysql.connector.errors.IntegrityError: 1048 (23000): Column 'codigo_produto' cannot be null
+
+
+[2025-11-24 19:54:31]
+Alertas gerados: 11
+CRITICO: Estoque crítico: 3 — estoque atual 1, deve acabar em ~1 dias.
+CRITICO: Estoque crítico: 7 — estoque atual 1, deve acabar em ~1 dias.
+CRITICO: Estoque crítico: 9 — estoque atual 1, deve acabar em ~2 dias.
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 0 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 2 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 6 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES DA IA ===
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 208, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 198, in executar_alertas
+    print(f"{r['codigo_produto']}: {r['recomendacao']}")
+             ~^^^^^^^^^^^^^^^^^^
+KeyError: 'codigo_produto'
+
+
+[2025-11-24 19:54:54]
+Alertas gerados: 11
+CRITICO: Estoque crítico: 3 — estoque atual 1, deve acabar em ~1 dias.
+CRITICO: Estoque crítico: 7 — estoque atual 1, deve acabar em ~1 dias.
+CRITICO: Estoque crítico: 9 — estoque atual 1, deve acabar em ~2 dias.
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 0 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 2 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 6 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES DA IA ===
+1: Faça uma promoção relâmpago para vender rápido
+1: Remanejar para áreas com mais saída
+3: Produto vencido, remover do estoque e notificar responsável
+5: Faça uma promoção relâmpago para vender rápido
+5: Remanejar para áreas com mais saída
+6: Faça uma promoção relâmpago para vender rápido
+6: Remanejar para áreas com mais saída
+7: Produto vencido, remover do estoque e notificar responsável
+3: Estoque crítico, priorizar venda e reforçar pedido de reposição
+3: Avisar equipe de compras e avaliar fornecedor alternativo
+7: Estoque crítico, priorizar venda e reforçar pedido de reposição
+7: Avisar equipe de compras e avaliar fornecedor alternativo
+9: Estoque crítico, priorizar venda e reforçar pedido de reposição
+9: Avisar equipe de compras e avaliar fornecedor alternativo
+
+
+[2025-11-24 20:49:00]
+Traceback (most recent call last):
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'idProdutos_TBL'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 213, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 184, in executar_alertas
+    alertas_estoque_baixo = gerar_alertas_estoque_baixo(estoque_df, engine)  # <-- PASSA O ENGINE AQUI
+  File "C:\laragon\www\TCC\python\ia_main.py", line 82, in gerar_alertas_estoque_baixo
+    id_produto = int(row['idProdutos_TBL'])   # FK CERTA DO ESTOQUE
+                     ~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\series.py", line 1121, in __getitem__
+    return self._get_value(key)
+           ~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\series.py", line 1237, in _get_value
+    loc = self.index.get_loc(label)
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'idProdutos_TBL'
+
+
+[2025-11-24 20:57:03]
+Traceback (most recent call last):
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'idProdutos_TBL'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 213, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 184, in executar_alertas
+    alertas_estoque_baixo = gerar_alertas_estoque_baixo(estoque_df, engine)  # <-- PASSA O ENGINE AQUI
+  File "C:\laragon\www\TCC\python\ia_main.py", line 82, in gerar_alertas_estoque_baixo
+    id_produto = int(row['idProdutos_TBL'])   # FK CERTA DO ESTOQUE
+                     ~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\series.py", line 1121, in __getitem__
+    return self._get_value(key)
+           ~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\series.py", line 1237, in _get_value
+    loc = self.index.get_loc(label)
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'idProdutos_TBL'
+
+
+[2025-11-24 20:58:25]
+Erro ao carregar estoque: Execution failed on sql '
+        SELECT 
+            e.id_estoque,
+            e.quantidade_atual,
+            e.quantidade_minima,
+            p.codigo_produto,
+            p.id_produto
+            e.idProdutos_TBL
+        FROM estoque_tbl e
+        JOIN produtos_tbl p ON e.idProdutos_TBL = p.id_produto
+        ': 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.idProdutos_TBL
+        FROM estoque_tbl e
+        JOIN produtos_tbl p ON e.idPr' at line 7
+Estoque vazio. Nenhum alerta gerado.
+
+
+[2025-11-24 20:58:46]
+[ERRO] Falha ao salvar alerta: 'id_produto'
+Alertas gerados: 11
+CRITICO: Estoque crítico: 3 — estoque atual 1, deve acabar em ~1 dias.
+CRITICO: Estoque crítico: 7 — estoque atual 1, deve acabar em ~1 dias.
+CRITICO: Estoque crítico: 9 — estoque atual 1, deve acabar em ~2 dias.
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 0 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 2 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 6 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+Traceback (most recent call last):
+  File "C:\laragon\www\TCC\python\ia_main.py", line 213, in <module>
+    executar_alertas()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\laragon\www\TCC\python\ia_main.py", line 198, in executar_alertas
+    recomendacoes = gerar_recomendacoes_alertas(alertas)
+  File "C:\laragon\www\TCC\python\ia_main.py", line 108, in gerar_recomendacoes_alertas
+    codigo = a['id_produto']
+             ~^^^^^^^^^^^^^^
+KeyError: 'id_produto'
+
+
+[2025-11-24 21:00:01]
+Alertas gerados: 11
+CRITICO: Estoque crítico: 3 — estoque atual 1, deve acabar em ~1 dias.
+CRITICO: Estoque crítico: 7 — estoque atual 1, deve acabar em ~1 dias.
+CRITICO: Estoque crítico: 9 — estoque atual 1, deve acabar em ~2 dias.
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 0 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 2 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 6 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES DA IA ===
+1: Faça uma promoção relâmpago para vender rápido
+1: Remanejar para áreas com mais saída
+3: Produto vencido, remover do estoque e notificar responsável
+5: Faça uma promoção relâmpago para vender rápido
+5: Remanejar para áreas com mais saída
+6: Faça uma promoção relâmpago para vender rápido
+6: Remanejar para áreas com mais saída
+7: Produto vencido, remover do estoque e notificar responsável
+3: Estoque crítico, priorizar venda e reforçar pedido de reposição
+3: Avisar equipe de compras e avaliar fornecedor alternativo
+7: Estoque crítico, priorizar venda e reforçar pedido de reposição
+7: Avisar equipe de compras e avaliar fornecedor alternativo
+9: Estoque crítico, priorizar venda e reforçar pedido de reposição
+9: Avisar equipe de compras e avaliar fornecedor alternativo
+
+
+[2025-11-24 21:25:56]
+Alertas gerados: 11
+CRITICO: Estoque crítico: 3 — estoque atual 1, deve acabar em ~1 dias.
+CRITICO: Estoque crítico: 7 — estoque atual 1, deve acabar em ~1 dias.
+CRITICO: Estoque crítico: 9 — estoque atual 1, deve acabar em ~2 dias.
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 0 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 2 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 6 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES DA IA ===
+1: Faça uma promoção relâmpago para vender rápido
+1: Remanejar para áreas com mais saída
+3: Produto vencido, remover do estoque e notificar responsável
+5: Faça uma promoção relâmpago para vender rápido
+5: Remanejar para áreas com mais saída
+6: Faça uma promoção relâmpago para vender rápido
+6: Remanejar para áreas com mais saída
+7: Produto vencido, remover do estoque e notificar responsável
+3: Estoque crítico, priorizar venda e reforçar pedido de reposição
+3: Avisar equipe de compras e avaliar fornecedor alternativo
+7: Estoque crítico, priorizar venda e reforçar pedido de reposição
+7: Avisar equipe de compras e avaliar fornecedor alternativo
+9: Estoque crítico, priorizar venda e reforçar pedido de reposição
+9: Avisar equipe de compras e avaliar fornecedor alternativo
+
+
+[2025-11-24 22:10:10]
+Alertas gerados: 11
+CRITICO: Estoque crítico — estoque atual 1, deve acabar em ~1 dias.
+CRITICO: Estoque crítico — estoque atual 1, deve acabar em ~1 dias.
+CRITICO: Estoque crítico — estoque atual 1, deve acabar em ~2 dias.
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 0 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 2 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 6 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES DA IA ===
+1: Faça uma promoção relâmpago para vender rápido
+1: Remanejar para áreas com mais saída
+3: Produto vencido, remover do estoque e notificar responsável
+5: Faça uma promoção relâmpago para vender rápido
+5: Remanejar para áreas com mais saída
+6: Faça uma promoção relâmpago para vender rápido
+6: Remanejar para áreas com mais saída
+7: Produto vencido, remover do estoque e notificar responsável
+3: Estoque crítico, priorizar venda e reforçar pedido de reposição
+3: Avisar equipe de compras e avaliar fornecedor alternativo
+7: Estoque crítico, priorizar venda e reforçar pedido de reposição
+7: Avisar equipe de compras e avaliar fornecedor alternativo
+9: Estoque crítico, priorizar venda e reforçar pedido de reposição
+9: Avisar equipe de compras e avaliar fornecedor alternativo
+
+
+[2025-11-24 22:21:11]
+[ERRO] Falha ao salvar alerta: 1054 (42S22): Unknown column 'nome_produto' in 'field list'
+Alertas gerados: 11
+CRITICO: Estoque crítico: Monitor Acer 23.9' — atual 1, acaba em ~1 dias.
+CRITICO: Estoque crítico: Arroz Branco Tipo 1 — atual 1, acaba em ~1 dias.
+CRITICO: Estoque crítico: Bolacha Tortinhas de Chocolate — atual 1, acaba em ~2 dias.
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 0 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 2 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 6 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES DA IA ===
+1: Faça uma promoção relâmpago para vender rápido
+1: Remanejar para áreas com mais saída
+3: Produto vencido, remover do estoque e notificar responsável
+5: Faça uma promoção relâmpago para vender rápido
+5: Remanejar para áreas com mais saída
+6: Faça uma promoção relâmpago para vender rápido
+6: Remanejar para áreas com mais saída
+7: Produto vencido, remover do estoque e notificar responsável
+3: Estoque crítico, priorizar venda e reforçar pedido de reposição
+3: Avisar equipe de compras e avaliar fornecedor alternativo
+7: Estoque crítico, priorizar venda e reforçar pedido de reposição
+7: Avisar equipe de compras e avaliar fornecedor alternativo
+9: Estoque crítico, priorizar venda e reforçar pedido de reposição
+9: Avisar equipe de compras e avaliar fornecedor alternativo
+
+
+[2025-11-24 22:23:24]
+Alertas gerados: 11
+CRITICO: Estoque crítico: Monitor Acer 23.9' — atual 1, acaba em ~1 dias.
+CRITICO: Estoque crítico: Arroz Branco Tipo 1 — atual 1, acaba em ~1 dias.
+CRITICO: Estoque crítico: Bolacha Tortinhas de Chocolate — atual 1, acaba em ~2 dias.
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 0 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 2 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 6 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES DA IA ===
+1: Faça uma promoção relâmpago para vender rápido
+1: Remanejar para áreas com mais saída
+3: Produto vencido, remover do estoque e notificar responsável
+5: Faça uma promoção relâmpago para vender rápido
+5: Remanejar para áreas com mais saída
+6: Faça uma promoção relâmpago para vender rápido
+6: Remanejar para áreas com mais saída
+7: Produto vencido, remover do estoque e notificar responsável
+3: Estoque crítico, priorizar venda e reforçar pedido de reposição
+3: Avisar equipe de compras e avaliar fornecedor alternativo
+7: Estoque crítico, priorizar venda e reforçar pedido de reposição
+7: Avisar equipe de compras e avaliar fornecedor alternativo
+9: Estoque crítico, priorizar venda e reforçar pedido de reposição
+9: Avisar equipe de compras e avaliar fornecedor alternativo
+
+
+[2025-11-24 22:30:41]
+Alertas gerados: 11
+CRITICO: Estoque crítico: Monitor Acer 23.9' — atual 1, acaba em ~1 dias.
+CRITICO: Estoque crítico: Arroz Branco Tipo 1 — atual 1, acaba em ~1 dias.
+CRITICO: Estoque crítico: Bolacha Tortinhas de Chocolate — atual 1, acaba em ~2 dias.
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 0 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 2 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 6 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES DA IA ===
+1: Faça uma promoção relâmpago para vender rápido
+1: Remanejar para áreas com mais saída
+3: Produto vencido, remover do estoque e notificar responsável
+5: Faça uma promoção relâmpago para vender rápido
+5: Remanejar para áreas com mais saída
+6: Faça uma promoção relâmpago para vender rápido
+6: Remanejar para áreas com mais saída
+7: Produto vencido, remover do estoque e notificar responsável
+3: Estoque crítico, priorizar venda e reforçar pedido de reposição
+3: Avisar equipe de compras e avaliar fornecedor alternativo
+7: Estoque crítico, priorizar venda e reforçar pedido de reposição
+7: Avisar equipe de compras e avaliar fornecedor alternativo
+9: Estoque crítico, priorizar venda e reforçar pedido de reposição
+9: Avisar equipe de compras e avaliar fornecedor alternativo
+
+
+[2025-11-25 02:13:58]
+Alertas gerados: 11
+CRITICO: Estoque crítico: Monitor Acer 23.9' — atual 1, acaba em ~1 dias.
+CRITICO: Estoque crítico: Arroz Branco Tipo 1 — atual 1, acaba em ~1 dias.
+CRITICO: Estoque crítico: Bolacha Tortinhas de Chocolate — atual 1, acaba em ~2 dias.
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 0 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 2 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 6 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES DA IA ===
+1: Faça uma promoção relâmpago para vender rápido
+1: Remanejar para áreas com mais saída
+3: Produto vencido, remover do estoque e notificar responsável
+5: Faça uma promoção relâmpago para vender rápido
+5: Remanejar para áreas com mais saída
+6: Faça uma promoção relâmpago para vender rápido
+6: Remanejar para áreas com mais saída
+7: Produto vencido, remover do estoque e notificar responsável
+3: Estoque crítico, priorizar venda e reforçar pedido de reposição
+3: Avisar equipe de compras e avaliar fornecedor alternativo
+7: Estoque crítico, priorizar venda e reforçar pedido de reposição
+7: Avisar equipe de compras e avaliar fornecedor alternativo
+9: Estoque crítico, priorizar venda e reforçar pedido de reposição
+9: Avisar equipe de compras e avaliar fornecedor alternativo
+
+

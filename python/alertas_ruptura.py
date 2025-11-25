@@ -23,18 +23,18 @@ def calcular_media_diaria(vendas_df, dias_anteriores=30):
 
 def calcular_dias_ate_acabar(estoque_df, medias_df, fallback_days=30):
     """
-    estoque_df deve ter colunas: 'id_estoque', 'codigo_produto', 'quantidade_atual'
+    estoque_df deve ter colunas: 'id_estoque', 'id_produto', 'quantidade_atual'
     medias_df: id_produto, media_diaria
-    Retorna DataFrame com: id_estoque, codigo_produto, quantidade_atual, media_diaria, dias_ate_acabar, risco
+    Retorna DataFrame com: id_estoque, id_produto, quantidade_atual, media_diaria, dias_ate_acabar, risco
     """
     df = estoque_df.copy()
     
     # Força tipos iguais pra evitar erros de merge
-    df['codigo_produto'] = df['codigo_produto'].astype(str)
+    df['id_produto'] = df['id_produto'].astype(str)
     medias_df['id_produto'] = medias_df['id_produto'].astype(str)
 
     # merge
-    merged = df.merge(medias_df, left_on='codigo_produto', right_on='id_produto', how='left')
+    merged = df.merge(medias_df, left_on='id_produto', right_on='id_produto', how='left')
     merged['media_diaria'] = merged['media_diaria'].fillna(0.0)
 
     def days_func(qty, avg):
@@ -58,31 +58,34 @@ def calcular_dias_ate_acabar(estoque_df, medias_df, fallback_days=30):
 
     merged['risco'] = merged['dias_ate_acabar'].apply(classificar)
 
-    return merged[['id_estoque','codigo_produto','quantidade_atual','media_diaria','dias_ate_acabar','risco']]
+    return merged[['id_estoque','id_produto','quantidade_atual','media_diaria','dias_ate_acabar','risco']]
 
-def gerar_alertas_de_ruptura(ruptura_df):
-    """
-    Recebe DataFrame resultado de calcular_dias_ate_acabar e retorna lista de dicts (alertas)
-    """
+def gerar_alertas_de_ruptura(ruptura_df, nomes_produtos):
     alertas = []
     for _, r in ruptura_df.iterrows():
+
+        nome_produto = nomes_produtos.get(int(r['id_produto']), f"Produto {r['id_produto']}")
+
         if r['risco'] == 'Crítico':
             nivel = 'critico'
-            mensagem = f"Estoque crítico: {r['codigo_produto']} — estoque atual {r['quantidade_atual']}, deve acabar em ~{r['dias_ate_acabar']} dias."
+            mensagem = f"Estoque crítico: {nome_produto} — atual {r['quantidade_atual']}, acaba em ~{r['dias_ate_acabar']} dias."
         elif r['risco'] == 'Atenção':
-            nivel = 'atencao'
-            mensagem = f"Atenção: {r['codigo_produto']} — estoque atual {r['quantidade_atual']}, deve acabar em ~{r['dias_ate_acabar']} dias."
+            nivel = 'atenção'
+            mensagem = f"Atenção: {nome_produto} — atual {r['quantidade_atual']}, acaba em ~{r['dias_ate_acabar']} dias."
         else:
-            # Seguro não gera alerta
             continue
+
         alertas.append({
             'id_estoque': int(r['id_estoque']),
-            'codigo_produto': str(r['codigo_produto']),
+            'id_produto': int(r['id_produto']),
+            'nome_produto': nome_produto,
             'nivel': nivel,
             'mensagem': mensagem,
             'dias_ate_acabar': r['dias_ate_acabar']
         })
+
     return alertas
+
 
 def salvar_alertas_no_db(engine, alertas, tabela='alertas_tbl'):
     """
@@ -95,10 +98,10 @@ def salvar_alertas_no_db(engine, alertas, tabela='alertas_tbl'):
         return
 
     insert_sql = """
-        INSERT INTO {tabela} 
-        (tipo, mensagem, nivel_prioridade, enviado_para, status, idUsuario_TBL, idProdutos_TBL)
-        VALUES (%s, %s, %s, NULL, 'pendente', %s, %s)
-    """.format(tabela=tabela)
+        INSERT INTO alertas_tbl 
+        (tipo, mensagem, nivel_prioridade, nome_produto, enviado_para, status, idUsuario_TBL, idProdutos_TBL)
+        VALUES (%s, %s, %s, %s, NULL, 'pendente', %s, %s)
+    """
 
     try:
         conn = engine
@@ -108,8 +111,9 @@ def salvar_alertas_no_db(engine, alertas, tabela='alertas_tbl'):
                 "ruptura",
                 a["mensagem"],
                 a["nivel"],
-                13,               # idUsuario_TBL
-                a["codigo_produto"]  # idProdutos_TBL
+                a.get("nome_produto", "Desconhecido"),
+                13,
+                a["id_produto"]
             ))
         conn.commit()
         cursor.close()

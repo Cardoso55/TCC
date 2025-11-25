@@ -9,6 +9,9 @@ from alertas_ruptura import (
     gerar_alertas_de_ruptura,
     salvar_alertas_no_db
 )
+import warnings
+warnings.filterwarnings("ignore")
+
 
 # ===== CONFIGURAÇÃO =====
 DIAS_AVISO_VALIDADE = 7  # alerta se faltar <= 7 dias para vencer
@@ -45,7 +48,8 @@ def gerar_alertas_validade(engine):
         if dias_restantes < 0:
             alertas.append({
                 'id_estoque': -1,
-                'codigo_produto': int(r['id_produto']),
+                'id_produto': int(r['id_produto']),
+                'nome_produto': nome_produto,
                 'nivel': 'critico',
                 'mensagem': f"Produto vencido: {nome_produto} — validade {r['validade'].date()}",
                 'dias_ate_acabar': -1
@@ -53,7 +57,8 @@ def gerar_alertas_validade(engine):
         elif dias_restantes <= DIAS_AVISO_VALIDADE:
             alertas.append({
                 'id_estoque': -1,
-                'codigo_produto': int(r['id_produto']),
+                'id_produto': int(r['id_produto']),
+                'nome_produto': nome_produto,
                 'nivel': 'atenção',
                 'mensagem': f"Produto próximo da validade: {nome_produto} — vence em {dias_restantes} dias",
                 'dias_ate_acabar': dias_restantes
@@ -64,29 +69,34 @@ def gerar_alertas_validade(engine):
 # Alertas de estoque baixo
 # ----------------------
 def gerar_alertas_estoque_baixo(estoque_df, engine):
-    # Carrega id, código real e nome dos produtos
+    # Carrega id_produto, codigo e nome dos produtos
     produtos_df = pd.read_sql("SELECT id_produto, codigo_produto, nome FROM produtos_tbl", engine)
 
-    # dicionários para buscar nome e id_produto por codigo_produto
-    codigo_para_nome = pd.Series(produtos_df.nome.values, index=produtos_df.codigo_produto).to_dict()
-    codigo_para_id = pd.Series(produtos_df.id_produto.values, index=produtos_df.codigo_produto).to_dict()
+    # dicionário: id_produto → nome
+    id_para_nome = pd.Series(
+        produtos_df.nome.values,
+        index=produtos_df.id_produto
+    ).to_dict()
 
     alertas = []
     for _, row in estoque_df.iterrows():
-        if row['quantidade_atual'] <= row['quantidade_minima']:
-            codigo_real = str(row['codigo_produto'])
-            nome_produto = codigo_para_nome.get(codigo_real, f"Produto ({codigo_real})")
-            id_produto = codigo_para_id.get(codigo_real, None)  # salva INT no banco, None se não existir
 
+        id_produto = int(row['idProdutos_TBL'])   # FK CERTA DO ESTOQUE
+
+        nome_produto = id_para_nome.get(id_produto, f"Produto desconhecido ({id_produto})")
+
+        if row['quantidade_atual'] <= row['quantidade_minima']:
             alertas.append({
                 'id_estoque': row['id_estoque'],
-                'codigo_produto': id_produto,       # só INT
-                'nome_produto': nome_produto,       # usado para mostrar na tela
+                'id_produto': id_produto,     # agora é o ID real
+                'nome_produto': nome_produto,
                 'nivel': 'atenção',
                 'mensagem': f"Estoque baixo: {nome_produto} — atual {row['quantidade_atual']}, mínimo {row['quantidade_minima']}",
                 'dias_ate_acabar': row['quantidade_atual']
             })
+
     return alertas
+
 
 
 # ----------------------
@@ -97,19 +107,19 @@ def gerar_recomendacoes_alertas(alertas):
 
     for a in alertas:
         msg = a['mensagem'].lower()
-        codigo = a['codigo_produto']
+        codigo = a['id_produto']
         nome_produto = a.get('nome_produto', f"Produto desconhecido ({codigo})")  # <-- sempre pega do alerta
 
         if "próximo da validade" in msg:
-            recomendacoes.append({'codigo_produto': codigo, 'nome_produto': nome_produto, 'recomendacao': "💡 Faça uma promoção relâmpago para vender rápido ⚡"})
-            recomendacoes.append({'codigo_produto': codigo, 'nome_produto': nome_produto, 'recomendacao': "🔄 Remanejar para áreas com mais saída ⚡"})
+            recomendacoes.append({'id_produto': codigo, 'nome_produto': nome_produto, 'recomendacao': "Faça uma promoção relâmpago para vender rápido"})
+            recomendacoes.append({'id_produto': codigo, 'nome_produto': nome_produto, 'recomendacao': "Remanejar para áreas com mais saída"})
         elif "vencido" in msg:
-            recomendacoes.append({'codigo_produto': codigo, 'nome_produto': nome_produto, 'recomendacao': "⚠️ Produto vencido, remover do estoque e notificar responsável ⚡"})
+            recomendacoes.append({'id_produto': codigo, 'nome_produto': nome_produto, 'recomendacao': "Produto vencido, remover do estoque e notificar responsável"})
         elif "estoque baixo" in msg:
-            recomendacoes.append({'codigo_produto': codigo, 'nome_produto': nome_produto, 'recomendacao': "📦 Estoque crítico, priorizar venda e reforçar pedido de reposição ⚡"})
-            recomendacoes.append({'codigo_produto': codigo, 'nome_produto': nome_produto, 'recomendacao': "🔔 Avisar equipe de compras e avaliar fornecedor alternativo ⚡"})
+            recomendacoes.append({'id_produto': codigo, 'nome_produto': nome_produto, 'recomendacao': "Estoque crítico, priorizar venda e reforçar pedido de reposição"})
+            recomendacoes.append({'id_produto': codigo, 'nome_produto': nome_produto, 'recomendacao': "Avisar equipe de compras e avaliar fornecedor alternativo"})
         elif "ruptura" in msg:
-            recomendacoes.append({'codigo_produto': codigo, 'nome_produto': nome_produto, 'recomendacao': "⏰ Risco de ruptura! Antecipe pedido e acompanhe lead time do fornecedor ⚡"})
+            recomendacoes.append({'id_produto': codigo, 'nome_produto': nome_produto, 'recomendacao': "Risco de ruptura! Antecipe pedido e acompanhe lead time do fornecedor"})
 
     return recomendacoes
 
@@ -133,7 +143,7 @@ def salvar_recomendacoes_no_db(engine, recomendacoes):
     """
 
     for r in recomendacoes:
-        codigo = r.get('codigo_produto')
+        codigo = r.get('id_produto')
         nome = r.get('nome_produto', f"Produto ({codigo})")
         rec = r.get('recomendacao', '')
         cursor.execute(sql, (codigo, nome, rec, agora))
@@ -145,11 +155,12 @@ def salvar_recomendacoes_no_db(engine, recomendacoes):
 # ----------------------
 # Executar alertas e recomendações
 # ----------------------
-# ----------------------
-# Executar alertas e recomendações
-# ----------------------
 def executar_alertas():
     engine = get_connection()
+    # Carregar mapa id → nome
+    produtos_df = pd.read_sql("SELECT id_produto, nome FROM produtos_tbl", engine)
+    nomes_produtos = dict(zip(produtos_df.id_produto, produtos_df.nome))
+
 
     # 1️⃣ Carrega vendas últimos 6 meses
     df_vendas = carregar_vendas(engine, dias_anteriores=180)
@@ -167,7 +178,8 @@ def executar_alertas():
     ruptura_df = calcular_dias_ate_acabar(estoque_df, medias, fallback_days=30)
 
     # 5️⃣ Gera alertas de estoque por previsão de ruptura
-    alertas_ruptura = gerar_alertas_de_ruptura(ruptura_df)
+    alertas_ruptura = gerar_alertas_de_ruptura(ruptura_df, nomes_produtos)
+
 
     # 6️⃣ Gera alertas de produtos vencidos/próximos da validade
     alertas_validade = gerar_alertas_validade(engine)
@@ -190,9 +202,9 @@ def executar_alertas():
     recomendacoes = gerar_recomendacoes_alertas(alertas)
 
     # Mostra no console
-    print("\n=== RECOMENDAÇÕES INSANAS DA IA ===")
+    print("\n=== RECOMENDAÇÕES DA IA ===")
     for r in recomendacoes:
-        print(f"{r['codigo_produto']}: {r['recomendacao']}")
+        print(f"{r['id_produto']}: {r['recomendacao']}")
 
     # Salva direto no banco igual os alertas
     salvar_recomendacoes_no_db(engine, recomendacoes)
