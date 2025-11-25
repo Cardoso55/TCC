@@ -6,9 +6,14 @@ require_once __DIR__ . '/../models/PedidoReposicaoModel.php';
 
 class ChecklistController {
 
-    // Listar checklists
-    public static function listar($filtros = []) {
-        return ChecklistModel::listarChecklists($filtros);
+    // Listar checklists de saída (Setor de Vendas)
+    public static function listarSaida($filtros = []) {
+        return ChecklistModel::listarChecklistsSaida($filtros);
+    }
+
+    // Listar checklists de entrada (Estoque)
+    public static function listarEntrada($filtros = []) {
+        return ChecklistModel::listarChecklistsEntrada($filtros);
     }
 
     // Criar checklist
@@ -19,80 +24,106 @@ class ChecklistController {
         return ChecklistModel::criarChecklist($dados);
     }
 
-    // Confirmar checklist
-    public static function confirmar($idChecklist, $idUsuario, $idPedido = null) {
-    $idChecklist = (int)$idChecklist;
-    $idUsuario = (int)$idUsuario;
-    $idPedido = $idPedido !== null ? (int)$idPedido : null;
+    private static function processarSaidaEstoque($checklist, $idUsuario) {
+    require_once __DIR__ . "/../models/Movimentacoes.php";
+    require_once __DIR__ . "/../models/EstoqueModel.php";
 
-    // Pega detalhes do checklist
-    $checklist = ChecklistModel::detalhesChecklist($idChecklist);
-    if (!$checklist) die("Checklist não encontrado!");
+    $idProduto = $checklist['idProduto_TBL'];
+    $quantidade = $checklist['quantidade'] ?? 1;
 
-    // 🚫 Impede dupla confirmação por clique rápido / requests simultâneos
-    if ($checklist['status'] === 'confirmado') {
-        header("Location: /TCC/index.php?pagina=checklist&ja_confirmado=1");
-        exit;
+    $estoque = EstoqueModel::buscarPorProduto($idProduto);
+    if (!$estoque) die("Erro: Estoque não encontrado para o produto {$idProduto}.");
+
+    $idEstoque = $estoque['id_estoque'];
+    $novaQuantidade = $estoque['quantidade_atual'] - $quantidade; // aqui debita a venda
+
+    // Atualiza estoque
+    EstoqueModel::atualizarQuantidade($idEstoque, $idProduto, $novaQuantidade);
+
+    // Registra movimentação de saída
+    MovimentacoesModel::registrarMovimentacao(
+        $idUsuario,
+        $idEstoque,
+        $idProduto,
+        $quantidade,
+        'saida',
+        'Checklist saída',
+        'Movimentação gerada automaticamente ao confirmar checklist de saída'
+    );
+}
+
+
+    // Confirmar checklist (mesma função que você já tinha)
+    // Confirmar checklist (atualiza e dispara ações específicas)
+public static function confirmar($idChecklist, $idUsuario, $idPedidoRecebido) {
+    $checklist = ChecklistModel::buscarPorId($idChecklist);
+    if (!$checklist) die("Checklist não encontrado.");
+
+    $idCompra = $checklist['idCompra_TBL'] ?? null;
+    $idReposicao = $checklist['idPedidosReposicao_TBL'] ?? null;
+
+    // Confirma checklist
+    ChecklistModel::confirmarChecklist($idChecklist, $idUsuario);
+
+    // Confirma compra, se houver
+    if ($idCompra) {
+        require_once __DIR__ . "/../models/CompraModel.php";
+        CompraModel::marcarComoConcluida($idCompra);
+        $compra = CompraModel::buscarPorId($idCompra);
+        $quantidade = $compra['quantidade'] ?? 1;
     }
 
-       
-    // Atualiza status do checklist
-    ChecklistModel::confirmarChecklist($idChecklist, $idUsuario, $idPedido);
+    // Confirma pedido de reposição, se houver
+    if ($idReposicao) {
+        require_once __DIR__ . "/../models/PedidoReposicaoModel.php";
+        PedidoReposicaoModel::marcarComoConcluido($idReposicao);
+        $pedido = PedidoReposicaoModel::buscarPorId($idReposicao);
+        $quantidade = $pedido['quantidade'] ?? ($quantidade ?? 1);
+    }
 
-    // Atualiza pedido vinculado e estoque
-    if ($idPedido) {
-        $pedido = PedidoReposicaoModel::buscarPedidoParaCompra($idPedido);
-        if ($pedido) {
+    // Se ainda não pegou quantidade, pega do checklist
+    $quantidade = $checklist['quantidade'] ?? ($quantidade ?? 1);
+
+    // Processa entrada ou saída
+    if (!empty($checklist['idProduto_TBL'])) {
+        if ($checklist['tipo'] === 'saida') {
+            // Chamando a função isolada para venda/saída
+            self::processarSaidaEstoque($checklist, $idUsuario);
+        } else {
+            // Entrada normal
+            require_once __DIR__ . "/../models/Movimentacoes.php";
+            require_once __DIR__ . "/../models/EstoqueModel.php";
+
+            $idProduto = $checklist['idProduto_TBL'];
+            $estoque = EstoqueModel::buscarPorProduto($idProduto);
+            if (!$estoque) die("Erro: Estoque não encontrado para o produto {$idProduto}.");
+
+            $idEstoque = $estoque['id_estoque'];
+            $novaQuantidade = $estoque['quantidade_atual'] + $quantidade;
+
             // Atualiza estoque
-            ProdutoModel::atualizarEstoque($pedido['id_produto'], $pedido['quantidade'], 'entrada');
-            ProdutoModel::criarMovimentacao(
-                $pedido['id_produto'],
+            EstoqueModel::atualizarQuantidade($idEstoque, $idProduto, $novaQuantidade);
+
+            // Registra movimentação de entrada
+            MovimentacoesModel::registrarMovimentacao(
                 $idUsuario,
-                $pedido['quantidade'],
+                $idEstoque,
+                $idProduto,
+                $quantidade,
                 'entrada',
-                'reposicao_confirmada',
-                'Movimentação gerada após confirmação do checklist'
+                'Checklist entrada',
+                'Movimentação gerada automaticamente ao confirmar checklist'
             );
-
-            // Atualiza status do pedido
-            $conn = conectarBanco();
-            $stmt = $conn->prepare("UPDATE pedidosreposicao_tbl SET status='confirmado', data_recebimento=NOW() WHERE id_pedido=?");
-            $stmt->bind_param("i", $idPedido);
-            $stmt->execute();
-            $stmt->close();
-            $conn->close();
-
-            // 🚀 Atualiza valor_total da compra após confirmação do pedido
-            if (!empty($pedido['id_compra'])) {
-                CompraModel::atualizarValorTotal($pedido['id_compra']);
-            }
         }
     }
 
-    // Atualiza status da compra se todos checklists confirmados
-    if (!empty($checklist['idCompra_TBL'])) {
-        $todosConfirmados = ChecklistModel::todosConfirmadosPara($checklist['idCompra_TBL']);
-        if ($todosConfirmados) {
-            CompraModel::atualizarStatus($checklist['idCompra_TBL'], 'confirmado');
-        }
-    }
-
-    // Redireciona para página de checklists com sucesso
-    header("Location: /TCC/index.php?pagina=checklist&sucesso=1");
+    header("Location: ?pagina=checklist&tipo=" . $checklist['tipo'] . "&sucesso=1");
     exit;
 }
 
-    // Gerar checklist automaticamente para compra
-    public static function gerarParaCompra($idCompra, $idUsuario, $idProduto, $quantidade, $idPedido) {
-        ChecklistModel::criarChecklist([
-            'tipo' => 'entrada',
-            'conteudo' => "Verificar recebimento de $quantidade unidades do produto ID $idProduto",
-            'idUsuarios_TBL' => $idUsuario,
-            'idCompra_TBL' => $idCompra,
-            'idProduto_TBL' => $idProduto,
-            'idPedidosReposicao_TBL' => $idPedido
-        ]);
-    }
+
+
+
 
     // Adicionar observação
     public static function adicionarObservacao($idChecklist, $observacao) {
