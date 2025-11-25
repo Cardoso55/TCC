@@ -1,5 +1,6 @@
 <?php
-require_once 'app/models/PrevisoesModel.php';
+require_once __DIR__ . "/../models/PrevisoesModel.php";
+
 
 $model = new PrevisoesModel();
 
@@ -55,6 +56,83 @@ $previsoes = $model->getUltimasPrevisoes();
     <?php include 'partials/sidebar.php'; ?>
     <div class="main-content">
         <h2 class="title">Dashboard Master</h2>
+        <?php if (isset($_GET['previsao_ok'])): ?>
+            <div style="
+                padding: 12px;
+                margin-bottom: 20px;
+                background: #4CAF50;
+                color: white;
+                border-radius: 6px;
+                text-align: center;
+            ">
+                ✔️ Previsões geradas com sucesso!
+            </div>
+        <?php endif; ?>
+
+        <div style="margin-bottom: 20px;">
+        <form action="/TCC/app/controllers/ExecutarPrevisaoController.php" method="POST">
+            <button type="submit" 
+                style="
+                    padding: 12px 20px;
+                    background: linear-gradient(135deg, #4c79ff, #6b8bff);
+                    border: none;
+                    color: white;
+                    font-size: 16px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    transition: 0.3s;
+                "
+                onmouseover="this.style.opacity='0.85'"
+                onmouseout="this.style.opacity='1'">
+                🔮 Gerar Previsões Agora
+            </button>
+        </form>
+
+
+        <!-- Botão IA fora do form -->
+        <button id="executar-ia-btn" class="gerar-btn" style="
+                padding: 12px 20px;
+                background: linear-gradient(135deg, #4c79ff, #6b8bff);
+                border: none;
+                color: white;
+                font-size: 16px;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: 0.3s;
+            "
+            onmouseover="this.style.opacity='0.85'"
+            onmouseout="this.style.opacity='1'">🤖 Executar IA</button>
+
+
+    </div>
+
+            <?php
+            require_once __DIR__ . "/../models/IARecommendationsModel.php";
+            $iaModel = new IARecommendationsModel();
+            $recomendacoes = $iaModel->getRecomendacoesNaoVistas();
+            ?>
+
+            <?php if(!empty($recomendacoes)): ?>
+                <h2>Recomendações Insanas da IA</h2>
+                <div class="cards" id="recomendacoes-ia">
+                    <?php foreach ($recomendacoes as $r): ?>
+                        <div class="card" id="rec-<?= $r['id'] ?>" style="background: linear-gradient(135deg, #ff4c4c, #ff8a8a); color: white;">
+                            <h4><?= $r['nome_produto'] ?> (<?= $r['codigo_produto'] ?>)</h4>
+                            <p><?= $r['recomendacao'] ?></p>
+                            <button class="marcar-visto-btn" data-id="<?= $r['id'] ?>" style="
+                                margin-top:10px; 
+                                padding:6px 12px; 
+                                background:#fff; 
+                                color:#ff4c4c; 
+                                border:none; 
+                                border-radius:6px; 
+                                cursor:pointer;">
+                                ✔️ Marcar como visto
+                            </button>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
 
         <!-- CARDS RESUMO -->
         <div class="cards">
@@ -134,5 +212,56 @@ $previsoes = $model->getUltimasPrevisoes();
         }
     });
 </script>
+<script>
+document.getElementById('executar-ia-btn').addEventListener('click', async (e) => {
+    e.preventDefault(); // evita submit do form
+
+    if (!confirm("Deseja executar a IA agora?")) return;
+
+    try {
+        const resp = await fetch('/TCC/app/controllers/executar_ia_dashboard.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: "executar=1" // pode ser qualquer flag pra indicar que deve rodar
+        });
+        const texto = await resp.text();
+
+        alert(texto);
+
+        // Atualiza alertas e dados se quiser
+        setTimeout(() => location.reload(), 800);
+    } catch (err) {
+        console.error(err);
+        alert("Erro ao executar a IA.");
+    }
+});
+
+</script>
+<script>
+document.querySelectorAll('.marcar-visto-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+        const id = btn.dataset.id;
+        try {
+            const resp = await fetch('/TCC/app/controllers/marcar_visto.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `id=${id}`
+            });
+            const text = await resp.text();
+            if(text.trim() === 'ok'){
+                // remove o card da tela
+                document.getElementById('rec-' + id).remove();
+            } else {
+                alert('Erro ao marcar como visto!');
+            }
+        } catch(e) {
+            console.error(e);
+            alert('Erro na requisição.');
+        }
+    });
+});
+</script>
+
+
 </body>
 </html>

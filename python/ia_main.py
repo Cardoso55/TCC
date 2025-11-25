@@ -1,200 +1,205 @@
-import json
-import os
-import sys
+# ia_main.py
 import pandas as pd
-import numpy as np
-from sklearn.linear_model import LinearRegression
-from utils.estoque_db import carregar_estoque_produtos, atualizar_estoque_minimo
-from alertas_ruptura import calcular_media_diaria, calcular_dias_ate_acabar, gerar_alertas_de_ruptura, salvar_alertas_no_db
+from datetime import datetime, timedelta
+from utils.db import get_connection
+from utils.estoque_db import carregar_estoque_produtos
+from alertas_ruptura import (
+    calcular_media_diaria,
+    calcular_dias_ate_acabar,
+    gerar_alertas_de_ruptura,
+    salvar_alertas_no_db
+)
+
+# ===== CONFIGURAÇÃO =====
+DIAS_AVISO_VALIDADE = 7  # alerta se faltar <= 7 dias para vencer
+DIAS_AVISO_ESTOQUE = 3   # alerta de estoque baixo se quantidade atual <= mínima
 
 # ----------------------
-# Função para caminhos relativos no exe
+# Carregar vendas do banco
 # ----------------------
-def caminho_relativo(*args):
-    """Retorna caminho absoluto relativo ao script ou exe."""
-    try:
-        # Se for exe gerado pelo PyInstaller
-        base_path = sys._MEIPASS
-    except AttributeError:
-        # Se for rodando como script Python
-        base_path = os.path.dirname(os.path.abspath(__file__))
-    return os.path.join(base_path, *args)
+def carregar_vendas(engine, dias_anteriores=None):
+    query = "SELECT id_venda, id_produto, quantidade, preco_unitario, data_venda FROM vendas_tbl"
+    df = pd.read_sql(query, engine, parse_dates=["data_venda"])
+    if dias_anteriores:
+        data_limite = pd.Timestamp.now() - pd.Timedelta(days=dias_anteriores)
+        df = df[df["data_venda"] >= data_limite]
+    return df
 
 # ----------------------
-# Previsões usando regressão linear
+# Alertas de produtos vencidos ou próximos da validade
 # ----------------------
-def gerar_previsoes(df_vendas, dias_futuros=30):
-    previsoes = {}
-    df_grouped = df_vendas.groupby(["codigo_produto", "data_venda"]).agg({
-        "quantidade_vendida": "sum",
-        "nome": "first",
-        "preco_unitario": "first"
-    }).reset_index()
+def gerar_alertas_validade(engine):
+    produtos_df = pd.read_sql(
+        "SELECT id_produto, nome, validade FROM produtos_tbl",
+        engine,
+        parse_dates=["validade"]
+    )
+    hoje = pd.Timestamp.now().normalize()
+    alertas = []
 
-    for codigo, grupo in df_grouped.groupby("codigo_produto"):
-        grupo = grupo.sort_values("data_venda")
-        grupo["dias"] = (grupo["data_venda"] - grupo["data_venda"].min()).dt.days
-
-        X = grupo["dias"].values.reshape(-1, 1)
-        y = grupo["quantidade_vendida"].values
-
-        if len(X) < 2:
-            previsao_total = max(0, int(np.round(y.sum())))
-        else:
-            modelo = LinearRegression()
-            modelo.fit(X, y)
-            dias_para_prever = np.array(range(X.max()+1, X.max()+dias_futuros+1)).reshape(-1, 1)
-            previsao = modelo.predict(dias_para_prever)
-            previsao_total = int(np.round(np.sum(np.maximum(previsao, 0))))
-
-        ultimo = grupo.iloc[-1]
-        previsoes[codigo] = {
-            "nome": ultimo["nome"],
-            "preco_unitario": float(ultimo["preco_unitario"]),
-            "previsao": previsao_total
-        }
-
-    return previsoes
-
-# ----------------------
-# Salva previsões em JSON
-# ----------------------
-def salvar_previsoes_json(previsoes):
-    caminho_json = caminho_relativo("previsoes_vendas.json")
-    with open(caminho_json, "w", encoding="utf-8") as f:
-        json.dump(previsoes, f, ensure_ascii=False, indent=4)
-    print(f"JSON de previsões atualizado: {caminho_json}")
+    for _, r in produtos_df.iterrows():
+        if pd.isna(r['validade']):
+            continue
+        dias_restantes = (r['validade'].normalize() - hoje).days
+        nome_produto = r['nome'] if pd.notna(r['nome']) else "Produto desconhecido"
+        if dias_restantes < 0:
+            alertas.append({
+                'id_estoque': -1,
+                'codigo_produto': int(r['id_produto']),
+                'nivel': 'critico',
+                'mensagem': f"Produto vencido: {nome_produto} — validade {r['validade'].date()}",
+                'dias_ate_acabar': -1
+            })
+        elif dias_restantes <= DIAS_AVISO_VALIDADE:
+            alertas.append({
+                'id_estoque': -1,
+                'codigo_produto': int(r['id_produto']),
+                'nivel': 'atenção',
+                'mensagem': f"Produto próximo da validade: {nome_produto} — vence em {dias_restantes} dias",
+                'dias_ate_acabar': dias_restantes
+            })
+    return alertas
 
 # ----------------------
-# CSV mais recente
+# Alertas de estoque baixo
 # ----------------------
-def obter_csv_mais_recente():
-    pasta_vendas = caminho_relativo("data", "vendas")
-    arquivos = [os.path.join(pasta_vendas, f) for f in os.listdir(pasta_vendas) if f.endswith(".csv")]
-    if not arquivos:
-        print("Nenhum arquivo CSV encontrado na pasta de vendas.")
-        return None
-    arquivo_recente = max(arquivos, key=os.path.getmtime)
-    print(f"CSV selecionado: {arquivo_recente}")
-    return arquivo_recente
+def gerar_alertas_estoque_baixo(estoque_df, engine):
+    # Carrega id, código real e nome dos produtos
+    produtos_df = pd.read_sql("SELECT id_produto, codigo_produto, nome FROM produtos_tbl", engine)
+
+    # dicionários para buscar nome e id_produto por codigo_produto
+    codigo_para_nome = pd.Series(produtos_df.nome.values, index=produtos_df.codigo_produto).to_dict()
+    codigo_para_id = pd.Series(produtos_df.id_produto.values, index=produtos_df.codigo_produto).to_dict()
+
+    alertas = []
+    for _, row in estoque_df.iterrows():
+        if row['quantidade_atual'] <= row['quantidade_minima']:
+            codigo_real = str(row['codigo_produto'])
+            nome_produto = codigo_para_nome.get(codigo_real, f"Produto ({codigo_real})")
+            id_produto = codigo_para_id.get(codigo_real, None)  # salva INT no banco, None se não existir
+
+            alertas.append({
+                'id_estoque': row['id_estoque'],
+                'codigo_produto': id_produto,       # só INT
+                'nome_produto': nome_produto,       # usado para mostrar na tela
+                'nivel': 'atenção',
+                'mensagem': f"Estoque baixo: {nome_produto} — atual {row['quantidade_atual']}, mínimo {row['quantidade_minima']}",
+                'dias_ate_acabar': row['quantidade_atual']
+            })
+    return alertas
+
 
 # ----------------------
-# Estoque mínimo
+# Recomendações baseadas nos alertas (corrigido)
 # ----------------------
-def calcular_estoque_minimo(caminho_csv, engine):
-    df = pd.read_csv(caminho_csv, parse_dates=["data_venda"])
-    if "codigo_produto" not in df.columns or "quantidade_vendida" not in df.columns:
-        print("CSV inválido. Deve conter 'codigo_produto' e 'quantidade_vendida'.")
+def gerar_recomendacoes_alertas(alertas):
+    recomendacoes = []
+
+    for a in alertas:
+        msg = a['mensagem'].lower()
+        codigo = a['codigo_produto']
+        nome_produto = a.get('nome_produto', f"Produto desconhecido ({codigo})")  # <-- sempre pega do alerta
+
+        if "próximo da validade" in msg:
+            recomendacoes.append({'codigo_produto': codigo, 'nome_produto': nome_produto, 'recomendacao': "💡 Faça uma promoção relâmpago para vender rápido ⚡"})
+            recomendacoes.append({'codigo_produto': codigo, 'nome_produto': nome_produto, 'recomendacao': "🔄 Remanejar para áreas com mais saída ⚡"})
+        elif "vencido" in msg:
+            recomendacoes.append({'codigo_produto': codigo, 'nome_produto': nome_produto, 'recomendacao': "⚠️ Produto vencido, remover do estoque e notificar responsável ⚡"})
+        elif "estoque baixo" in msg:
+            recomendacoes.append({'codigo_produto': codigo, 'nome_produto': nome_produto, 'recomendacao': "📦 Estoque crítico, priorizar venda e reforçar pedido de reposição ⚡"})
+            recomendacoes.append({'codigo_produto': codigo, 'nome_produto': nome_produto, 'recomendacao': "🔔 Avisar equipe de compras e avaliar fornecedor alternativo ⚡"})
+        elif "ruptura" in msg:
+            recomendacoes.append({'codigo_produto': codigo, 'nome_produto': nome_produto, 'recomendacao': "⏰ Risco de ruptura! Antecipe pedido e acompanhe lead time do fornecedor ⚡"})
+
+    return recomendacoes
+
+# ----------------------
+# Salvar recomendações no banco
+# ----------------------
+
+def salvar_recomendacoes_no_db(engine, recomendacoes):
+    if not recomendacoes:
         return
 
-    df_grouped = df.groupby("codigo_produto")["quantidade_vendida"].sum().reset_index()
-    df_grouped["quantidade_minima_sugerida"] = (df_grouped["quantidade_vendida"] * 3).astype(int)
+    # Converte datas para string MySQL
+    agora = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
-    print("Médias calculadas:")
-    print(df_grouped)
+    conn = engine  # seu get_connection() retorna um MySQL connection
+    cursor = conn.cursor()
 
+    sql = """
+        INSERT INTO ia_recomendacoes_tbl (codigo_produto, nome_produto, recomendacao, criado_em)
+        VALUES (%s, %s, %s, %s)
+    """
+
+    for r in recomendacoes:
+        codigo = r.get('codigo_produto')
+        nome = r.get('nome_produto', f"Produto ({codigo})")
+        rec = r.get('recomendacao', '')
+        cursor.execute(sql, (codigo, nome, rec, agora))
+
+    conn.commit()
+    cursor.close()
+
+
+# ----------------------
+# Executar alertas e recomendações
+# ----------------------
+# ----------------------
+# Executar alertas e recomendações
+# ----------------------
+def executar_alertas():
+    engine = get_connection()
+
+    # 1️⃣ Carrega vendas últimos 6 meses
+    df_vendas = carregar_vendas(engine, dias_anteriores=180)
+
+    # 2️⃣ Calcula média diária por produto
+    medias = calcular_media_diaria(df_vendas, dias_anteriores=30) if not df_vendas.empty else pd.DataFrame(columns=['id_produto','media_diaria'])
+
+    # 3️⃣ Carrega estoque atual
     estoque_df = carregar_estoque_produtos(engine)
-    for _, row in df_grouped.iterrows():
-        cod = row["codigo_produto"]
-        minimo = int(row["quantidade_minima_sugerida"])
-        if estoque_df.empty:
-            continue
-        match = estoque_df[estoque_df["codigo_produto"] == cod]
-        if not match.empty:
-            id_estoque = int(match.iloc[0]["id_estoque"])
-            atualizar_estoque_minimo(engine, id_estoque, minimo)
-            print(f"Atualizado: Produto {cod} | mínimo = {minimo}")
-        else:
-            print(f"Produto {cod} não existe no banco.")
+    if estoque_df.empty:
+        print("Estoque vazio. Nenhum alerta gerado.")
+        return
 
-# ----------------------
-# Recomendar por sazonalidade
-# ----------------------           
-def recomendar_por_sazonalidade(df_vendas, mes_atual):
-    df_vendas['data_venda'] = pd.to_datetime(df_vendas['data_venda'])
-    df_vendas['mes'] = df_vendas['data_venda'].dt.month
+    # 4️⃣ Calcula dias até acabar e risco
+    ruptura_df = calcular_dias_ate_acabar(estoque_df, medias, fallback_days=30)
 
-    saz = df_vendas.groupby(['codigo_produto', 'nome', 'mes'])['quantidade_vendida'].sum().reset_index()
-    saz['percentual'] = saz.groupby('codigo_produto')['quantidade_vendida'].transform(lambda x: x / x.sum())
+    # 5️⃣ Gera alertas de estoque por previsão de ruptura
+    alertas_ruptura = gerar_alertas_de_ruptura(ruptura_df)
 
-    recomendados = saz[(saz['mes'] == mes_atual) & (saz['percentual'] > 0.2)]
-    recomendados = recomendados[['codigo_produto', 'nome', 'percentual']].sort_values('percentual', ascending=False)
+    # 6️⃣ Gera alertas de produtos vencidos/próximos da validade
+    alertas_validade = gerar_alertas_validade(engine)
 
-    return recomendados
+    # 7️⃣ Gera alertas de estoque baixo
+    alertas_estoque_baixo = gerar_alertas_estoque_baixo(estoque_df, engine)  # <-- PASSA O ENGINE AQUI
 
-# ----------------------
-# Salvar sazonalidade em JSON
-# ----------------------  
-def salvar_sazonalidade_json(recomendados, df_vendas):
-    cod_to_nome = df_vendas.set_index("codigo_produto")["nome"].to_dict()
-    lista_produtos = [{"nome": cod_to_nome.get(row["codigo_produto"], row["codigo_produto"])}
-                      for _, row in recomendados.iterrows()]
-    caminho_json = caminho_relativo("previsoes_sazonais.json")
-    with open(caminho_json, "w", encoding="utf-8") as f:
-        json.dump(lista_produtos, f, ensure_ascii=False, indent=4)
-    print(f"JSON de previsões sazonais atualizado: {caminho_json}")
+    # 8️⃣ Junta todos os alertas
+    alertas = alertas_ruptura + alertas_validade + alertas_estoque_baixo
 
-# ----------------------
-# Gerar mais procurados
-# ----------------------  
-def gerar_mais_procurados(df_vendas, mes_atual):
-    df_vendas['data_venda'] = pd.to_datetime(df_vendas['data_venda'])
-    df_vendas['mes'] = df_vendas['data_venda'].dt.month
+    # 9️⃣ Salva alertas no banco
+    salvar_alertas_no_db(engine, alertas)
 
-    vendas_mes = df_vendas.groupby(['codigo_produto', 'nome', 'mes'])['quantidade_vendida'].sum().reset_index()
-    atual = vendas_mes[vendas_mes['mes'] == mes_atual].copy()
-    anterior = vendas_mes[vendas_mes['mes'] == (mes_atual-1)].copy()
-    
-    merged = atual.merge(
-        anterior[['codigo_produto','quantidade_vendida']],
-        on='codigo_produto', how='left',
-        suffixes=('_atual','_anterior')
-    )
-    merged['quantidade_vendida_anterior'].fillna(0, inplace=True)
-    merged['variacao'] = ((merged['quantidade_vendida_atual'] - merged['quantidade_vendida_anterior']) /
-                          merged['quantidade_vendida_anterior'].replace(0,1) * 100).round(0).astype(int)
-    top3 = merged.sort_values('quantidade_vendida_atual', ascending=False).head(3)
-    
-    return [{'nome': row['nome'], 'variacao': row['variacao']} for _, row in top3.iterrows()]
+    # 🔟 Mostra alertas
+    print(f"Alertas gerados: {len(alertas)}")
+    for a in alertas:
+        print(f"{a['nivel'].upper()}: {a['mensagem']}")
 
-# ----------------------
-# Salvar mais procurados em JSON
-# ----------------------  
-def salvar_mais_procurados_json(lista_produtos):
-    caminho_json = caminho_relativo("mais_procurados.json")
-    with open(caminho_json, "w", encoding="utf-8") as f:
-        json.dump(lista_produtos, f, ensure_ascii=False, indent=4)
-    print(f"JSON de produtos mais procurados atualizado: {caminho_json}")
+    # 1️⃣1️⃣ Gera recomendações inteligentes
+    recomendacoes = gerar_recomendacoes_alertas(alertas)
+
+    # Mostra no console
+    print("\n=== RECOMENDAÇÕES INSANAS DA IA ===")
+    for r in recomendacoes:
+        print(f"{r['codigo_produto']}: {r['recomendacao']}")
+
+    # Salva direto no banco igual os alertas
+    salvar_recomendacoes_no_db(engine, recomendacoes)
+
 
 # ----------------------
 # Main
 # ----------------------
-def main():
-    from utils.db_connector import conectar_engine
-    engine = conectar_engine()
-
-    caminho_csv = obter_csv_mais_recente()
-    if not caminho_csv:
-        return
-
-    df_vendas = pd.read_csv(caminho_csv, parse_dates=["data_venda"])
-    medias = calcular_media_diaria(df_vendas, dias_anteriores=30)
-    estoque_df = carregar_estoque_produtos(engine)
-    ruptura_df = calcular_dias_ate_acabar(estoque_df, medias, fallback_days=30)
-    alertas = gerar_alertas_de_ruptura(ruptura_df)
-    salvar_alertas_no_db(engine, alertas)
-    print("Alertas de ruptura gerados:", alertas)
-
-    calcular_estoque_minimo(caminho_csv, engine)
-    previsoes = gerar_previsoes(df_vendas)
-    salvar_previsoes_json(previsoes)
-
-    recomendados = recomendar_por_sazonalidade(df_vendas, mes_atual=pd.Timestamp.now().month)
-    salvar_sazonalidade_json(recomendados, df_vendas)
-
-    mes_atual = pd.Timestamp.now().month
-    mais_procurados = gerar_mais_procurados(df_vendas, mes_atual)
-    salvar_mais_procurados_json(mais_procurados)
-
 if __name__ == "__main__":
-    main()
+    executar_alertas()
