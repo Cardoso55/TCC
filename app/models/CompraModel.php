@@ -197,5 +197,29 @@ class CompraModel
         $db->close();
         return true;
     }
+
+    public static function buscarPorId($idCompra) {
+        $conn = conectarBanco();
+        $stmt = $conn->prepare("SELECT * FROM compras_tbl WHERE id_compra = ?");
+        $stmt->bind_param("i", $idCompra);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $data = $res->fetch_assoc();
+        $stmt->close();
+        $conn->close();
+        return $data;
+    }
+
+    public static function marcarComoConcluida($idCompra) {
+        $conn = conectarBanco();
+        $stmt = $conn->prepare("UPDATE compras_tbl SET status='concluido' WHERE id_compra=?");
+        $stmt->bind_param("i", $idCompra);
+        $ok = $stmt->execute();
+        $stmt->close();
+        $conn->close();
+        return $ok;
+    }
 }
+
+
  

@@ -3,7 +3,7 @@ require_once __DIR__ . '/../database/conexao.php';
 
 class EstoqueModel {
     public static function salvar($estoque) {
-        $db = Database::conectar();
+        $db = conectarBanco();
         $stmt = $db->prepare("INSERT INTO estoque_tbl (idProduto, quantidade) VALUES (?, ?)");
         return $stmt->execute([$estoque['idProduto'], $estoque['quantidade']]);
     }
@@ -94,8 +94,39 @@ class EstoqueModel {
         echo json_encode($this->model->getAlertasIA());
     }
 
-    $router->get('/alertas-ia', 'EstoqueController@listarAlertasIA');
+   public static function buscarPorProduto($idProduto) {
+    $conn = conectarBanco();
 
+    $stmt = $conn->prepare("SELECT * FROM estoque_tbl WHERE idProdutos_TBL = ?");
+    $stmt->bind_param("i", $idProduto);
+    $stmt->execute();
 
+    $result = $stmt->get_result();
+    $estoque = $result->fetch_assoc();
+
+    $stmt->close();
+    $conn->close();
+
+    return $estoque;
+}
+public static function atualizarQuantidade($idEstoque, $idProduto, $novaQuantidade) {
+    $conn = conectarBanco();
+
+    $stmt = $conn->prepare("
+        UPDATE estoque_tbl
+        SET quantidade_atual = ?
+        WHERE id_estoque = ? AND idProdutos_TBL = ?
+    ");
+    $stmt->bind_param("iii", $novaQuantidade, $idEstoque, $idProduto);
+    $stmt->execute();
+
+    $stmt->close();
+    $conn->close();
+    return true;
+}
 
 }
+
+
+
+

@@ -35,7 +35,7 @@ function router() {
     // ==========================================================
     $acessoRestrito = [
         'usuarios' => ['diretor', 'gerente', 'supervisor'],
-        'checklist' => ['operario','supervisor','gerente','diretor'],
+        'checklist' => ['operario','supervisor','gerente','diretor','setor-de-vendas'],
     ];
 
     if (isset($acessoRestrito[$pagina]) && !in_array($nivelLogado, $acessoRestrito[$pagina])) {
@@ -148,50 +148,44 @@ function router() {
             $controller->listar();
             break;
 
+        // CONFIRMAR CHECKLIST (ENTRADA OU SAÍDA)
         case 'checklist_confirmar':
-      case 'checklist_confirmar':
-        require_once __DIR__ . '/controllers/ChecklistController.php';
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $idChecklist = $_POST['idChecklist'] ?? null;
-            $idUsuario = $_POST['idUsuario'] ?? null;
-            $idPedido = $_POST['idPedido'] ?? null; // precisa vir do form
+            require_once __DIR__ . '/controllers/ChecklistController.php';
 
-            // Valida se todos os dados existem
-            if (!$idChecklist || !$idUsuario || !$idPedido) {
-                die("Erro: faltando dados para confirmar o checklist.");
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $idChecklist = $_POST['idChecklist'] ?? null;
+                $idUsuario   = $_POST['idUsuario'] ?? null;
+                $idPedido = $_POST['idPedido'] ?? null;
+
+                if (!$idChecklist || !$idUsuario || !$idPedido) {
+                    die("Erro: faltando dados para confirmar o checklist.");
+                }
+
+                ChecklistController::confirmar($idChecklist, $idUsuario, $idPedido);
+                exit;
             }
+            break;
+       
 
-            ChecklistController::confirmar($idChecklist, $idUsuario, $idPedido);
-            // A função já redireciona, então não precisa de header aqui
-            exit;
+// ADICIONAR OBSERVAÇÃO AO CHECKLIST
+case 'checklist_observacao':
+    require_once __DIR__ . '/controllers/ChecklistController.php';
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+        $idChecklist = $_POST['idChecklist'] ?? null;
+        $observacao  = $_POST['observacao'] ?? null;
+
+        if (!$idChecklist) {
+            die("Erro: idChecklist não informado.");
         }
-        break;
 
+        ChecklistController::adicionarObservacao($idChecklist, $observacao);
+        header('Location: ?pagina=checklist');
+        exit;
+    }
+    break;
 
-
-        case 'checklist_observacao':
-            require_once __DIR__ . '/controllers/ChecklistController.php';
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                ChecklistController::confirmar(
-                    $_POST['idChecklist'],
-                    $_POST['idUsuario'],
-                    $_POST['idPedido']
-                );
-                exit;
-            }
-            break;
-
-        case 'checklist_observacao':
-            require_once __DIR__ . '/controllers/ChecklistController.php';
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                ChecklistController::adicionarObservacao(
-                    $_POST['idChecklist'],
-                    $_POST['observacao']
-                );
-                header('Location: ?pagina=checklist');
-                exit;
-            }
-            break;
 
         case 'solicitacoes':
             require_once __DIR__ . '/controllers/SolicitacoesController.php';

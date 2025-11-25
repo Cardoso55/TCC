@@ -3,117 +3,216 @@ require_once __DIR__ . "/../database/conexao.php";
 
 class ChecklistModel {
 
-    public static function listarChecklists($filtros = []) {
+    /* ============================
+   CRIAR CHECKLIST
+============================= */
+public static function criarChecklist($data) {
     $conn = conectarBanco();
-    $query = "SELECT c.*, u.nome AS usuario_nome, p.nome AS produto_nome
-              FROM Checklist_TBL c
-              LEFT JOIN Usuarios_TBL u ON c.idUsuarios_TBL = u.id_usuario
-              LEFT JOIN Produtos_TBL p ON c.idProduto_TBL = p.id_produto
-              WHERE 1=1";
 
-    if (!empty($filtros['tipo'])) $query .= " AND c.tipo = '".$conn->real_escape_string($filtros['tipo'])."'";
-    if (!empty($filtros['idProduto_TBL'])) $query .= " AND c.idProduto_TBL = ".(int)$filtros['idProduto_TBL'];
-    if (!empty($filtros['idCompra_TBL'])) $query .= " AND c.idCompra_TBL = ".(int)$filtros['idCompra_TBL'];
-    if (!empty($filtros['idPedidosReposicao_TBL'])) $query .= " AND c.idPedidosReposicao_TBL = ".(int)$filtros['idPedidosReposicao_TBL'];
+    $stmt = $conn->prepare("
+        INSERT INTO checklist_tbl (
+            tipo,
+            conteudo,
+            idUsuarios_TBL,
+            idPedidosReposicao_TBL,
+            idCompra_TBL,
+            idProduto_TBL
+        ) VALUES (?, ?, ?, ?, ?, ?)
+    ");
 
-    // Adiciona ordenação pelos mais recentes primeiro
-    $query .= " ORDER BY c.data_criacao DESC";
+    $stmt->bind_param(
+        "ssiiii",
+        $data['tipo'],
+        $data['conteudo'],
+        $data['idUsuarios_TBL'],
+        $data['idPedidosReposicao_TBL'],
+        $data['idCompra_TBL'],
+        $data['idProduto_TBL']
+    );
 
-    $res = $conn->query($query);
-    $checklists = $res->fetch_all(MYSQLI_ASSOC);
+    $ok = $stmt->execute();
+    $novoId = $stmt->insert_id;
+
+    $stmt->close();
     $conn->close();
-    return $checklists;
+
+    return $ok ? $novoId : false;
 }
 
 
-    public static function criarChecklist($dados) {
-    $conn = conectarBanco();
-
-    $tipo = $conn->real_escape_string($dados['tipo']);
-    $conteudo = $conn->real_escape_string($dados['conteudo']);
-    $idUsuario = (int)$dados['idUsuarios_TBL'];
-
-    // IDs opcionais — garantimos NULL real no SQL
-    $idPedido  = !empty($dados['idPedidosReposicao_TBL']) ? (int)$dados['idPedidosReposicao_TBL'] : "NULL";
-    $idCompra  = !empty($dados['idCompra_TBL']) ? (int)$dados['idCompra_TBL'] : "NULL";
-    $idProduto = !empty($dados['idProduto_TBL']) ? (int)$dados['idProduto_TBL'] : "NULL";
-
-    $query = "
-        INSERT INTO Checklist_TBL 
-        (tipo, conteudo, status, data_criacao, idUsuarios_TBL, idPedidosReposicao_TBL, idCompra_TBL, idProduto_TBL)
-        VALUES ('$tipo', '$conteudo', 'pendente', NOW(), $idUsuario, $idPedido, $idCompra, $idProduto)
-    ";
-
-    if ($conn->query($query)) {
-        $id = $conn->insert_id;
-        $conn->close();
-        return ['sucesso' => true, 'id' => $id];
-    } else {
-        $erro = $conn->error;
-        $conn->close();
-        return ['erro' => $erro];
-    }
-}
-
-
-
-
-   public static function confirmarChecklist($idChecklist, $idUsuario, $idPedido) {
-    $conn = conectarBanco();
-    $idChecklist = (int)$idChecklist;
-    $idUsuario = (int)$idUsuario;
-    $idPedidoSql = $idPedido !== null ? (int)$idPedido : 'NULL';
-
-    $query = "UPDATE Checklist_TBL
-              SET status='concluído', data_confirmacao=NOW(), idUsuarios_TBL=$idUsuario, idPedidosReposicao_TBL=$idPedidoSql
-              WHERE id_checklist=$idChecklist";
-
-    if ($conn->query($query)) {
-        $conn->close();
-        return ['sucesso' => true];
-    } else {
-        $conn->close();
-        return ['erro' => $conn->error];
-    }
-}
-
-
-
-    public static function adicionarObservacao($idChecklist, $observacao) {
+    /* ============================
+       LISTAR ENTRADA / COMPRA
+    ============================= */
+    public static function listarChecklistsEntrada($filtros = []) {
         $conn = conectarBanco();
-        $idChecklist = (int)$idChecklist;
-        $observacao = $conn->real_escape_string($observacao);
 
-        $query = "UPDATE Checklist_TBL SET observacao='$observacao' WHERE id_checklist=$idChecklist";
-        $conn->query($query);
+        $query = "SELECT c.*, u.nome AS usuario_nome, p.nome AS produto_nome
+                  FROM checklist_tbl c
+                  LEFT JOIN usuarios_tbl u ON c.idUsuarios_TBL = u.id_usuario
+                  LEFT JOIN produtos_tbl p ON c.idProduto_TBL = p.id_produto
+                  WHERE c.tipo IN ('entrada', 'compra')";
+
+        if (!empty($filtros['idProduto_TBL'])) {
+            $query .= " AND c.idProduto_TBL = " . (int)$filtros['idProduto_TBL'];
+        }
+        if (!empty($filtros['idPedidosReposicao_TBL'])) {
+            $query .= " AND c.idPedidosReposicao_TBL = " . (int)$filtros['idPedidosReposicao_TBL'];
+        }
+        if (!empty($filtros['idCompra_TBL'])) {
+            $query .= " AND c.idCompra_TBL = " . (int)$filtros['idCompra_TBL'];
+        }
+
+        $query .= " ORDER BY c.data_criacao DESC";
+
+        $res = $conn->query($query);
+        $rows = $res ? $res->fetch_all(MYSQLI_ASSOC) : [];
+        $conn->close();
+        return $rows;
+    }
+
+    /* ============================
+       LISTAR SAÍDA
+    ============================= */
+    public static function listarChecklistsSaida($filtros = []) {
+        $conn = conectarBanco();
+
+        $query = "SELECT c.*, u.nome AS usuario_nome, p.nome AS produto_nome
+                  FROM checklist_tbl c
+                  LEFT JOIN usuarios_tbl u ON c.idUsuarios_TBL = u.id_usuario
+                  LEFT JOIN produtos_tbl p ON c.idProduto_TBL = p.id_produto
+                  WHERE LOWER(c.tipo) = 'saida'";
+
+        if (!empty($filtros['idProduto_TBL'])) {
+            $query .= " AND c.idProduto_TBL = " . (int)$filtros['idProduto_TBL'];
+        }
+        if (!empty($filtros['idPedidosSaida_TBL'])) {
+            $query .= " AND c.idPedidosSaida_TBL = " . (int)$filtros['idPedidosSaida_TBL'];
+        }
+
+        $query .= " ORDER BY c.data_criacao DESC";
+
+        $res = $conn->query($query);
+        $rows = $res ? $res->fetch_all(MYSQLI_ASSOC) : [];
+        $conn->close();
+        return $rows;
+    }
+
+    /* ============================
+       BUSCAR POR ID (para confirmar)
+    ============================= */
+   public static function buscarPorId($idChecklist) {
+    $conn = conectarBanco();
+
+    $stmt = $conn->prepare("
+        SELECT 
+            c.*, 
+            u.nome AS usuario_nome, 
+            p.nome AS produto_nome,
+            e.id_estoque,
+            e.quantidade_atual
+        FROM checklist_tbl c
+        LEFT JOIN usuarios_tbl u ON c.idUsuarios_TBL = u.id_usuario
+        LEFT JOIN produtos_tbl p ON c.idProduto_TBL = p.id_produto
+        LEFT JOIN estoque_tbl e ON e.idProdutos_TBL = p.id_produto
+        WHERE c.id_checklist = ?
+    ");
+    $stmt->bind_param("i", $idChecklist);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $data = $result->fetch_assoc();
+
+    $stmt->close();
+    $conn->close();
+
+    return $data;
+}
+
+
+
+
+    /* ============================
+       CONFIRMAR CHECKLIST
+    ============================= */
+    public static function confirmarChecklist($idChecklist, $idUsuario) {
+    $conn = conectarBanco();
+    $stmt = $conn->prepare("
+        UPDATE checklist_tbl
+        SET status='concluido',
+            data_confirmacao=NOW(),
+            idUsuarios_TBL=?
+        WHERE id_checklist=?
+    ");
+    $stmt->bind_param("ii", $idUsuario, $idChecklist);
+    $ok = $stmt->execute();
+    $stmt->close();
+    $conn->close();
+    return $ok;
+}
+
+
+    /* ============================
+       ADICIONAR OBSERVAÇÃO
+    ============================= */
+    public static function adicionarObservacao($idChecklist, $obs) {
+        $conn = conectarBanco();
+        $stmt = $conn->prepare("
+            UPDATE checklist_tbl
+            SET observacao = ?
+            WHERE id_checklist = ?
+        ");
+        $stmt->bind_param("si", $obs, $idChecklist);
+        $stmt->execute();
+        $stmt->close();
         $conn->close();
         return true;
     }
 
+    /* ============================
+       DETALHES
+    ============================= */
     public static function detalhesChecklist($idChecklist) {
         $conn = conectarBanco();
-        $idChecklist = (int)$idChecklist;
 
-        $query = "SELECT c.*, u.nome AS usuario_nome, p.nome AS produto_nome
-                  FROM Checklist_TBL c
-                  LEFT JOIN Usuarios_TBL u ON c.idUsuarios_TBL = u.id_usuario
-                  LEFT JOIN Produtos_TBL p ON c.idProduto_TBL = p.id_produto
-                  WHERE c.id_checklist = $idChecklist";
+        $stmt = $conn->prepare("
+            SELECT c.*, u.nome AS usuario_nome, p.nome AS produto_nome
+            FROM checklist_tbl c
+            LEFT JOIN usuarios_tbl u ON c.idUsuarios_TBL = u.id_usuario
+            LEFT JOIN produtos_tbl p ON c.idProduto_TBL = p.id_produto
+            WHERE c.id_checklist = ?
+        ");
+        $stmt->bind_param("i", $idChecklist);
+        $stmt->execute();
 
-        $res = $conn->query($query);
-        $detalhes = $res->fetch_assoc();
+        $result = $stmt->get_result();
+        $data = $result->fetch_assoc();
+
+        $stmt->close();
         $conn->close();
-        return $detalhes;
+
+        return $data;
     }
 
-    public static function todosConfirmadosPara($idCompra = null, $idPedido = null) {
+    /* ============================
+       VERIFICAR SE TODOS CONFIRMADOS
+    ============================= */
+    public static function todosConfirmadosPara($idCompra = null, $idReposicao = null) {
         $conn = conectarBanco();
-        $query = "SELECT COUNT(*) AS pendentes FROM Checklist_TBL WHERE status<>'concluído'";
-        if ($idCompra) $query .= " AND idCompra_TBL=". (int)$idCompra;
-        if ($idPedido) $query .= " AND idPedidosReposicao_TBL=". (int)$idPedido;
+
+        $query = "SELECT COUNT(*) AS pendentes
+                  FROM checklist_tbl
+                  WHERE status <> 'concluido'";
+
+        if ($idCompra) {
+            $query .= " AND idCompra_TBL = " . (int)$idCompra;
+        }
+        if ($idReposicao) {
+            $query .= " AND idPedidosReposicao_TBL = " . (int)$idReposicao;
+        }
 
         $res = $conn->query($query);
         $row = $res->fetch_assoc();
+
         $conn->close();
         return $row['pendentes'] == 0;
     }

@@ -358,6 +358,22 @@ public static function rejeitarPedido($id_pedido) {
     return $stmt->execute();
 }
 
+// Marca o pedido de reposição como concluído
+    public static function marcarComoConcluido($idPedido) {
+    $conn = conectarBanco();
+    $stmt = $conn->prepare("
+        UPDATE pedidosreposicao_tbl
+        SET status='concluido'
+        WHERE id_pedido=?
+    ");
+    $stmt->bind_param("i", $idPedido);
+    $ok = $stmt->execute();
+    $stmt->close();
+    $conn->close();
+    return $ok;
+}
+
+
 
 
 }
