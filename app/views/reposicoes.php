@@ -79,17 +79,16 @@ $pedidos = RequisicaoController::listar();
                       <?= ucfirst($p['status']) ?>
                   </span>
                 </td>
-                <td></td>
+                <td>
+                  <?= $p['gerado_por_ia'] ? 'Sim' : 'Não' ?>
+                </td>
 
                 <td>
-                  <?php if ($p['status'] === 'pendente'
-                        && isset($p['nivel_aprovacao'])
-                        && $p['nivel_aprovacao'] === $userLevel): ?>
-                      
-                      <button class="check-btn" data-id="<?= $p['id_pedido'] ?>" data-acao="aceitar">Aprovar</button>
-                      <button class="deny-btn" data-id="<?= $p['id_pedido'] ?>" data-acao="negar">Recusar</button>
-
+                  <?php if ($p['status'] === 'pendente' || $p['status'] === 'pendente_ia'): ?>
+                    <button class="check-btn" data-id="<?= $p['id_pedido'] ?>" data-acao="aceitar">Confirmar</button>
+                    <button class="deny-btn" data-id="<?= $p['id_pedido'] ?>" data-acao="negar">Recusar</button>
                   <?php endif; ?>
+                  
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -125,7 +124,7 @@ document.addEventListener('click', async (e) => {
         });
 
         const data = await resp.json();
-       alert(data.sucesso || data.mensagem || data.erro || "Ação concluída.");
+        alert(data.sucesso || data.mensagem || data.erro || "Ação concluída.");
 
 
         if (data.sucesso) {

@@ -1614,3 +1614,108 @@ ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
 9: Avisar equipe de compras e avaliar fornecedor alternativo
 
 
+[2025-11-25 02:22:50]
+Alertas gerados: 11
+CRITICO: Estoque crítico: Monitor Acer 23.9' — atual 1, acaba em ~1 dias.
+CRITICO: Estoque crítico: Arroz Branco Tipo 1 — atual 1, acaba em ~1 dias.
+CRITICO: Estoque crítico: Bolacha Tortinhas de Chocolate — atual 1, acaba em ~2 dias.
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 0 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 2 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 6 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES DA IA ===
+1: Faça uma promoção relâmpago para vender rápido
+1: Remanejar para áreas com mais saída
+3: Produto vencido, remover do estoque e notificar responsável
+5: Faça uma promoção relâmpago para vender rápido
+5: Remanejar para áreas com mais saída
+6: Faça uma promoção relâmpago para vender rápido
+6: Remanejar para áreas com mais saída
+7: Produto vencido, remover do estoque e notificar responsável
+3: Estoque crítico, priorizar venda e reforçar pedido de reposição
+3: Avisar equipe de compras e avaliar fornecedor alternativo
+7: Estoque crítico, priorizar venda e reforçar pedido de reposição
+7: Avisar equipe de compras e avaliar fornecedor alternativo
+9: Estoque crítico, priorizar venda e reforçar pedido de reposição
+9: Avisar equipe de compras e avaliar fornecedor alternativo
+
+
+[2025-11-25 02:24:46]
+Alertas gerados: 11
+CRITICO: Estoque crítico: Monitor Acer 23.9' — atual 1, acaba em ~1 dias.
+CRITICO: Estoque crítico: Arroz Branco Tipo 1 — atual 1, acaba em ~1 dias.
+CRITICO: Estoque crítico: Bolacha Tortinhas de Chocolate — atual 1, acaba em ~2 dias.
+ATENÇÃO: Produto próximo da validade: Redmi Buds 6 Lite — vence em 0 dias
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 2 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 6 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Monitor Acer 23.9' — atual 1, mínimo 9
+ATENÇÃO: Estoque baixo: Arroz Branco Tipo 1 — atual 1, mínimo 33
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES DA IA ===
+1: Faça uma promoção relâmpago para vender rápido
+1: Remanejar para áreas com mais saída
+3: Produto vencido, remover do estoque e notificar responsável
+5: Faça uma promoção relâmpago para vender rápido
+5: Remanejar para áreas com mais saída
+6: Faça uma promoção relâmpago para vender rápido
+6: Remanejar para áreas com mais saída
+7: Produto vencido, remover do estoque e notificar responsável
+3: Estoque crítico, priorizar venda e reforçar pedido de reposição
+3: Avisar equipe de compras e avaliar fornecedor alternativo
+7: Estoque crítico, priorizar venda e reforçar pedido de reposição
+7: Avisar equipe de compras e avaliar fornecedor alternativo
+9: Estoque crítico, priorizar venda e reforçar pedido de reposição
+9: Avisar equipe de compras e avaliar fornecedor alternativo
+
+
+[2025-11-25 04:14:35]
+Alertas gerados: 7
+CRITICO: Estoque crítico: Bolacha Tortinhas de Chocolate — atual 1, acaba em ~2 dias.
+CRITICO: Produto vencido: Redmi Buds 6 Lite — validade 2025-11-24
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 1 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 5 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 1, mínimo 225
+
+=== RECOMENDAÇÕES DA IA ===
+1: Produto vencido, remover do estoque e notificar responsável
+3: Produto vencido, remover do estoque e notificar responsável
+5: Faça uma promoção relâmpago para vender rápido
+5: Remanejar para áreas com mais saída
+6: Faça uma promoção relâmpago para vender rápido
+6: Remanejar para áreas com mais saída
+7: Produto vencido, remover do estoque e notificar responsável
+9: Estoque crítico, priorizar venda e reforçar pedido de reposição
+9: Avisar equipe de compras e avaliar fornecedor alternativo
+
+
+[2025-11-26 22:03:12]
+Alertas gerados: 6
+CRITICO: Produto vencido: Redmi Buds 6 Lite — validade 2025-11-24
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 0 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 4 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Feijão Carioca — atual 70, mínimo 111
+
+=== RECOMENDAÇÕES DA IA ===
+1: Produto vencido, remover do estoque e notificar responsável
+3: Produto vencido, remover do estoque e notificar responsável
+5: Faça uma promoção relâmpago para vender rápido
+5: Remanejar para áreas com mais saída
+6: Faça uma promoção relâmpago para vender rápido
+6: Remanejar para áreas com mais saída
+7: Produto vencido, remover do estoque e notificar responsável
+8: Estoque crítico, priorizar venda e reforçar pedido de reposição
+8: Avisar equipe de compras e avaliar fornecedor alternativo
+
+

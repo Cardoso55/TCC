@@ -97,18 +97,30 @@ class PedidoReposicaoModel
     {
         $db = conectarBanco();
 
+        // Definimos o nível e status direto como variáveis
+        $nivel_aprovacao = 'setor-de-compras';
+        $status = 'pendente';
+
         $sql = "INSERT INTO pedidosreposicao_tbl
-                (id_produto, quantidade, fornecedor, status, data_pedido,
-                 idUsuarios_TBL, gerado_por_ia, data_prevista_chegada)
-                VALUES (?, ?, NULL, 'pendente', NOW(), ?, 1, ?)";
+                (id_produto, quantidade, fornecedor, nivel_aprovacao, status, data_pedido,
+                idUsuarios_TBL, gerado_por_ia, data_prevista_chegada)
+                VALUES (?, ?, NULL, ?, ?, NOW(), ?, 1, ?)";
 
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("iiis", $id_produto, $quantidade, $id_usuario, $data_prevista_chegada);
+
+        if (!$stmt) {
+            return ['success' => false, 'error' => $db->error];
+        }
+
+        // Aqui bindamos as variáveis corretamente
+        $stmt->bind_param("iissis", $id_produto, $quantidade, $nivel_aprovacao, $status, $id_usuario, $data_prevista_chegada);
 
         $ok = $stmt->execute();
         $stmt->close();
+
         return $ok;
     }
+
 
     // ---------------------------------------------------------------------
     // 3) LISTAR TODOS
@@ -327,51 +339,68 @@ class PedidoReposicaoModel
     }
 
    public static function atualizarAprovacao($id_pedido, $novoNivel, $novoStatus)
-{
-    $db = conectarBanco();
+    {
+        $db = conectarBanco();
 
-    $sql = "UPDATE pedidosreposicao_tbl
-            SET nivel_aprovacao = ?, status = ?, data_aprovacao = NOW()
-            WHERE id_pedido = ?";
+        $sql = "UPDATE pedidosreposicao_tbl
+                SET nivel_aprovacao = ?, status = ?, data_aprovacao = NOW()
+                WHERE id_pedido = ?";
 
-    $stmt = $db->prepare($sql);
+        $stmt = $db->prepare($sql);
 
-    if (!$stmt) {
-        return ['success' => false, 'error' => $db->error];
+        if (!$stmt) {
+            return ['success' => false, 'error' => $db->error];
+        }
+
+        // Forçar tipos corretos
+        $novoNivel = (string) ($novoNivel ?? '');
+        $novoStatus = (string) ($novoStatus ?? '');
+        $id_pedido = (int) $id_pedido;
+
+        $stmt->bind_param("ssi", $novoNivel, $novoStatus, $id_pedido);
+
+        if ($stmt->execute()) {
+            return ['success' => true];
+        }
+
+        return ['success' => false, 'error' => $stmt->error];
     }
 
-    $stmt->bind_param("ssi", $novoNivel, $novoStatus, $id_pedido);
-
-    if ($stmt->execute()) {
-        return ['success' => true];
+    public static function rejeitarPedido($id_pedido) {
+        $db = conectarBanco();
+        $sql = "UPDATE pedidosreposicao_tbl 
+                SET status = 'negado', data_aprovacao = NOW()
+                WHERE id_pedido = ?";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $id_pedido);
+        return $stmt->execute();
     }
 
-    return ['success' => false, 'error' => $stmt->error];
-}
-public static function rejeitarPedido($id_pedido) {
-    $db = conectarBanco();
-    $sql = "UPDATE pedidosreposicao_tbl 
-            SET status = 'negado', data_aprovacao = NOW()
-            WHERE id_pedido = ?";
-    $stmt = $db->prepare($sql);
-    $stmt->bind_param("i", $id_pedido);
-    return $stmt->execute();
-}
+    // Marca o pedido de reposição como concluído
+        public static function marcarComoConcluido($idPedido) {
+        $conn = conectarBanco();
+        $stmt = $conn->prepare("
+            UPDATE pedidosreposicao_tbl
+            SET status='concluido'
+            WHERE id_pedido=?
+        ");
+        $stmt->bind_param("i", $idPedido);
+        $ok = $stmt->execute();
+        $stmt->close();
+        $conn->close();
+        return $ok;
+    }
 
-// Marca o pedido de reposição como concluído
-    public static function marcarComoConcluido($idPedido) {
-    $conn = conectarBanco();
-    $stmt = $conn->prepare("
-        UPDATE pedidosreposicao_tbl
-        SET status='concluido'
-        WHERE id_pedido=?
-    ");
-    $stmt->bind_param("i", $idPedido);
-    $ok = $stmt->execute();
-    $stmt->close();
-    $conn->close();
-    return $ok;
-}
+    public static function buscarValorProduto($idProduto)
+    {
+        $db = conectarBanco();
+        $stmt = $db->prepare("SELECT valor_compra FROM produtos_tbl WHERE id_produto = ?");
+        $stmt->bind_param("i", $idProduto);
+        $stmt->execute();
+        $res = $stmt->get_result()->fetch_assoc();
+        return $res['valor_compra'] ?? 0;
+    }
+
 
 
 

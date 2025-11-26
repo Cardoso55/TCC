@@ -167,24 +167,25 @@ function router() {
             break;
        
 
-// ADICIONAR OBSERVAÇÃO AO CHECKLIST
-case 'checklist_observacao':
-    require_once __DIR__ . '/controllers/ChecklistController.php';
+    // ADICIONAR OBSERVAÇÃO AO CHECKLIST
+    case 'checklist_observacao':
+        require_once __DIR__ . '/controllers/ChecklistController.php';
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            
+            $idChecklist = $_POST['idChecklist'] ?? null;
+            $observacao  = $_POST['observacao'] ?? null;
 
-        $idChecklist = $_POST['idChecklist'] ?? null;
-        $observacao  = $_POST['observacao'] ?? null;
+            if (!$idChecklist) {
+                die("Erro: idChecklist não informado.");
+            }
 
-        if (!$idChecklist) {
-            die("Erro: idChecklist não informado.");
+            ChecklistController::adicionarObservacao($idChecklist, $observacao);
+            $tipo = $_POST['tipo'] ?? 'saída';
+            header("Location: ?pagina=checklist&tipo=$tipo&obs=ok");
+            exit;
         }
-
-        ChecklistController::adicionarObservacao($idChecklist, $observacao);
-        header('Location: ?pagina=checklist');
-        exit;
-    }
-    break;
+        break;
 
 
         case 'solicitacoes':

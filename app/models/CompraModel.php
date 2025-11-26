@@ -94,52 +94,35 @@ class CompraModel
        5. LISTAR PEDIDOS DA COMPRA
           (somente a-caminho + confirmado)
     =============================== */
-    public static function listarPedidosDaCompra($idCompra)
-{
-    $db = conectarBanco();
+    public static function listarPedidosDaCompra($id_compra)
+    {
+        $db = conectarBanco();
 
-    $sql = "SELECT 
-                p.id_pedido,
-                p.id_compra,
-                p.status,
-                p.fornecedor,
-                p.data_pedido,
-                p.data_recebimento,
-                p.idUsuarios_TBL,
-                p.id_produto,
-                p.quantidade,
-                prod.preco_unitario,
-                (p.quantidade * prod.preco_unitario) AS total_item,
-                prod.nome,
+        $sql = "
+            SELECT 
+                pr.id_pedido,
+                pr.id_produto,
+                pr.quantidade,
+                pr.status,
+                pr.data_pedido,
+                p.nome,
+                p.preco_unitario,
+                (pr.quantidade * p.preco_unitario) AS total_item,
                 u.nome AS nome_usuario
-            FROM pedidosreposicao_tbl p
-            LEFT JOIN produtos_tbl prod 
-                   ON prod.id_produto = p.id_produto
-            LEFT JOIN usuarios_tbl u
-                   ON u.id_usuario = p.idUsuarios_TBL
-            WHERE p.id_compra = ?
-              AND (p.status = 'a-caminho' OR p.status = 'confirmado')
-            ORDER BY p.status DESC, p.data_pedido DESC";
+            FROM pedidosreposicao_tbl pr
+            JOIN produtos_tbl p ON pr.id_produto = p.id_produto
+            LEFT JOIN usuarios_tbl u ON pr.idUsuarios_TBL = u.id_usuario
+            WHERE pr.id_compra = ?
+            ORDER BY pr.id_pedido ASC
+        ";
 
-    $stmt = $db->prepare($sql);
-    if (!$stmt) {
-        // erro na preparação da query, retorna array vazio
-        return [];
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $id_compra);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
-
-    $stmt->bind_param("i", $idCompra);
-    if (!$stmt->execute()) {
-        // erro na execução, retorna array vazio
-        return [];
-    }
-
-    $result = $stmt->get_result();
-    if (!$result) {
-        return [];
-    }
-
-    return $result->fetch_all(MYSQLI_ASSOC); // sempre retorna array
-}
 
 
     /* ===============================
@@ -155,8 +138,7 @@ class CompraModel
                         SELECT pr.id_compra, SUM(pr.quantidade * p.valor_compra) AS total_confirmado
                         FROM pedidosreposicao_tbl pr
                         JOIN produtos_tbl p ON pr.id_produto = p.id_produto
-                        WHERE pr.status = 'confirmado'
-                        AND pr.id_compra = ?
+                        WHERE pr.id_compra = ?
                         GROUP BY pr.id_compra
                     ) t ON c.id_compra = t.id_compra
                     SET c.valor_total = IFNULL(t.total_confirmado, 0)";
@@ -219,6 +201,7 @@ class CompraModel
         $conn->close();
         return $ok;
     }
+
 }
 
 
