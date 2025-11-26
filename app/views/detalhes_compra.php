@@ -35,7 +35,7 @@ if (!isset($compra)) {
         <?php else: ?>
             <div class="cards-container">
                 <?php foreach ($pedidos as $p): ?>
-                    <div class="card-item <?= ($p['status'] === 'confirmado') ? 'status-confirmado' : 'status-acaminho' ?>">
+                    <div class="card-item <?= ($p['status'] === 'concluido') ? 'status-confirmado' : 'status-acaminho' ?>">
                         <h3><?= $p['nome'] ?></h3>
                         <p><strong>ID Pedido:</strong> <?= $p['id_pedido'] ?></p>
                         <p><strong>Quantidade:</strong> <?= $p['quantidade'] ?></p>
@@ -43,7 +43,7 @@ if (!isset($compra)) {
                         <p><strong>Data do Pedido:</strong> <?= date('d/m/Y H:i', strtotime($p['data_pedido'])) ?></p>
                         <p><strong>Recebido por:</strong> <?= $p['nome_usuario'] ?></p>
                         <p class="total">Total do Item: R$ <?= number_format($p['total_item'], 2, ',', '.') ?></p>
-                        <span class="status-label"><?= ($p['status'] === 'confirmado') ? 'Confirmado' : 'A caminho' ?></span>
+                        <span class="status-label"><?= ($p['status'] === 'concluido') ? 'Confirmado' : 'A caminho' ?></span>
                     </div>
                 <?php endforeach; ?>
             </div>

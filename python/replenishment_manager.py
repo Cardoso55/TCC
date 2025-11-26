@@ -118,40 +118,20 @@ class ReplenishmentManagerPRO:
         return demanda_ajustada, max(0, int(necessario))
 
     # ---------------------- Inserção do pedido ---------------------
-    def insert_order(self, conn, product_id, qty, data_prevista_chegada, created_by):
+    def insert_order(self, conn, product_id, qty, data_prevista_chegada, id_usuario):
         sql = """
         INSERT INTO pedidosreposicao_tbl
-        (
-            id_compra,
-            status,
-            fornecedor,
-            data_recebimento,
-            idUsuarios_TBL,
-            id_produto,
-            quantidade,
-            nivel_aprovacao,
-            data_aprovacao,
-            data_prevista_chegada,
-            gerado_por_ia
-        )
-        VALUES (
-            NULL,
-            'pendente_ia',
-            NULL,
-            NULL,
-            %s,
-            %s,
-            %s,
-            NULL,
-            NULL,
-            %s,
-            1
-        )
+        (idUsuarios_TBL, id_produto, quantidade, nivel_aprovacao, status, data_prevista_chegada, gerado_por_ia)
+        VALUES (%s, %s, %s, %s, %s, %s, 1)
         """
 
         with conn.cursor() as cur:
-            cur.execute(sql, (created_by, product_id, qty, data_prevista_chegada))
+            cur.execute(
+                sql, 
+                (id_usuario, product_id, qty, 'setor-de-compras', 'pendente', data_prevista_chegada)
+            )
         conn.commit()
+
 
         cur.close()
 

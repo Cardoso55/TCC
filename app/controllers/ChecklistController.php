@@ -24,12 +24,12 @@ class ChecklistController {
         return ChecklistModel::criarChecklist($dados);
     }
 
-    private static function processarSaidaEstoque($checklist, $idUsuario) {
+    private static function processarSaidaEstoque($checklist, $idUsuario, $quantidade) {
     require_once __DIR__ . "/../models/Movimentacoes.php";
     require_once __DIR__ . "/../models/EstoqueModel.php";
 
     $idProduto = $checklist['idProduto_TBL'];
-    $quantidade = $checklist['quantidade'] ?? 1;
+    $quantidade = $pedido['quantidade'] ?? $quantidade;
 
     $estoque = EstoqueModel::buscarPorProduto($idProduto);
     if (!$estoque) die("Erro: Estoque não encontrado para o produto {$idProduto}.");
@@ -81,14 +81,40 @@ public static function confirmar($idChecklist, $idUsuario, $idPedidoRecebido) {
         $quantidade = $pedido['quantidade'] ?? ($quantidade ?? 1);
     }
 
-    // Se ainda não pegou quantidade, pega do checklist
-    $quantidade = $checklist['quantidade'] ?? ($quantidade ?? 1);
+    // Quantidade REAL da movimentação
+    $quantidade = null;
+
+    // 1) Se veio de compra, usa quantidade da compra
+    if ($idCompra) {
+        $compra = CompraModel::buscarPorId($idCompra);
+        $quantidade = $compra['quantidade'] ?? null;
+    }
+
+    // 2) Se veio de reposição, usa quantidade da reposição
+    if ($idReposicao) {
+        $pedido = PedidoReposicaoModel::buscarPorId($idReposicao);
+        $quantidade = $pedido['quantidade'] ?? $quantidade;
+    }
+
+    // 3) Se veio de pedido de saída, pega quantidade CORRETA
+    if (!empty($checklist['idPedidosSaida_TBL'])) {
+        require_once __DIR__ . "/../models/PedidoSaidaModel.php";
+        $pedidoSaida = PedidoSaidaModel::getPedidoById($checklist['idPedidosSaida_TBL']);
+        $quantidade = $pedidoSaida['quantidade'] ?? $quantidade;
+    }
+
+    // 4) Se mesmo assim não tem quantidade, ERRO
+    if (!$quantidade) {
+        die("Erro: Não foi possível determinar a quantidade da movimentação.");
+    }
+
 
     // Processa entrada ou saída
     if (!empty($checklist['idProduto_TBL'])) {
-        if ($checklist['tipo'] === 'saida') {
+        if ($checklist['tipo'] === 'saída') {
             // Chamando a função isolada para venda/saída
-            self::processarSaidaEstoque($checklist, $idUsuario);
+            self::processarSaidaEstoque($checklist, $idUsuario, $quantidade);
+
         } else {
             // Entrada normal
             require_once __DIR__ . "/../models/Movimentacoes.php";

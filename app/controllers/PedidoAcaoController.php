@@ -84,53 +84,37 @@ if (!$pedido) {
 // ==========================
 if ($acao === 'aceitar') {
 
-    // -------------------------
     // Supervisor aprova
-    // -------------------------
     if ($userLevel === 'supervisor') {
 
-        // Confere se o pedido tá no nível do supervisor
         if ($pedido['nivel_aprovacao'] !== 'supervisor') {
             echo json_encode(["erro" => "Este pedido não está no nível do supervisor"]);
             exit;
         }
 
-        // Atualiza nível para setor de compras e status para pendente
         PedidoReposicaoModel::atualizarAprovacao($idPedido, 'setor-de-compras', 'pendente');
 
-        echo json_encode(["sucesso" => "Pedido aprovado pelo supervisor e enviado ao setor de compras!"]);
+        echo json_encode([
+            "sucesso" => true,
+            "mensagem" => "Pedido aprovado pelo supervisor e enviado ao setor de compras!"
+        ]);
         exit;
     }
-    }
 
-    // -------------------------
     // Setor de compras aprova
-    // -------------------------
     if ($userLevel === 'setor-de-compras') {
 
-        // Confere se o pedido tá no nível correto
         if ($pedido['nivel_aprovacao'] !== 'setor-de-compras') {
             echo json_encode(["erro" => "Este pedido não está no setor de compras"]);
             exit;
         }
 
-        // 1. Criar compra
-        $idCompra = CompraModel::criarCompra(
-            $pedido['fornecedor'], // fornecedor do pedido
-            0,                     // valor_total inicial (será atualizado)
-            $userId
-        );
-
-        // 2. Vincular pedido à compra
+        $idCompra = CompraModel::criarCompra($pedido['fornecedor'], 0, $userId);
         CompraModel::vincularPedidosACompra($idCompra, $idPedido);
 
-        // 2.1 Recalcular valor total da compra
         $valorTotal = $pedido['quantidade'] * $pedido['valor_compra'];
+        CompraModel::atualizarValorTotal($idCompra);
 
-        // 2.2 Atualiza a compra com o valor total
-        CompraModel::atualizarValorTotal($idCompra, $valorTotal);
-
-        // 3. Criar checklist vinculado à compra
         ChecklistModel::criarChecklist([
             'tipo' => 'compra',
             'conteudo' => 'Pedido autorizado pelo setor de compras e enviado ao fornecedor.',
@@ -140,12 +124,16 @@ if ($acao === 'aceitar') {
             'idProduto_TBL' => $pedido['id_produto'] ?? null
         ]);
 
-        // 4. Atualizar status do pedido para 'a-caminho'
         PedidoReposicaoModel::atualizarStatus($idPedido, 'a-caminho');
 
-        echo json_encode(["sucesso" => "Pedido aprovado e enviado!"]);
+        echo json_encode([
+            "sucesso" => true,
+            "mensagem" => "Pedido aprovado e enviado!"
+        ]);
         exit;
     }
+}
+
 
 // ==========================
 // REJEITAR PEDIDO

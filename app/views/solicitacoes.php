@@ -100,7 +100,16 @@ document.addEventListener('click', async (e) => {
             method: 'POST',
             body: formData
         });
-        const data = await resp.json();
+        let data;
+        try {
+            data = await resp.json();
+        } catch (e) {
+            const text = await resp.text();
+            console.log("Retorno inválido:", text);
+            alert("Resposta inválida do servidor!");
+            return;
+        }
+
         alert(data.mensagem || data.erro);
 
         if (data.sucesso) {
