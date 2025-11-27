@@ -181,8 +181,6 @@ class VendasModel {
         ";
         if (!$conn->query($sqlInsMov)) throw new Exception("Erro ao inserir movimentação: " . $conn->error);
 
-        // 5) Baixar estoque
-        echo "FINALIZAR SAIDA: idProduto=$idProduto, quantidade=$quantidade, estoqueAtual=$estoqueAtual";
 
         $sqlBaixa = "
             UPDATE estoque_tbl
