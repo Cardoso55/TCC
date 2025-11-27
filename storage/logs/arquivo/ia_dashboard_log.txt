@@ -1719,3 +1719,51 @@ ATENÇÃO: Estoque baixo: Feijão Carioca — atual 70, mínimo 111
 8: Avisar equipe de compras e avaliar fornecedor alternativo
 
 
+[2025-11-27 00:32:39]
+Alertas gerados: 7
+CRITICO: Produto vencido: Redmi Buds 6 Lite — validade 2025-11-24
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 0 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 4 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Feijão Carioca — atual 70, mínimo 111
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 200, mínimo 225
+
+=== RECOMENDAÇÕES DA IA ===
+1: Produto vencido, remover do estoque e notificar responsável
+3: Produto vencido, remover do estoque e notificar responsável
+5: Faça uma promoção relâmpago para vender rápido
+5: Remanejar para áreas com mais saída
+6: Faça uma promoção relâmpago para vender rápido
+6: Remanejar para áreas com mais saída
+7: Produto vencido, remover do estoque e notificar responsável
+8: Estoque crítico, priorizar venda e reforçar pedido de reposição
+8: Avisar equipe de compras e avaliar fornecedor alternativo
+9: Estoque crítico, priorizar venda e reforçar pedido de reposição
+9: Avisar equipe de compras e avaliar fornecedor alternativo
+
+
+[2025-11-27 00:57:00]
+Alertas gerados: 7
+CRITICO: Produto vencido: Redmi Buds 6 Lite — validade 2025-11-24
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+ATENÇÃO: Produto próximo da validade: Detergente — vence em 0 dias
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 4 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+ATENÇÃO: Estoque baixo: Feijão Carioca — atual 70, mínimo 111
+ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 200, mínimo 225
+
+=== RECOMENDAÇÕES DA IA ===
+1: Produto vencido, remover do estoque e notificar responsável
+3: Produto vencido, remover do estoque e notificar responsável
+5: Faça uma promoção relâmpago para vender rápido
+5: Remanejar para áreas com mais saída
+6: Faça uma promoção relâmpago para vender rápido
+6: Remanejar para áreas com mais saída
+7: Produto vencido, remover do estoque e notificar responsável
+8: Estoque crítico, priorizar venda e reforçar pedido de reposição
+8: Avisar equipe de compras e avaliar fornecedor alternativo
+9: Estoque crítico, priorizar venda e reforçar pedido de reposição
+9: Avisar equipe de compras e avaliar fornecedor alternativo
+
+
