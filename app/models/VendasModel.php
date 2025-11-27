@@ -201,17 +201,22 @@ class VendasModel {
 }
 
 
-    private function registrarVenda($idProduto, $idUsuario, $quantidade, $precoUnitario, $conn) {
-    $sqlInsVenda = "
-        INSERT INTO vendas_tbl
-        (id_produto, id_usuario, quantidade, preco_unitario, canal_venda, data_venda)
-        VALUES
-        ($idProduto, $idUsuario, $quantidade, $precoUnitario, 'sistema', NOW())
-    ";
-    if (!$conn->query($sqlInsVenda)) {
-        throw new Exception("Erro ao registrar venda: " . $conn->error);
-    }
+   public static function registrarVenda($idProduto, $idUsuario, $quantidade)
+{
+    $conn = conectarBanco();
+
+    // Pega o preço
+    $preco = self::buscarPreco($idProduto);
+
+    $sql = "INSERT INTO vendas_tbl (id_produto, id_usuario, quantidade, preco_unitario)
+            VALUES (?, ?, ?, ?)";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("iiid", $idProduto, $idUsuario, $quantidade, $preco);
+
+    return $stmt->execute();
 }
+
 
 
 }

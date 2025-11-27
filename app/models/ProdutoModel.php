@@ -135,6 +135,22 @@ class ProdutoModel {
     return (int)$row['total'];
 }
 
+    public static function buscarPreco($idProduto)
+    {
+        $conn = conectarBanco();
+
+        $sql = "SELECT preco_unitario FROM produtos_tbl WHERE id_produto = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $idProduto);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $dados = $result->fetch_assoc();
+
+        return $dados ? floatval($dados['preco_unitario']) : 0;
+    }
+
+
 public static function contarReposicoes($produtoId) {
     $conn = conectarBanco();
     $stmt = $conn->prepare("SELECT COUNT(*) as total FROM pedidosreposicao_tbl WHERE id_produto = ?");
