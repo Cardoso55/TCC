@@ -1354,3 +1354,323 @@ Previsões salvas com sucesso!
 Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-26 21:55:17.125466
 Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
 
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+C:\laragon\www\TCC\python\modelo\predict_previsoes.py:47: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql_query(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+Modelo carregado!
+DF original: 1291
+DF após features: 481
+Produtos únicos: 9
+Previsões salvas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-27 17:42:47.202892
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+C:\laragon\www\TCC\python\modelo\predict_previsoes.py:47: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql_query(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+Modelo carregado!
+DF original: 1292
+DF após features: 482
+Produtos únicos: 9
+Previsões salvas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-28 16:49:35.242266
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+C:\laragon\www\TCC\python\modelo\predict_previsoes.py:47: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql_query(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+Modelo carregado!
+DF original: 1408
+DF após features: 598
+Produtos únicos: 9
+Previsões salvas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-28 20:40:10.417269
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+C:\laragon\www\TCC\python\modelo\predict_previsoes.py:47: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql_query(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+Modelo carregado!
+DF original: 1408
+DF após features: 598
+Produtos únicos: 9
+Previsões salvas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-28 20:40:20.970861
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+C:\laragon\www\TCC\python\modelo\predict_previsoes.py:47: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql_query(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+Modelo carregado!
+DF original: 1408
+DF após features: 598
+Produtos únicos: 9
+Previsões salvas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-28 20:40:52.532079
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+C:\laragon\www\TCC\python\modelo\predict_previsoes.py:47: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql_query(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+Modelo carregado!
+DF original: 1408
+DF após features: 598
+Produtos únicos: 9
+Previsões salvas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-29 10:35:09.194186
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+C:\laragon\www\TCC\python\modelo\predict_previsoes.py:47: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql_query(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+Modelo carregado!
+DF original: 1408
+DF após features: 598
+Produtos únicos: 9
+Previsões salvas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-29 11:37:15.160323
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+C:\laragon\www\TCC\python\modelo\predict_previsoes.py:47: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql_query(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+Modelo carregado!
+DF original: 1408
+DF após features: 598
+Produtos únicos: 9
+Previsões salvas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-29 12:48:08.037819
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+C:\laragon\www\TCC\python\modelo\predict_previsoes.py:47: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql_query(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+Modelo carregado!
+DF original: 1408
+DF após features: 598
+Produtos únicos: 9
+Previsões salvas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-29 16:08:22.464846
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+
+CMD: python "C:\laragon\www\TCC\app\controllers/../../python/modelo/agendador_previsao.py" 2>&1
+
+OUTPUT:
+C:\laragon\www\TCC\python\modelo\predict_previsoes.py:47: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql_query(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:493: UserWarning: X does not have valid feature names, but HistGradientBoostingRegressor was fitted with feature names
+  warnings.warn(
+Modelo carregado!
+DF original: 1408
+DF após features: 598
+Produtos únicos: 9
+Previsões salvas com sucesso!
+
+Rodando script: C:\laragon\www\TCC\python\modelo\predict_previsoes.py | 2025-11-29 18:06:23.857720
+Script C:\laragon\www\TCC\python\modelo\predict_previsoes.py finalizado com sucesso!
+

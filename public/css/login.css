@@ -1,17 +1,25 @@
-/* ===== Página de Login - Macaw Systems ===== */
+:root {
+    --macaw-blue: #355fbb;
+    --macaw-blue-dark: #1f3b73;
+    --macaw-blue-light: #6a9dff;
+    --macaw-bg-soft: #eef2ff;
+    --macaw-card-bg: #f9faff;
+    --macaw-gradient: linear-gradient(135deg, #355fbb, #6a9dff);
+    --macaw-hover-shadow: 0 6px 20px rgba(53, 95, 187, 0.35);
+}
 
 .login-wrapper {
     display: flex;
     min-height: 100vh;
     width: 100%;
-    background-color: #f5f7fa;
+    background-color: var(--macaw-bg-soft);
     font-family: "Poppins", sans-serif;
 }
 
 /* ===== LADO ESQUERDO ===== */
 .login-left {
     flex: 1;
-    background-color: #d9d9d9; /* cinza claro */
+    background: #d9dfff;
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
     display: flex;
@@ -24,14 +32,13 @@
 }
 
 .logo-area .logo {
-    width: 500px; /* aumenta a logo para telas grandes */
-    max-width: 90%;
+    width: 100%;
     margin-bottom: 1rem;
 }
 
 /* ===== LADO DIREITO ===== */
 .login-right {
-    flex: 1.5; /* um pouco mais largo */
+    flex: 1.5;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -41,11 +48,11 @@
 /* ===== Caixa do formulário ===== */
 .form-area {
     width: 100%;
-    max-width: 450px;   /* aumenta largura do formulário */
-    background: #fff;
+    max-width: 450px;
+    background: var(--macaw-card-bg);
     border-radius: 20px;
-    padding: 3rem;      /* aumenta espaço interno */
-    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.15);
+    padding: 3rem;
+    box-shadow: 0 5px 30px rgba(53, 95, 187, 0.25); /* sombra azulada */
     text-align: center;
     max-height: 95vh;
     overflow-y: auto;
@@ -56,11 +63,11 @@
 
 /* ===== Ícone do usuário ===== */
 .icon-user {
-    width: 80px;      /* maior círculo */
+    width: 80px;
     height: 80px;
     margin: 0 auto 15px auto;
     border-radius: 50%;
-    border: 2px solid #000; /* borda preta */
+    border: 2px solid var(--macaw-blue);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -68,21 +75,21 @@
 }
 
 .icon-user img {
-    width: 80%;  /* maior ícone dentro do círculo */
+    width: 80%;
     height: 80%;
     object-fit: contain;
 }
 
 /* ===== Títulos e textos ===== */
 .form-area h2 {
-    color: #1f2937;
-    font-size: 1.8rem; /* aumenta título */
+    color: var(--macaw-blue-dark);
+    font-size: 1.8rem;
     margin-bottom: 0.5rem;
 }
 
 .form-area p {
-    color: #6b7280;
-    font-size: 1rem;   /* aumenta texto */
+    color: #444;
+    font-size: 1rem;
     margin-bottom: 2rem;
 }
 
@@ -91,12 +98,11 @@
     text-align: left;
     margin-bottom: 1.5rem;
     width: 100%;
-
 }
 
 .input-group label {
     font-weight: 600;
-    color: #374151;
+    color: var(--macaw-blue-dark);
     display: block;
     margin-bottom: 0.5rem;
     font-size: 1rem;
@@ -104,28 +110,38 @@
 
 .input-group input {
     width: 100%;
-    padding: 1rem;       /* aumenta altura */
-    border: 1px solid #d1d5db;
+    padding: 1rem;
+    border: 1px solid var(--macaw-blue-light);
     border-radius: 12px;
-    font-size: 1.1rem;   /* aumenta fonte */
+    font-size: 1.1rem;
+    transition: border 0.3s, box-shadow 0.3s;
+    min-width: 300px;
+}
+
+#email{
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid var(--macaw-blue-light);
+    border-radius: 12px;
+    font-size: 1.1rem;
     transition: border 0.3s, box-shadow 0.3s;
     min-width: 300px;
 }
 
 .input-group input:focus {
-    border-color: #a31d1c;
-    box-shadow: 0 0 5px #a31c1c5e;
+    border-color: var(--macaw-blue);
+    box-shadow: 0 0 5px rgba(53, 95, 187, 0.4);
     outline: none;
 }
 
 /* ===== Botão de login ===== */
 .btn-login {
     width: 100%;
-    padding: 1rem;      /* maior botão */
-    font-size: 1.2rem;     /* fonte maior */
+    padding: 1rem;
+    font-size: 1.2rem;
     border-radius: 15px;
     border: none;
-    background-color: #a31d1c;
+    background: var(--macaw-gradient);
     color: #fff;
     cursor: pointer;
     transition: 0.3s;
@@ -134,7 +150,8 @@
 }
 
 .btn-login:hover {
-    background-color: #6d0f0f;
+    box-shadow: var(--macaw-hover-shadow);
+    transform: translateY(-2px);
 }
 
 /* ===== Esqueceu a senha ===== */
@@ -143,14 +160,43 @@
 }
 
 .forgot a {
-    color: #a31d1c;
-    font-size: 1rem;    /* aumenta fonte */
+    color: var(--macaw-blue);
+    font-size: 1rem;
     text-decoration: none;
+    font-weight: 600;
 }
 
 .forgot a:hover {
     text-decoration: underline;
 }
+
+/* ===== Wrapper do input da senha ===== */
+.senha-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.senha-wrapper input {
+    width: 100%;
+}
+
+/* ===== Ícone de olho ===== */
+.toggle-eye {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    width: 24px;
+    height: 24px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    opacity: 0.7;
+    transition: 0.2s;
+}
+
+.toggle-eye:hover {
+    opacity: 1;
+}
+
 
 /* ===== Responsividade ===== */
 @media (max-width: 900px) {
@@ -170,7 +216,7 @@
     }
 
     .form-area {
-        max-width: 90%;  /* ocupa mais espaço na tela pequena */
+        max-width: 90%;
         padding: 2rem;
     }
 

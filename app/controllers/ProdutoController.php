@@ -5,11 +5,17 @@ require_once __DIR__ . '/../models/ProdutoModel.php';
 
 class ProdutoController
 {
-    // LISTAGEM ============================================================
+
+    public static function filtrar($filtros)
+    {
+        return ProdutoModel::buscarFiltradoComOrdenacao($filtros);
+    }
+
     public static function listarProdutos()
     {
         return ProdutoModel::buscarComEstoque();
     }
+
 
     // CADASTRO =============================================================
     public static function cadastrarProduto($dados, $arquivo)
@@ -112,5 +118,27 @@ class ProdutoController
 
         return true;
     }
+    // REVISAR ESTOQUE MÍNIMO ============================================
+    // REVISAR ESTOQUE MÍNIMO (instância)
+    public function recalcularMinimos()
+    {
+        require_once __DIR__ . '/../helpers/EstoqueService.php';
+
+        try {
+            $service = new EstoqueService();
+            $ok = $service->recalcularTodosMinimos(); // seu método do service
+
+            if ($ok === false) {
+                return ['sucesso' => false, 'mensagem' => 'Falha ao recalcular os mínimos.'];
+            }
+
+            return ['sucesso' => true, 'mensagem' => 'Estoque mínimo recalculado com sucesso.'];
+        } catch (Throwable $t) {
+            // captura Exceptions e Errors
+            return ['sucesso' => false, 'mensagem' => $t->getMessage()];
+        }
+    }
+
+
 }
 

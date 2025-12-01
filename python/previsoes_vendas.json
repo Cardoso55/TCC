@@ -2,34 +2,78 @@
   {
     "id_produto": 3,
     "nome": "Monitor Acer 23.9'",
-    "estoque_atual": 1,
+    "estoque_atual": 50,
+    "incoming": 93,
+    "forecast": 56.7,
+    "vendas_historicas": 171,
+    "demanda_ajustada": 171,
+    "qty_to_order": 29,
+    "data_prevista_chegada": "2025-12-06 21:24:18"
+  },
+  {
+    "id_produto": 5,
+    "nome": "Detergente",
+    "estoque_atual": 100,
     "incoming": 0,
-    "forecast": 44.0,
-    "vendas_historicas": 43,
-    "demanda_ajustada": 44.0,
-    "qty_to_order": 43,
-    "data_prevista_chegada": "2025-12-02 00:10:57"
+    "forecast": 17.1,
+    "vendas_historicas": 129,
+    "demanda_ajustada": 129,
+    "qty_to_order": 29,
+    "data_prevista_chegada": "2025-12-06 21:24:18"
+  },
+  {
+    "id_produto": 6,
+    "nome": "Sabão em Pó",
+    "estoque_atual": 70,
+    "incoming": 23,
+    "forecast": 92.68,
+    "vendas_historicas": 116,
+    "demanda_ajustada": 116,
+    "qty_to_order": 23,
+    "data_prevista_chegada": "2025-12-06 21:24:18"
   },
   {
     "id_produto": 7,
     "nome": "Arroz Branco Tipo 1",
-    "estoque_atual": 1,
+    "estoque_atual": 90,
     "incoming": 0,
-    "forecast": 67.0,
-    "vendas_historicas": 82,
-    "demanda_ajustada": 82,
-    "qty_to_order": 81,
-    "data_prevista_chegada": "2025-12-02 00:10:57"
+    "forecast": 56.35,
+    "vendas_historicas": 111,
+    "demanda_ajustada": 111,
+    "qty_to_order": 21,
+    "data_prevista_chegada": "2025-12-06 21:24:18"
+  },
+  {
+    "id_produto": 8,
+    "nome": "Feijão Carioca",
+    "estoque_atual": 70,
+    "incoming": 28,
+    "forecast": 56.64,
+    "vendas_historicas": 137,
+    "demanda_ajustada": 137,
+    "qty_to_order": 39,
+    "data_prevista_chegada": "2025-12-06 21:24:18"
   },
   {
     "id_produto": 9,
     "nome": "Bolacha Tortinhas de Chocolate",
-    "estoque_atual": 1,
+    "estoque_atual": 100,
     "incoming": 0,
-    "forecast": 45.0,
-    "vendas_historicas": 60,
-    "demanda_ajustada": 60,
-    "qty_to_order": 225,
-    "data_prevista_chegada": "2025-12-02 00:10:57"
+    "forecast": 30.28,
+    "vendas_historicas": 194,
+    "demanda_ajustada": 194,
+    "qty_to_order": 94,
+    "data_prevista_chegada": "2025-12-06 21:24:18"
+  },
+  {
+    "id_produto": 11,
+    "nome": "Contra Filé",
+    "estoque_atual": 100,
+    "incoming": 0,
+    "forecast": 16.52,
+    "vendas_historicas": 105,
+    "demanda_ajustada": 105,
+    "qty_to_order": 15,
+    "data_prevista_chegada": "2025-12-06 21:24:18"
   }
 ]

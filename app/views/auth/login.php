@@ -20,8 +20,7 @@ $error = $auth->loginFromPost();
         <!-- LADO ESQUERDO - LOGO / CINZA CLARO -->
         <div class="login-left">
             <div class="logo-area">
-                <img src="/TCC/public/images/logos/VERMELHOPRETO.png" alt="Logo Macaw Systems" class="logo">
-    
+                <img src="/TCC/public/images/logos/finalpreta.png" alt="Logo Macaw Systems" class="logo">
             </div>
         </div>
 
@@ -36,18 +35,25 @@ $error = $auth->loginFromPost();
 
                 <form action="" method="POST">
                     <div class="input-group">
-                        <label for="email">Usuário</label>
+                        <label for="email">Email</label>
                         <input type="text" id="email" name="email" placeholder="Digite seu email" required>
                     </div>
 
-                    <div class="input-group">
+                    <div class="input-group senha-group">
                         <label for="senha">Senha</label>
-                        <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+
+                        <div class="senha-wrapper">
+                            <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+                            <img src="/TCC/public/images/icons/eye-closed.png" 
+                                id="toggleSenha"
+                                class="toggle-eye"
+                                alt="Mostrar senha">
+                        </div>
                     </div>
 
                     <button type="submit" class="btn-login">Entrar</button>
 
-                    <p class="forgot"><a href="alterar_senha.php">Esqueceu a senha?</a></p>
+                    <!-- <p class="forgot"><a href="alterar_senha.php">Esqueceu a senha?</a></p> -->
                 </form>
                 <?php if ($error): ?>
                     <p style="color:red;"><?= $error ?></p>
@@ -56,6 +62,20 @@ $error = $auth->loginFromPost();
             </div>
         </div>
     </div>
+<script>
+document.getElementById("toggleSenha").addEventListener("click", function () {
+    const input = document.getElementById("senha");
+
+    if (input.type === "password") {
+        input.type = "text";
+        this.src = "/TCC/public/images/icons/eye.png";
+    } else {
+        input.type = "password";
+        this.src = "/TCC/public/images/icons/eye-closed.png";
+    }
+});
+</script>
+
 
 </body>
 </html>

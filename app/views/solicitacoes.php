@@ -25,7 +25,7 @@ $pedidos = $controller->listarSolicitacoes($nivelUsuario);
 
     <main class="main-content">
 
-        <h1 class="title">Solicitações para aprovação <?= ucfirst($nivelUsuario) ?></h1>
+        <h2 class="title">Solicitações para aprovação <?= ucfirst($nivelUsuario) ?></h2>
 
         <section class="request-history">
             <table>

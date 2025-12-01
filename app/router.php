@@ -1,8 +1,13 @@
 <?php
 require_once __DIR__ . '/controllers/AuthController.php';
-
-function router() {
+require_once __DIR__ . '/controllers/ComprasController.php';
+require_once __DIR__ . '/controllers/ProdutoController.php';
+require_once __DIR__ . '/controllers/RelatorioController.php';
+function router()
+{
     $pagina = $_GET['pagina'] ?? 'dashboard';
+
+
 
     // ==========================================================
     // ROTAS PÚBLICAS
@@ -35,7 +40,7 @@ function router() {
     // ==========================================================
     $acessoRestrito = [
         'usuarios' => ['diretor', 'gerente', 'supervisor'],
-        'checklist' => ['operario','supervisor','gerente','diretor','setor-de-vendas'],
+        'checklist' => ['operario', 'supervisor', 'gerente', 'diretor', 'setor-de-vendas'],
     ];
 
     if (isset($acessoRestrito[$pagina]) && !in_array($nivelLogado, $acessoRestrito[$pagina])) {
@@ -43,13 +48,8 @@ function router() {
         exit;
     }
 
-    // ==========================================================
-    // CONTROLLERS GERAIS
-    // ==========================================================
-    require_once __DIR__ . '/controllers/ComprasController.php';
-    require_once __DIR__ . '/controllers/ProdutoController.php';
-
-    switch($pagina) {
+  
+    switch ($pagina) {
 
         // ==========================================
         // VIEWS SIMPLES
@@ -76,8 +76,55 @@ function router() {
             $controller->detalhes();
             break;
 
+        case 'pdf_financeiro':
+            RelatorioController::gerarPDFFinanceiro();
+            break;
+        case 'pdf_compras':
+            RelatorioController::gerarPDFCompras();
+            break;
+        case 'pdf_vendas':
+            RelatorioController::gerarPDFVendas();
+            break;
+
         case 'produto':
             $controller = new ProdutoController();
+
+            // FILTRO AJAX
+            if ($_GET['acao'] ?? '' === 'filtrar') {
+
+                $filtros = [
+                    'codigo'      => $_GET['codigo'] ?? '',
+                    'nome'        => $_GET['nome'] ?? '',
+                    'categoria'   => $_GET['categoria'] ?? '',
+                    'preco'       => $_GET['preco'] ?? '',
+                    'quantidade'  => $_GET['quantidade'] ?? '',
+                    'ordenar_por' => $_GET['ordenar_por'] ?? null,
+                    'ordem'       => $_GET['ordem'] ?? null
+                ];
+
+                $produtos = ProdutoController::filtrar($filtros);
+
+                header("Content-Type: application/json");
+                echo json_encode($produtos);
+                exit;
+            }
+
+            // ... código POST / GET atual ...
+
+            // RECURSO: RECALCULAR MÍNIMOS
+            if (isset($_GET['acao']) && $_GET['acao'] === 'recalcular_minimos') {
+                header('Content-Type: application/json; charset=utf-8');
+
+                try {
+                    $res = $controller->recalcularMinimos();
+                    echo json_encode($res);
+                } catch (Throwable $e) {
+                    http_response_code(500);
+                    echo json_encode(['sucesso' => false, 'mensagem' => $e->getMessage()]);
+                }
+                exit;
+            }
+
 
             // POST (CADASTRAR / EDITAR / REPOSIÇÃO / SAÍDA)
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -106,7 +153,7 @@ function router() {
                         header('Content-Type: application/json; charset=utf-8');
                         echo json_encode($res);
                         exit;
-                }
+                }   
             }
 
             // GET (FILTRAR / ORDENAR / EXCLUIR)
@@ -122,20 +169,21 @@ function router() {
                         exit;
 
                     case 'excluir':
-                        $id = isset($_GET['id_produto']) ? (int)$_GET['id_produto'] : 0;
+                        $id = isset($_GET['id_produto']) ? (int) $_GET['id_produto'] : 0;
                         $resultado = $controller::excluirProduto($id);
                         header('Content-Type: application/json; charset=utf-8');
                         echo json_encode($resultado);
                         exit;
                 }
             }
+            
             break;
-        
+
         case 'ia_atualizarStatus':
             require_once __DIR__ . '/controllers/IAController.php';
             $controller = new IAController();
             $controller->atualizarStatus();
-        exit;
+            exit;
 
 
         // ==========================================
@@ -144,7 +192,8 @@ function router() {
         case 'requisicao':
             require_once __DIR__ . '/controllers/RequisicaoController.php';
             $controller = new RequisicaoController();
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') exit;
+            if ($_SERVER['REQUEST_METHOD'] === 'POST')
+                exit;
             $controller->listar();
             break;
 
@@ -154,7 +203,7 @@ function router() {
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $idChecklist = $_POST['idChecklist'] ?? null;
-                $idUsuario   = $_POST['idUsuario'] ?? null;
+                $idUsuario = $_POST['idUsuario'] ?? null;
                 $idPedido = $_POST['idPedido'] ?? null;
 
                 if (!$idChecklist || !$idUsuario || !$idPedido) {
@@ -165,27 +214,28 @@ function router() {
                 exit;
             }
             break;
-       
 
-    // ADICIONAR OBSERVAÇÃO AO CHECKLIST
-    case 'checklist_observacao':
-        require_once __DIR__ . '/controllers/ChecklistController.php';
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            
-            $idChecklist = $_POST['idChecklist'] ?? null;
-            $observacao  = $_POST['observacao'] ?? null;
 
-            if (!$idChecklist) {
-                die("Erro: idChecklist não informado.");
+        // ADICIONAR OBSERVAÇÃO AO CHECKLIST
+        case 'checklist_observacao':
+            require_once __DIR__ . '/controllers/ChecklistController.php';
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+                $idChecklist = $_POST['idChecklist'] ?? null;
+                $observacao = $_POST['observacao'] ?? null;
+
+                if (!$idChecklist) {
+                    die("Erro: idChecklist não informado.");
+                }
+
+                ChecklistController::adicionarObservacao($idChecklist, $observacao);
+                $tipo = $_POST['tipo'] ?? 'saída';
+                header("Location: ?pagina=checklist&tipo=$tipo&obs=ok");
+                exit;
             }
-
-            ChecklistController::adicionarObservacao($idChecklist, $observacao);
-            $tipo = $_POST['tipo'] ?? 'saída';
-            header("Location: ?pagina=checklist&tipo=$tipo&obs=ok");
-            exit;
-        }
-        break;
+            break;
 
 
         case 'solicitacoes':

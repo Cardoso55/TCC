@@ -1767,3 +1767,139 @@ ATENÇÃO: Estoque baixo: Bolacha Tortinhas de Chocolate — atual 200, mínimo 225
 9: Avisar equipe de compras e avaliar fornecedor alternativo
 
 
+[2025-11-27 20:44:26]
+Alertas gerados: 5
+CRITICO: Produto vencido: Redmi Buds 6 Lite — validade 2025-11-24
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+CRITICO: Produto vencido: Detergente — validade 2025-11-26
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 3 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+
+=== RECOMENDAÇÕES DA IA ===
+1: Produto vencido, remover do estoque e notificar responsável
+3: Produto vencido, remover do estoque e notificar responsável
+5: Produto vencido, remover do estoque e notificar responsável
+6: Faça uma promoção relâmpago para vender rápido
+6: Remanejar para áreas com mais saída
+7: Produto vencido, remover do estoque e notificar responsável
+
+
+[2025-11-28 19:50:45]
+Alertas gerados: 5
+CRITICO: Produto vencido: Redmi Buds 6 Lite — validade 2025-11-24
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+CRITICO: Produto vencido: Detergente — validade 2025-11-26
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 2 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+
+=== RECOMENDAÇÕES DA IA ===
+1: Produto vencido, remover do estoque e notificar responsável
+3: Produto vencido, remover do estoque e notificar responsável
+5: Produto vencido, remover do estoque e notificar responsável
+6: Faça uma promoção relâmpago para vender rápido
+6: Remanejar para áreas com mais saída
+7: Produto vencido, remover do estoque e notificar responsável
+
+
+[2025-11-29 14:38:02]
+Alertas gerados: 5
+CRITICO: Produto vencido: Redmi Buds 6 Lite — validade 2025-11-24
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+CRITICO: Produto vencido: Detergente — validade 2025-11-26
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 1 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+
+=== RECOMENDAÇÕES DA IA ===
+1: Produto vencido, remover do estoque e notificar responsável
+3: Produto vencido, remover do estoque e notificar responsável
+5: Produto vencido, remover do estoque e notificar responsável
+6: Faça uma promoção relâmpago para vender rápido
+6: Remanejar para áreas com mais saída
+7: Produto vencido, remover do estoque e notificar responsável
+
+
+[2025-11-29 15:29:34]
+Alertas gerados: 5
+CRITICO: Produto vencido: Redmi Buds 6 Lite — validade 2025-11-24
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+CRITICO: Produto vencido: Detergente — validade 2025-11-26
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 1 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+
+=== RECOMENDAÇÕES DA IA ===
+1: Produto vencido, remover do estoque e notificar responsável
+3: Produto vencido, remover do estoque e notificar responsável
+5: Produto vencido, remover do estoque e notificar responsável
+6: Faça uma promoção relâmpago para vender rápido
+6: Remanejar para áreas com mais saída
+7: Produto vencido, remover do estoque e notificar responsável
+
+
+[2025-11-29 15:34:33]
+Alertas gerados: 5
+CRITICO: Produto vencido: Redmi Buds 6 Lite — validade 2025-11-24
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+CRITICO: Produto vencido: Detergente — validade 2025-11-26
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 1 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+
+=== RECOMENDAÇÕES DA IA ===
+1: Produto vencido, remover do estoque e notificar responsável
+3: Produto vencido, remover do estoque e notificar responsável
+5: Produto vencido, remover do estoque e notificar responsável
+6: Faça uma promoção relâmpago para vender rápido
+6: Remanejar para áreas com mais saída
+7: Produto vencido, remover do estoque e notificar responsável
+
+
+[2025-11-29 17:16:52]
+Alertas gerados: 5
+CRITICO: Produto vencido: Redmi Buds 6 Lite — validade 2025-11-24
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+CRITICO: Produto vencido: Detergente — validade 2025-11-26
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 1 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+
+=== RECOMENDAÇÕES DA IA ===
+1: Produto vencido, remover do estoque e notificar responsável
+3: Produto vencido, remover do estoque e notificar responsável
+5: Produto vencido, remover do estoque e notificar responsável
+6: Faça uma promoção relâmpago para vender rápido
+6: Remanejar para áreas com mais saída
+7: Produto vencido, remover do estoque e notificar responsável
+
+
+[2025-11-29 21:06:46]
+Alertas gerados: 5
+CRITICO: Produto vencido: Redmi Buds 6 Lite — validade 2025-11-24
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+CRITICO: Produto vencido: Detergente — validade 2025-11-26
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 1 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+
+=== RECOMENDAÇÕES DA IA ===
+1: Produto vencido, remover do estoque e notificar responsável
+3: Produto vencido, remover do estoque e notificar responsável
+5: Produto vencido, remover do estoque e notificar responsável
+6: Faça uma promoção relâmpago para vender rápido
+6: Remanejar para áreas com mais saída
+7: Produto vencido, remover do estoque e notificar responsável
+
+
+[2025-11-29 22:05:18]
+Alertas gerados: 5
+CRITICO: Produto vencido: Redmi Buds 6 Lite — validade 2025-11-24
+CRITICO: Produto vencido: Monitor Acer 23.9' — validade 2025-11-10
+CRITICO: Produto vencido: Detergente — validade 2025-11-26
+ATENÇÃO: Produto próximo da validade: Sabão em Pó — vence em 1 dias
+CRITICO: Produto vencido: Arroz Branco Tipo 1 — validade 2025-11-12
+
+=== RECOMENDAÇÕES DA IA ===
+1: Produto vencido, remover do estoque e notificar responsável
+3: Produto vencido, remover do estoque e notificar responsável
+5: Produto vencido, remover do estoque e notificar responsável
+6: Faça uma promoção relâmpago para vender rápido
+6: Remanejar para áreas com mais saída
+7: Produto vencido, remover do estoque e notificar responsável
+
+

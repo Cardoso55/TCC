@@ -1,18 +1,14 @@
 /* ===== Sidebar ===== */
 .sidebar {
-    width: 200px; /* MENOR */
+    width: 200px;
+    margin: 10px 20px;
+    border-radius: 16px;
     background: #ffffff;
     color: #bdbdbd;
     height: 112vh;
     display: flex;
     flex-direction: column;
     padding: 30px;
-}
-
-/* ===== Logo ===== */
-.sidebar-logo img {
-    width: 140px;
-    cursor: pointer;
 }
 
 .sidebar-logo img {
@@ -25,6 +21,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    margin-top: 20px;
 }
 
 .menu-btn {
@@ -42,37 +39,36 @@
 }
 
 .menu-btn:hover {
-    background-color: #01aad4;
+    background-color: #2F78D1; /* azul elegante mais escuro */
     color: #fff;
     transform: translateY(-2px);
 }
 
-/* ACTIVE correto */
+/* ACTIVE */
 .menu-btn.active,
 .menu-btn[href*="<?php echo $_GET['pagina'] ?? '' ?>"] {
-    background: #4AA3FF !important;
-    color: #0A1A2F !important;
+    background: #2F78D1 !important;
+    color: #ffffff !important;
     font-weight: 600;
 }
 
-/* DIVISÓRIAS tipo YouTube */
+/* DIVISÓRIAS */
 .menu-section {
-    border-top: 1px solid #ccc; /* cinza suave */
+    border-top: 1px solid #ccc;
     margin: 10px 0;
     padding-top: 10px;
 }
 
-/* ===== Botão vermelho ===== */
+/* Botão de sair */
 .sidebar-bottom {
-    padding: 1rem 0; /* remove o padding lateral */
+    padding: 1rem 0;
     display: flex;
-    justify-content: center; /* centraliza horizontalmente */
+    justify-content: center;
 }
 
 .logout-btn {
-   
-    background-color: transparent; /* removido */
-    color: #a31d1c; /* vermelho */
+    background-color: transparent;
+    color: #a31d1c;
     text-align: center;
     border-radius: 14px;
     text-decoration: none;
@@ -86,7 +82,7 @@
     background-color: #a31d1c;
 }
 
-/* Header da sidebar (logo + botão) */
+/* Header Sidebar */
 .sidebar-header {
     width: 100%;
     display: flex;
@@ -97,13 +93,13 @@
 }
 
 /* ========================================= */
-/* 🔔 BOTÃO DO SINO BRABO */
+/* 🔔 BOTÃO DO SINO */
 /* ========================================= */
 .btn-alertas {
-    background: #01aad4;
+    background: #2F78D1;        /* azul elegante escuro */
     color: #fff;
     padding: 10px 14px;
-    font-size: 20px;
+    font-size: 1.1rem;
     border: none;
     border-radius: 14px;
     cursor: pointer;
@@ -111,27 +107,26 @@
     align-items: center;
     gap: 8px;
     transition: 0.22s ease;
-    box-shadow: 0 6px 15px rgba(1, 170, 212, 0.3);
+    box-shadow: 0 6px 15px rgba(47,120,209,0.3);
 }
 
 .btn-alertas:hover {
-    background: #0188ab; /* azul mais escuro */
+    background: #1B4F8C;        /* azul ainda mais escuro */
     transform: translateY(-3px);
-    box-shadow: 0 10px 22px rgba(1, 170, 212, 0.4);
+    box-shadow: 0 10px 22px rgba(27,79,140,0.4);
 }
-
 
 /* Badge */
 .badge {
     padding: 4px 8px;
     border-radius: 20px;
     color: #fff;
-    font-size: 14px;
+    font-size: 0.9rem;
     font-weight: 700;
 }
 
 /* ========================================= */
-/* 🔔 DROPDOWN ULTRA CLEAN + GLASS */
+/* 🔔 DROPDOWN CLEAN */
 /* ========================================= */
 .alertas-dropdown {
     position: absolute;
@@ -142,7 +137,6 @@
     min-height: 600px;
     max-height: 700px;
 
-    /* Glass effect PRO */
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(230, 230, 230, 0.55);
@@ -160,7 +154,6 @@
                 visibility .32s;
 }
 
-/* Mostrando */
 .alertas-dropdown.show {
     opacity: 1;
     visibility: visible;
@@ -170,7 +163,7 @@
 
 /* Header */
 .alertas-header {
-    background: linear-gradient(135deg, #0188ab, #01aad4);
+    background: linear-gradient(135deg, #1B4F8C, #2F78D1);
     padding: 14px 18px;
     color: #fff;
     border-radius: 18px 18px 0 0;
@@ -178,12 +171,12 @@
 
 .alertas-header h3 {
     margin: 0;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 600;
     letter-spacing: .3px;
 }
 
-/* Lista com scroll suave */
+/* Scroll */
 .alertas-list {
     max-height: 480px;
     overflow-y: auto;
@@ -195,21 +188,20 @@
 }
 
 .alertas-list::-webkit-scrollbar-thumb {
-    background: #cfcfcf;
+    background: #b6b6b6;
     border-radius: 10px;
 }
 
 /* ========================================= */
-/* 🧩 CARTÃO DE ALERTA ESTILO PREMIUM */
+/* 🧩 CARTÕES */
 /* ========================================= */
 .alerta-card {
     background: #ffffffcc;
-    border-left: 5px solid #01aad4;
+    border-left: 5px solid #2F78D1;  /* azul escuro */
     padding: 14px;
     border-radius: 12px;
     margin-bottom: 12px;
     display: flex;
-    
     gap: 12px;
     justify-content: space-between;
     align-items: center;
@@ -217,21 +209,21 @@
 }
 
 .alerta-card:hover {
-    background: #e9f9ff; /* blue-ish hover */
+    background: #e3efff; /* tom mais frio e claro */
     transform: translateX(8px);
     box-shadow: 0 6px 18px rgba(0,0,0,0.07);
 }
 
 /* Ícone */
 .alerta-card .icone {
-    font-size: 22px;
+    font-size: 1.1rem;
     color: #ffb03b;
 }
 
 /* Texto */
 .conteudo-alerta {
     color: #333;
-    font-size: 14px;
+    font-size: 0.9rem;
     font-weight: 500;
 }
 
@@ -239,20 +231,21 @@
     color: #222;
     display: block;
     margin-bottom: 5px;
-    font-size: 14px;
+    font-size: 0.9rem;
 }
 
+/* Botão visto */
 .botao-visto {
   margin-left: auto;
-  background: #0188ab;
+  background: #1B4F8C;  /* azul escuro */
   color: #fff;
   border: none;
-  padding: 10px 0;               /* mais alto */
+  padding: 10px 0;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 0.9rem;
   font-weight: 600;
-  width: 110px;                  /* 🔥 TAMANHO PADRÃO */
+  width: 110px;
   text-align: center;
   display: flex;
   justify-content: center;
@@ -261,10 +254,9 @@
 }
 
 .botao-visto:hover {
-  background: #01aad4;
+  background: #2F78D1;
   transform: translateY(-2px);
 }
-
 
 /* Nenhum alerta */
 .alerta-card.nenhum {
@@ -276,16 +268,14 @@
     padding: 18px;
 }
 
-/* Efeito remoção */
+/* Remoção */
 .sumindo {
     opacity: 0;
     transform: translateX(25px);
     transition: .25s ease;
 }
 
-/* ========================================= */
-/* MOBILE */
-/* ========================================= */
+/* Mobile */
 @media (max-width:900px) {
   .alertas-dropdown {
     width: 92vw;

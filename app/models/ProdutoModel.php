@@ -35,15 +35,29 @@ class ProdutoModel {
 
    public static function buscarComEstoque() {
     $db = conectarBanco();
-    $res = $db->query(
-        "SELECT p.*, e.quantidade_atual, e.quantidade_minima
-         FROM produtos_tbl p
-         LEFT JOIN estoque_tbl e ON p.id_produto = e.idProdutos_TBL
-         WHERE p.ativo = 1"
-    );
-    $produtos = $res->fetch_all(MYSQLI_ASSOC);
+
+    $sql = "
+        SELECT 
+            p.id_produto,
+            p.codigo_produto,
+            p.nome,
+            p.descricao,
+            p.categoria,
+            p.preco_unitario,
+            p.valor_compra,
+            p.ativo,
+            e.quantidade_atual AS estoque_atual,
+            e.quantidade_minima AS estoque_minima
+        FROM produtos_tbl p
+        LEFT JOIN estoque_tbl e 
+            ON e.idProdutos_TBL = p.id_produto
+        WHERE p.ativo = 1
+    ";
+
+    $result = $db->query($sql)->fetch_all(MYSQLI_ASSOC);
+
     $db->close();
-    return $produtos;
+    return $result;
 }
 
 
@@ -134,6 +148,22 @@ class ProdutoModel {
     $conn->close();
     return (int)$row['total'];
 }
+
+    public static function buscarPreco($idProduto)
+    {
+        $conn = conectarBanco();
+
+        $sql = "SELECT preco_unitario FROM produtos_tbl WHERE id_produto = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $idProduto);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $dados = $result->fetch_assoc();
+
+        return $dados ? floatval($dados['preco_unitario']) : 0;
+    }
+
 
 public static function contarReposicoes($produtoId) {
     $conn = conectarBanco();
@@ -290,9 +320,3 @@ public static function contarReposicoes($produtoId) {
             $db->close();
         }
 }
-
-   
-
-
-
-

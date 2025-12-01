@@ -29,7 +29,7 @@ class ChecklistController {
     require_once __DIR__ . "/../models/EstoqueModel.php";
 
     $idProduto = $checklist['idProduto_TBL'];
-    $quantidade = $pedido['quantidade'] ?? $quantidade;
+    $quantidade = $pedidoSaida['quantidade'] ?? $quantidade;
 
     $estoque = EstoqueModel::buscarPorProduto($idProduto);
     if (!$estoque) die("Erro: Estoque não encontrado para o produto {$idProduto}.");
@@ -56,6 +56,7 @@ class ChecklistController {
     // Confirmar checklist (mesma função que você já tinha)
     // Confirmar checklist (atualiza e dispara ações específicas)
 public static function confirmar($idChecklist, $idUsuario, $idPedidoRecebido) {
+    
     $checklist = ChecklistModel::buscarPorId($idChecklist);
     if (!$checklist) die("Checklist não encontrado.");
 
@@ -80,9 +81,6 @@ public static function confirmar($idChecklist, $idUsuario, $idPedidoRecebido) {
         $pedido = PedidoReposicaoModel::buscarPorId($idReposicao);
         $quantidade = $pedido['quantidade'] ?? ($quantidade ?? 1);
     }
-
-    // Quantidade REAL da movimentação
-    $quantidade = null;
 
     // 1) Se veio de compra, usa quantidade da compra
     if ($idCompra) {
@@ -112,8 +110,27 @@ public static function confirmar($idChecklist, $idUsuario, $idPedidoRecebido) {
     // Processa entrada ou saída
     if (!empty($checklist['idProduto_TBL'])) {
         if ($checklist['tipo'] === 'saída') {
+
+            $idPedidoSaida = $checklist['idPedidosSaida_TBL'] ?? null;
+            $idUsuario = $_SESSION['user_id'] ?? null;
+            $idProduto = $checklist['idProduto_TBL'];
+
+
             // Chamando a função isolada para venda/saída
             self::processarSaidaEstoque($checklist, $idUsuario, $quantidade);
+            // Atualiza o status do pedido de saída
+            if ($idPedidoSaida) {
+                PedidoSaidaModel::marcarComoConcluido($idPedidoSaida);
+            }
+
+
+            // Registra venda (se quiser rastrear)
+           PedidoSaidaModel::registrarVenda(
+                $idProduto,
+                $idUsuario,
+                $quantidade
+            );
+
 
         } else {
             // Entrada normal

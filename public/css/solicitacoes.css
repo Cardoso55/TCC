@@ -1,30 +1,62 @@
-/* ===== Container principal ===== */
-.all{
+:root {
+    --macaw-blue: #355fbb;
+    --macaw-blue-dark: #1f3b73;
+    --macaw-blue-light: #6a9dff;
+    --macaw-bg-soft: #eef2ff;
+    --macaw-card-bg: #f9faff;
+    --macaw-gradient: linear-gradient(135deg, #355fbb, #6a9dff);
+    --macaw-hover-shadow: 0 6px 20px rgba(53, 95, 187, 0.35);
+}
+
+.all {
     display: flex;
     flex-direction: row;
+    background: var(--macaw-bg-soft);
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
 }
+
 
 .main-content {
     width: 80%;
-    margin: 10px;
+    margin: 10px auto;
     display: flex;
     flex-direction: column;
-    background-color: #fff;
-    box-shadow: 10px 0 10px rgba(0,0,0,0.1);
+    background-color: var(--macaw-card-bg);
+    border-radius: 16px;
+    box-shadow: 10px 0 25px rgba(0, 0, 0, 0.08);
+    padding: 20px 30px;
+    transition: all 0.3s ease;
 }
 
-/* ===== Títulos ===== */
 .title {
-    font-size: 50px;
+    font-size: 2.4rem;
+    margin-top: 25px;
+    position: relative;
+    padding-left: 10px;
     font-weight: bold;
-    margin: 30px 0 10px 30px;
+    margin-left: 30px;
+}
+
+.title::before {
+    content: "";
+    width: 6px;
+    height: 28px;
+    background: var(--macaw-blue);
+    border-radius: 6px;
+    position: absolute;
+    left: -12px;
+    top: 6px;
 }
 
 .subtitle {
-    font-size: 30px;
-    font-weight: bold;
-    margin: 20px 0 10px 30px;
+    font-size: 1.4rem;
+    margin-top: 20px;
+    padding-left: 8px;
+    border-left: 4px solid var(--macaw-blue-light);
+    font-weight: bold;  
 }
+
 
 /* ===== Cards de contagem ===== */
 .count {
@@ -62,65 +94,117 @@
 }
 
 .number {
-    font-size: 40px;
+    font-size: 2.2rem;
     font-weight: bold;
     color: #333;
 }
 
 .card-title {
-    font-size: 20px;
+    font-size: 1.1rem;
     font-weight: bold;
     color: #666;
 }
 
 /* ===== Histórico de solicitações ===== */
 .request-history {
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    width: 100%;
-    max-width: 90%;
-    margin: 20px auto;
-    overflow-x: auto;
+    background-color: var(--macaw-card-bg);
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(53, 95, 187, 0.1);
+    overflow: hidden;
+    margin: 10px 0;
+    transition: all 0.3s ease;
 }
 
-.request-history h2 {
-    font-size: 18px;
-    margin-bottom: 15px;
-    color: #333;
-}
-
-.request-history table {
+table {
     width: 100%;
     border-collapse: collapse;
-    font-family: "Poppins", sans-serif;
-    font-size: 14px;
-}
-
-.request-history th {
     text-align: left;
-    background-color: #f7f7f7;
-    padding: 10px;
-    color: #333;
+    font-size: 0.95rem;
+}
+
+/* CABEÇALHO */
+thead {
+    background: linear-gradient(135deg, var(--macaw-blue-dark), var(--macaw-blue));
+    color: #fff;
+}
+
+th {
+    padding: 14px 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    border-bottom: 2px solid rgba(255,255,255,0.3);
+    position: relative;
+}
+
+th button {
+    background: #1f3b73;
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
     font-weight: 600;
-    border-bottom: 2px solid #ddd;
+    transition: all 0.3s ease;
 }
 
-.request-history td {
-    padding: 10px;
-    border-bottom: 1px solid #e0e0e0;
-    color: #444;
+th button:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 18px rgba(53, 95, 187, 0.3);
 }
 
-.request-history tr:last-child td {
-    border-bottom: none;
+/* LINHAS DA TABELA */
+td {
+    padding: 12px;
+    color: #555;
+    border-bottom: 1px solid #eee;
+    transition: all 0.2s ease;
 }
 
-.request-history tr:hover {
-    background-color: #f9f9f9;
-    transition: 0.2s ease;
+tbody tr:nth-child(even) {
+    background-color: #f0f4ff;
 }
+
+tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+tbody tr:hover {
+    background-color: #e2ebff;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(53, 95, 187, 0.1);
+}
+
+/* LINKS */
+td a {
+    text-decoration: none;
+    color: var(--macaw-blue);
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+td a:hover {
+    text-decoration: underline;
+    color: var(--macaw-blue-dark);
+}
+
+/* ÚLTIMA COLUNA (AÇÕES) */
+th:last-child,
+td:last-child {
+    text-align: right;
+    padding-right: 25px;
+}
+
+td:last-child a,
+td:last-child button {
+    margin-left: 8px;
+}
+
+/* PADDING ENTRE COLUNAS */
+td:not(:last-child),
+th:not(:last-child) {
+    padding-right: 12px;
+}
+
 
 /* ===== Status dos pedidos ===== */
 .status {
@@ -145,7 +229,7 @@
     border: none;
     color: #333;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 0.9rem;
     transition: 0.2s;
 }
 

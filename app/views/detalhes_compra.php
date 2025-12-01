@@ -4,9 +4,9 @@ if (!isset($compra)) {
 }
 ?>
 
-<link rel="stylesheet" href="/TCC/public/css/detalhes_compra.css">
 <link rel="stylesheet" href="/TCC/public/css/reset.css">
 <link rel="stylesheet" href="/TCC/public/css/sidebar.css">
+<link rel="stylesheet" href="/TCC/public/css/detalhes_compra.css">
 
 <div class="all">
 
@@ -17,12 +17,12 @@ if (!isset($compra)) {
     <div class="main-content">
 
         <!-- Info geral da compra -->
-        <div class="title">Compra #<?= $compra['id_compra'] ?></div>
-        <div class="subtitle">Fornecedor: <?= $compra['fornecedor'] ?></div>
+        <h2 class="title">Compra #<?= $compra['id_compra'] ?></h2>
+        <h2 class="subtitle">Fornecedor: <?= $compra['fornecedor'] ?></h2>
 
         <div class="info-box">
             <p><strong>Data da compra:</strong> <?= date("d/m/Y H:i", strtotime($compra['data_compra'])) ?></p>
-            <p><strong>Valor total:</strong> R$ <?= number_format($compra['valor_total'], 2, ',', '.') ?></p>
+            <p><strong>Valor total da compra:</strong> R$ <?= number_format($compra['valor_total'], 2, ',', '.') ?></p>
         </div>
 
         <!-- Itens da compra em cards -->
@@ -36,7 +36,7 @@ if (!isset($compra)) {
             <div class="cards-container">
                 <?php foreach ($pedidos as $p): ?>
                     <div class="card-item <?= ($p['status'] === 'concluido') ? 'status-confirmado' : 'status-acaminho' ?>">
-                        <h3><?= $p['nome'] ?></h3>
+                        <section class="card-title"><?= $p['nome'] ?></section>
                         <p><strong>ID Pedido:</strong> <?= $p['id_pedido'] ?></p>
                         <p><strong>Quantidade:</strong> <?= $p['quantidade'] ?></p>
                         <p><strong>Valor Unitário:</strong> R$ <?= number_format($p['preco_unitario'], 2, ',', '.') ?></p>

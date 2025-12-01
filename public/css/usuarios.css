@@ -1,27 +1,60 @@
-.all{
+:root {
+    --macaw-blue: #355fbb;
+    --macaw-blue-dark: #1f3b73;
+    --macaw-blue-light: #6a9dff;
+    --macaw-bg-soft: #eef2ff;
+    --macaw-card-bg: #f9faff;
+    --macaw-gradient: linear-gradient(135deg, #355fbb, #6a9dff);
+    --macaw-hover-shadow: 0 6px 20px rgba(53, 95, 187, 0.35);
+}
+
+.all {
     display: flex;
     flex-direction: row;
+    background: var(--macaw-bg-soft);
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
 }
 
-.main-content{
+
+.main-content {
     width: 80%;
-    margin: 10px;
+    margin: 10px auto;
     display: flex;
     flex-direction: column;
-    background-color: #fff;
-    box-shadow: 10px 0 10px rgba(0,0,0,0.1);
+    background-color: var(--macaw-card-bg);
+    border-radius: 16px;
+    box-shadow: 10px 0 25px rgba(0, 0, 0, 0.08);
+    padding: 20px 30px;
+    transition: all 0.3s ease;
 }
 
-.title{
-    font-size: 50px;
+.title {
+    font-size: 2.4rem;
+    margin-top: 25px;
+    position: relative;
+    padding-left: 10px;
     font-weight: bold;
-    margin: 30px 0px 10px 30px;
+    margin-left: 30px;
 }
 
-.subtitle{
-    font-size: 30px;
-    font-weight: bold;
-    margin: 20px 0px 10px 30px;
+.title::before {
+    content: "";
+    width: 6px;
+    height: 28px;
+    background: var(--macaw-blue);
+    border-radius: 6px;
+    position: absolute;
+    left: -12px;
+    top: 6px;
+}
+
+.subtitle {
+    font-size: 1.4rem;
+    margin-top: 20px;
+    padding-left: 8px;
+    border-left: 4px solid var(--macaw-blue-light);
+    font-weight: bold;  
 }
 
 .user-management {
@@ -39,9 +72,9 @@
 .user-management input,
 .user-management select {
     padding: 10px 12px;
-    border: 1px solid #ccc;
+    border: 2px solid #ccc;
     border-radius: 8px;
-    font-size: 15px;
+    font-size: 1rem;
     outline: none;
     width: 220px;
     background-color: #fff;
@@ -50,11 +83,18 @@
 
 .user-management input:focus,
 .user-management select:focus {
-    border-color: #b50000; /* tom vermelho da logo */
+    border-color: var(--macaw-blue);
+    box-shadow: 0 0 10px rgba(53, 95, 187, 0.25);
+}
+
+.user-management input::placeholder,
+.user-management select::placeholder {
+    color: #9c9c9c;
+    font-weight: 400;
 }
 
 .user-management button {
-    background-color: #b50000;
+    background-color: var(--macaw-blue);
     color: white;
     border: none;
     border-radius: 8px;
@@ -65,9 +105,8 @@
 }
 
 .user-management button:hover {
-    background-color: #910000;
+    background-color: var(--macaw-blue-dark);
 }
-
 
 .middle-line {
     display: flex;
@@ -86,24 +125,18 @@
     border: 1px solid #ccc;
     border-radius: 10px;
     padding: 10px 16px;
-    font-size: 15px;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: 0.3s ease;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* Ícone padrão “+” estilizado */
-.add-user::before {
-    content: "👤";
-    font-size: 17px;
-}
-
 /* Efeito hover */
 .add-user:hover {
-    background-color: #e9e9e9;
-    border-color: #b50000;
-    color: #b50000;
+    background-color: var(--macaw-blue-dark);
+    border-color: var(--macaw-blue-dark);
+    color: #fff;
     transform: translateY(-1px);
     box-shadow: 0 3px 6px rgba(0,0,0,0.1);
 }
@@ -114,79 +147,121 @@
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-
 .user-list {
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    margin: 20px;
+    background-color: var(--macaw-card-bg);
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(53, 95, 187, 0.1);
+    overflow: hidden;
+    margin: 10px 0;
+    transition: all 0.3s ease;
 }
 
 .user-list h2 {
     margin-bottom: 15px;
     color: #333;
-    font-size: 20px;
+    font-size: 1.2rem;
 }
 
-/* Cabeçalho */
+/* TABELA */
 .user-list table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 15px;
+    text-align: left;
+    font-size: 0.95rem;
+}
+
+/* CABEÇALHO */
+.user-list thead {
+    background: linear-gradient(135deg, var(--macaw-blue-dark), var(--macaw-blue));
+    color: #fff;
 }
 
 .user-list th {
-    background-color: #f3f3f3;
-    text-align: left;
-    padding: 12px 10px;
-    border-bottom: 2px solid #ddd;
-    color: #222;
+    padding: 14px 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    border-bottom: 2px solid rgba(255,255,255,0.3);
+    position: relative;
 }
 
-/* Linhas */
+.user-list th button {
+    background: var(--macaw-blue-dark);
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.user-list th button:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: var(--macaw-hover-shadow);
+}
+
+/* LINHAS DA TABELA */
 .user-list td {
-    padding: 10px;
+    padding: 12px;
+    color: #555;
     border-bottom: 1px solid #eee;
+    transition: all 0.2s ease;
 }
 
-/* Linhas alternadas */
 .user-list tbody tr:nth-child(even) {
-    background-color: #fafafa;
+    background-color: #f0f4ff;
 }
 
-/* ======== STATUS ======== */
-.user-list td:nth-child(4) {
+.user-list tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+.user-list tbody tr:hover {
+    background-color: #e2ebff;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(53, 95, 187, 0.1);
+}
+
+/* STATUS */
+.user-list td.status {
     font-weight: 600;
 }
 
-.user-list td:nth-child(4):contains("Ativo") {
-    color: #2ecc71; /* verde */
-}
+.user-list td.status.ativo { color: #2ecc71; }
+.user-list td.status.inativo { color: #e74c3c; }
+.user-list td.status.ausente { color: #8e44ad; }
 
-.user-list td:nth-child(4):contains("Inativo") {
-    color: #e74c3c; /* vermelho */
-}
-
-.user-list td:nth-child(4):contains("Ausente") {
-    color: #8e44ad; /* roxo */
-}
-
-/* ======== AÇÕES ======== */
-.user-list a {
-    background: #f3f3f3;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 6px 12px;
+/* LINKS E AÇÕES */
+.user-list td a {
     text-decoration: none;
-    color: #333;
+    color: var(--macaw-blue);
     font-weight: 500;
-    transition: 0.3s;
+    transition: all 0.2s ease;
 }
 
-.user-list a:hover {
-    background: #ddd;
+.user-list td a:hover {
+    text-decoration: underline;
+    color: var(--macaw-blue-dark);
 }
+
+/* ÚLTIMA COLUNA (AÇÕES) */
+.user-list th:last-child,
+.user-list td:last-child {
+    text-align: right;
+    padding-right: 25px;
+}
+
+.user-list td:last-child a,
+.user-list td:last-child button {
+    margin-left: 8px;
+}
+
+/* PADDING ENTRE COLUNAS */
+.user-list td:not(:last-child),
+.user-list th:not(:last-child) {
+    padding-right: 12px;
+}
+
 
 /* ===== MODAL ===== */
 .modal-overlay {
@@ -207,9 +282,8 @@
     background: #fff;
     border-radius: 16px;
     padding: 25px 30px;
-    width: 400px;
+    width: 700px;
     max-width: 90vw;
-    border: 2px solid #b39ddb; /* roxinho */
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
     animation: fadeIn 0.3s ease;
     margin: 0 auto; /* centraliza horizontalmente */
@@ -226,8 +300,9 @@
 .modal-content h2 {
     margin-top: 0;
     margin-bottom: 20px;
-    font-size: 20px;
+    font-size: 1.2rem;
     font-weight: 700;
+    text-align: center;
 }
 
 /* Inputs e selects */
@@ -238,14 +313,36 @@
     margin: 5px 0 15px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 0.9rem;
     outline: none;
     box-sizing: border-box;
+}
+
+#name {
+    padding: 9px 10px;
+    border-radius: 8px;
 }
 
 .modal-content input:focus,
 .modal-content select:focus {
     border-color: #b39ddb;
+}
+
+.juntarOsDois {
+    width: 10%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.modal-content label {
+    width: 100%;
+    text-align: left;
+    font-weight: 600;
+    margin-bottom: 5px;
+    display: block;
 }
 
 /* Botões */
@@ -257,7 +354,7 @@
 }
 
 .save {
-    background: #3c3c3c;
+    background: #136837;
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -267,13 +364,26 @@
 }
 
 .save:hover {
-    background: #000;
+    background: #0a3d1f;
+}
+
+.delete {
+    background: #d32f2f;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.delete:hover {
+    background: #a00000;
 }
 
 .cancel {
-    background: #f3f3f3;
-    color: #333;
-    border: 1px solid #ccc;
+    background: #3c3c3c;
+    color: #fff;
     border-radius: 6px;
     padding: 8px 16px;
     cursor: pointer;
@@ -283,6 +393,11 @@
 .cancel:hover {
     background: #e0e0e0;
 }
+
+.password-requirements {
+    flex-wrap: wrap;
+}
+
 .password-requirements p {
     margin: 2px 0;
     color: #888; /* cinza padrão */
@@ -290,7 +405,7 @@
 }
 
 .password-requirements .invalid {
-    color: red;
+    color: rgb(216, 0, 0);
 }
 
 .password-requirements .valid {
@@ -309,6 +424,36 @@ button:disabled {
 .feedback.success { color: green; }
 .feedback.error { color: red; }
 
+.flash-message {
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 600;
+    margin-top: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.4s ease;
+}
+
+.flash-message.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.flash-success {
+    background-color: #2ecc71; /* verde */
+}
+
+.flash-error {
+    background-color: #e74c3c; /* vermelho */
+}
+
+.modal-buttons{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
 
 
 

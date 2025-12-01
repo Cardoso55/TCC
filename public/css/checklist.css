@@ -1,19 +1,60 @@
-/* checklist.css */
+:root {
+    --macaw-blue: #355fbb;
+    --macaw-blue-dark: #1f3b73;
+    --macaw-blue-light: #6a9dff;
+    --macaw-bg-soft: #eef2ff;
+    --macaw-card-bg: #f9faff;
+    --macaw-gradient: linear-gradient(135deg, #355fbb, #6a9dff);
+    --macaw-hover-shadow: 0 6px 20px rgba(53, 95, 187, 0.35);
+}
 
-/* Wrapper para alinhar sidebar + conteúdo */
-.wrapper {
+.all {
     display: flex;
-    min-height: 100vh; /* faz o wrapper ocupar toda a altura da tela */
+    flex-direction: row;
+    background: var(--macaw-bg-soft);
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
 }
 
 
-/* Conteúdo principal */
-.conteudo {
-    flex: 1;
-    margin-left: 30px; /* mesma largura da sidebar */
-    padding: 20px;
-    box-sizing: border-box;
-    background-color: #f4f4f4;
+.main-content {
+    width: 80%;
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--macaw-card-bg);
+    border-radius: 16px;
+    box-shadow: 10px 0 25px rgba(0, 0, 0, 0.08);
+    padding: 20px 30px;
+    transition: all 0.3s ease;
+}
+
+.title {
+    font-size: 2.4rem;
+    margin-top: 25px;
+    position: relative;
+    padding-left: 10px;
+    font-weight: bold;
+    margin-left: 30px;
+}
+
+.title::before {
+    content: "";
+    width: 6px;
+    height: 28px;
+    background: var(--macaw-blue);
+    border-radius: 6px;
+    position: absolute;
+    left: -12px;
+    top: 6px;
+}
+
+.subtitle {
+    font-size: 1.4rem;
+    margin-top: 20px;
+    padding-left: 8px;
+    border-left: 4px solid var(--macaw-blue-light);
+    font-weight: bold;  
 }
 
 /* Cards de checklist */

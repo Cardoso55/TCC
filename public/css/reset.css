@@ -48,6 +48,7 @@ table {
 
 /* Suaviza fontes em navegadores WebKit */
 html {
+    font-size: 16px; /* padrão */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     scroll-behavior: smooth;
@@ -57,3 +58,668 @@ html {
 *, *::before, *::after {
     box-sizing: inherit;
 }
+
+
+body, div, span, p, h1, h3, h4, h5, h6,
+a, button, input, textarea, select, th, td,
+.modal-content *, #modalReposicao * {
+    font-size: 1rem !important; /* força herança do JS */
+}
+
+
+.title {
+    font-size: 2.5rem;
+}
+
+.subtitle, .card-title {
+    font-size: 1.5rem;
+}
+
+/* ===========================
+   VARIÁVEIS — TEMA LIGHT
+   =========================== */
+:root {
+    --bg-page: #f4f4f4;
+    --bg-card: #ffffff;
+
+    --text-color: #111;
+
+    --shadow-color: rgba(0,0,0,0.1);
+
+    --border-color: #ccc;
+
+    --entrada-color: #3498db;
+    --saida-color: #2ecc71;
+
+    --pendente-color: #f9e79f;
+    --andamento-color: #f5b041;
+    --concluido-color: #d5dbdb;
+
+    --btn-confirmar-bg: #2ecc71;
+    --btn-observacao-bg: #3498db;
+
+    --btn-text: #ffffff;
+}
+
+/* ===========================
+   VARIÁVEIS — TEMA DARK
+   =========================== */
+:root.dark {
+    --bg-page: #111;
+    --bg-card: #1a1a1a;
+
+    --text-color: #e5e5e5;
+
+    --shadow-color: rgba(0,0,0,0.4);
+
+    --border-color: #444;
+
+    --entrada-color: #5dade2;
+    --saida-color: #58d68d;
+
+    --pendente-color: #a0892c;
+    --andamento-color: #b3741a;
+    --concluido-color: #4d5656;
+
+    --btn-confirmar-bg: #27ae60;
+    --btn-observacao-bg: #2e86c1;
+
+    --btn-text: #ffffff;
+}
+
+/* ===========================
+   LAYOUT GERAL
+   =========================== */
+
+/* Wrapper */
+.wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Conteúdo */
+.conteudo {
+    flex: 1;
+    margin-left: 30px;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: var(--bg-page);
+    color: var(--text-color);
+}
+
+/* Cards */
+.card {
+    background: var(--bg-card);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px var(--shadow-color);
+    color: var(--text-color);
+}
+
+/* Tipos */
+.tipo-entrada { border-left: 5px solid var(--entrada-color); }
+.tipo-saida { border-left: 5px solid var(--saida-color); }
+
+/* Status */
+.status-pendente { background-color: var(--pendente-color); }
+.status-em_andamento { background-color: var(--andamento-color); }
+.status-concluido { background-color: var(--concluido-color); }
+
+/* Botões */
+.botao {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+    color: var(--btn-text);
+}
+
+.botao-confirmar { background: var(--btn-confirmar-bg); }
+.botao-observacao { background: var(--btn-observacao-bg); }
+
+/* Inputs */
+form input[type="text"] {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-color);
+}
+
+/* ===========================
+   VARIÁVEIS — LIGHT MODE
+   =========================== */
+:root {
+    --bg-main: #ffffff;
+    --text-color: #111;
+
+    --btn-bg: #007bff;
+    --btn-hover: #005fcc;
+
+    --shadow: rgba(0,0,0,0.1);
+}
+
+/* ===========================
+   VARIÁVEIS — DARK MODE
+   =========================== */
+:root.dark {
+    --bg-main: #1a1a1a;
+    --text-color: #e5e5e5;
+
+    --btn-bg: #005fcc;
+    --btn-hover: #007bff;
+
+    --shadow: rgba(0,0,0,0.4);
+}
+
+/* ===========================
+   ESTILOS
+   =========================== */
+
+.all{
+    display: flex;
+    flex-direction: row;
+}
+
+.main-content{
+    width: 80%;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-main);
+    color: var(--text-color);
+    box-shadow: 10px 0 10px var(--shadow);
+}
+
+.title{
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 30px 0px 10px 30px;
+    color: var(--text-color);
+}
+
+.subtitle{
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 20px 0px 10px 30px;
+    color: var(--text-color);
+}
+
+.acessibilidade-controles {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.acessibilidade-controles button {
+    padding: 8px 14px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 6px;
+    border: none;
+    background: var(--btn-bg);
+    color: white;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.acessibilidade-controles button:hover {
+    background: var(--btn-hover);
+}
+
+/* modo leitura */
+.modo-leitura-ativo *:hover {
+    outline: 2px solid var(--btn-bg);
+    cursor: pointer;
+}
+
+/* ===========================================================
+   🌙 DARK MODE GLOBAL — Macaw Systems
+   Este arquivo NÃO muda seu tema claro.
+   Ele apenas define como cada elemento se comporta quando
+   a classe `.dark-mode` estiver aplicada no <body>.
+   =========================================================== */
+
+/* ===== CORES BASE DO DARKMODE ===== */
+body.dark-mode {
+    --bg-primary: #0d1117;
+    --bg-secondary: #161b22;
+    --bg-tertiary: #1e242e;
+
+    --text-primary: #e6edf3;
+    --text-secondary: #9ba3b4;
+
+    --card-bg: #161b22;
+    --card-border: #2d333b;
+
+    --input-bg: #0f1620;
+    --input-border: #2d333b;
+
+    --primary-color: #a31d1c;      /* seu vermelho oficial */
+    --primary-hover: #7a1212;
+
+    --table-header: #21262d;
+    --table-row-hover: #1b2028;
+
+    --shadow-dark: rgba(0, 0, 0, 0.5);
+}
+
+/* ===== FUNDO GERAL ===== */
+body.dark-mode,
+body.dark-mode .main-content,
+body.dark-mode .all,
+body.dark-mode .conteudo {
+    background-color: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+}
+
+/* ===== TEXTOS ===== */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6,
+body.dark-mode p,
+body.dark-mode span,
+body.dark-mode label,
+body.dark-mode strong {
+    color: var(--text-primary) !important;
+}
+
+/* ===== CARDS E BOXES ===== */
+body.dark-mode .card,
+body.dark-mode .report-box,
+body.dark-mode .user-management,
+body.dark-mode .tabela-container,
+body.dark-mode .request-history,
+body.dark-mode .user-list,
+body.dark-mode .modal-content {
+    background-color: var(--bg-secondary) !important;
+    border-color: var(--card-border) !important;
+    color: var(--text-primary) !important;
+    box-shadow: 0 0 12px var(--shadow-dark) !important;
+}
+
+/* ===== INPUTS & SELECTS ===== */
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+    background-color: var(--input-bg) !important;
+    border: 1px solid var(--input-border) !important;
+    color: var(--text-primary) !important;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+    color: var(--text-secondary) !important;
+}
+
+/* ===== TABELAS ===== */
+body.dark-mode table {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+}
+
+body.dark-mode th {
+    background-color: var(--table-header) !important;
+    color: var(--text-primary) !important;
+}
+
+body.dark-mode td {
+    border-color: var(--card-border) !important;
+}
+
+body.dark-mode tbody tr:hover {
+    background-color: var(--table-row-hover) !important;
+}
+
+body.dark-mode .card-alert {
+    background: linear-gradient(135deg, #b84a4a, #d97d7d);
+    box-shadow: 0 4px 14px rgba(180, 60, 60, 0.25);
+    border-left: 6px solid rgba(255, 180, 180, 0.5);
+}
+
+body.dark-mode .marcar-visto-btn {
+    background: #1f1f1f;
+    color: #ff9f9f;
+}
+
+body.dark-mode .marcar-visto-btn:hover {
+    background: #2c2c2c;
+}
+
+
+
+/* ===== BOTÕES ===== */
+body.dark-mode button,
+body.dark-mode .btn,
+body.dark-mode .save,
+body.dark-mode .cancel {
+    color: var(--text-primary) !important;
+}
+
+body.dark-mode .btn-login,
+body.dark-mode .btn-filtrar,
+body.dark-mode .detalhes-btn,
+body.dark-mode .save-button {
+    background-color: var(--primary-color) !important;
+}
+
+body.dark-mode .btn-login:hover,
+body.dark-mode .btn-filtrar:hover,
+body.dark-mode .detalhes-btn:hover,
+body.dark-mode .save-button:hover {
+    background-color: var(--primary-hover) !important;
+}
+
+/* Botões neutros */
+body.dark-mode .btn-limpar,
+body.dark-mode .cancel-button,
+body.dark-mode .cancel {
+    background-color: #444 !important;
+    color: #eee !important;
+}
+
+/* Botões cinza hover */
+body.dark-mode .btn-limpar:hover,
+body.dark-mode .cancel:hover {
+    background-color: #555 !important;
+}
+
+/* ===== SIDEBAR ===== */
+body.dark-mode .sidebar {
+    background-color: var(--bg-secondary) !important;
+}
+
+body.dark-mode .menu-btn {
+    color: var(--text-secondary) !important;
+}
+
+body.dark-mode .menu-btn:hover {
+    background-color: var(--primary-color) !important;
+    color: #fff !important;
+}
+
+body.dark-mode .menu-btn.active {
+    background-color: var(--primary-color) !important;
+    color: #fff !important;
+}
+
+/* ===== DROPDOWN DE ALERTAS ===== */
+body.dark-mode .alertas-dropdown {
+    background: rgba(20, 24, 33, 0.85) !important;
+    border-color: #30363d !important;
+    backdrop-filter: blur(12px) !important;
+}
+
+body.dark-mode .alerta-card {
+    background: #1c222b !important;
+    border-left-color: var(--primary-color) !important;
+}
+
+/* ===== MODAL ===== */
+body.dark-mode .modal {
+    background: rgba(0,0,0,0.7) !important;
+}
+
+body.dark-mode .modal-content {
+    background-color: var(--bg-secondary) !important;
+}
+
+/* ===== TABS ===== */
+body.dark-mode .tab {
+    background-color: #1c222b !important;
+    color: var(--text-primary) !important;
+}
+
+body.dark-mode .tab.on {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+}
+
+/* ===== SCROLLBAR ===== */
+body.dark-mode *::-webkit-scrollbar-thumb {
+    background-color: #555 !important;
+}
+
+body.dark-mode *::-webkit-scrollbar-track {
+    background-color: #222 !important;
+}
+
+/* ===========================================================
+   🎨 MODOS DE DALTONISMO — Macaw Systems
+   NÃO ALTERA SEU TEMA CLARO/DARK
+   Apenas aplica filtros corretivos quando o usuário ativa.
+   =========================================================== */
+
+/* ============================
+   🔵 PROTANOPIA (vermelho reduzido)
+   ============================ */
+body.protanopia-mode {
+    filter: url('#protanopia');
+}
+
+/* ============================
+   🟡 DEUTERANOPIA (verde reduzido)
+   ============================ */
+body.deuteranopia-mode {
+    filter: url('#deuteranopia');
+}
+
+/* ============================
+   🔴 TRITANOPIA (azul reduzido)
+   ============================ */
+body.tritanopia-mode {
+    filter: url('#tritanopia');
+}
+
+/* ===========================================
+   SVG FILTERS — necessários para correção real
+   (funciona em QUALQUER navegador moderno)
+   =========================================== */
+body::before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    visibility: hidden;
+}
+
+svg#colorblind-filters {
+    position: absolute;
+    width: 0;
+    height: 0;
+    visibility: hidden;
+}
+
+/* ===========================================================
+   ⚫⚪ HIGH CONTRAST MODE — Macaw Systems
+   Aumenta contraste para acessibilidade visual severa.
+   Não altera tema claro/dark original.
+   =========================================================== */
+
+body.high-contrast {
+    --hc-bg-primary: #000 !important;
+    --hc-bg-secondary: #111 !important;
+    --hc-bg-tertiary: #1a1a1a !important;
+
+    --hc-text-primary: #ffffff !important;
+    --hc-text-secondary: #ffff66 !important; /* amarelo suave acessível */
+
+    --hc-border: #ffffff !important;
+    --hc-accent: #ffea00 !important; /* destaque amigável */
+
+    filter: contrast(1.25) brightness(1.1);
+}
+
+/* ===== FUNDO GERAL ===== */
+body.high-contrast,
+body.high-contrast .main-content,
+body.high-contrast .all,
+body.high-contrast .conteudo {
+    background-color: var(--hc-bg-primary) !important;
+    color: var(--hc-text-primary) !important;
+}
+
+/* ===== TEXTOS ===== */
+body.high-contrast h1,
+body.high-contrast h2,
+body.high-contrast h3,
+body.high-contrast h4,
+body.high-contrast h5,
+body.high-contrast h6,
+body.high-contrast p,
+body.high-contrast span,
+body.high-contrast label,
+body.high-contrast strong {
+    color: var(--hc-text-primary) !important;
+}
+
+/* ===== LINKS ===== */
+body.high-contrast a {
+    color: var(--hc-text-secondary) !important;
+    text-decoration: underline !important;
+}
+
+/* ===== CARDS, BOXES ===== */
+body.high-contrast .card,
+body.high-contrast .report-box,
+body.high-contrast .user-management,
+body.high-contrast .tabela-container,
+body.high-contrast .request-history,
+body.high-contrast .user-list,
+body.high-contrast .modal-content {
+    background-color: var(--hc-bg-secondary) !important;
+    border: 2px solid var(--hc-border) !important;
+    color: var(--hc-text-primary) !important;
+    box-shadow: none !important;
+}
+
+/* ===== INPUTS ===== */
+body.high-contrast input,
+body.high-contrast select,
+body.high-contrast textarea {
+    background-color: black !important;
+    border: 2px solid var(--hc-border) !important;
+    color: var(--hc-text-primary) !important;
+}
+
+body.high-contrast input::placeholder {
+    color: #cccccc !important;
+}
+
+/* ===== TABELAS ===== */
+body.high-contrast table {
+    background-color: black !important;
+    color: var(--hc-text-primary) !important;
+    border: 2px solid var(--hc-border) !important;
+}
+
+body.high-contrast th {
+    background-color: #222 !important;
+    color: white !important;
+    border: 2px solid white !important;
+}
+
+body.high-contrast td {
+    border: 1px solid white !important;
+}
+
+/* ===== BOTÕES ===== */
+body.high-contrast button,
+body.high-contrast .btn,
+body.high-contrast .save,
+body.high-contrast .cancel,
+body.high-contrast .action-btn {
+    background-color: black !important;
+    color: var(--hc-text-secondary) !important;
+    border: 2px solid var(--hc-text-secondary) !important;
+    font-weight: bold !important;
+}
+
+body.high-contrast button:hover {
+    background-color: var(--hc-text-secondary) !important;
+    color: black !important;
+}
+
+/* Botões principais */
+body.high-contrast .btn-login,
+body.high-contrast .btn-filtrar,
+body.high-contrast .detalhes-btn,
+body.high-contrast .save-button {
+    background-color: var(--hc-accent) !important;
+    color: black !important;
+    border: 2px solid white !important;
+}
+
+body.high-contrast .btn-login:hover,
+body.high-contrast .btn-filtrar:hover,
+body.high-contrast .detalhes-btn:hover,
+body.high-contrast .save-button:hover {
+    background-color: white !important;
+    color: black !important;
+}
+
+/* ===== SIDEBAR ===== */
+body.high-contrast .sidebar {
+    background-color: black !important;
+    border-right: 2px solid white !important;
+}
+
+body.high-contrast .menu-btn {
+    color: white !important;
+    border: 2px solid transparent !important;
+}
+
+body.high-contrast .menu-btn:hover {
+    background-color: white !important;
+    color: black !important;
+}
+
+body.high-contrast .menu-btn.active {
+    background-color: var(--hc-accent) !important;
+    color: black !important;
+}
+
+/* ===== ALERTAS DROPDOWN ===== */
+body.high-contrast .alertas-dropdown {
+    background-color: black !important;
+    border: 2px solid white !important;
+}
+
+body.high-contrast .alerta-card {
+    background-color: #111 !important;
+    border-left-color: var(--hc-accent) !important;
+    border: 2px solid white !important;
+}
+
+/* ===== MODAL ===== */
+body.high-contrast .modal {
+    background: rgba(0,0,0,0.9) !important;
+}
+
+/* ===== TABS ===== */
+body.high-contrast .tab {
+    background-color: black !important;
+    color: var(--hc-text-secondary) !important;
+    border: 2px solid var(--hc-text-secondary) !important;
+}
+
+body.high-contrast .tab.on {
+    background-color: var(--hc-accent) !important;
+    color: black !important;
+    border: 2px solid white !important;
+}
+
+/* ===== SCROLLBAR ===== */
+body.high-contrast *::-webkit-scrollbar-thumb {
+    background-color: white !important;
+}
+
+body.high-contrast *::-webkit-scrollbar-track {
+    background-color: black !important;
+}
+

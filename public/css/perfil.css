@@ -14,13 +14,13 @@
 }
 
 .title{
-    font-size: 50px;
+    font-size: 2.5rem;
     font-weight: bold;
     margin: 30px 0px 10px 30px;
 }
 
 .subtitle{
-    font-size: 30px;
+    font-size: 1.5rem;
     font-weight: bold;
     margin: 20px 0px 10px 30px;
 }
@@ -53,7 +53,7 @@
 .card h1 {
     color: var(--color-text);
     font-weight: 600;
-    font-size: 1.6em;
+    font-size: 1.6rem;
     padding-bottom: 15px;
     margin: 0 0 25px 0;
     border-bottom: 1px solid var(--color-border);
@@ -62,7 +62,7 @@
 .card h2 {
     color: var(--color-text);
     font-weight: 600;
-    font-size: 1.4em;
+    font-size: 1.4rem;
     padding-bottom: 15px;
     margin: 0 0 20px 0;
     border-bottom: 1px solid var(--color-border);
@@ -358,7 +358,7 @@
 .close-button {
     color: #aaa;
     float: right;
-    font-size: 28px;
+    font-size: 1.5rem;
     font-weight: bold;
     cursor: pointer;
     transition: color 0.3s;
@@ -393,7 +393,7 @@
     padding: 10px 15px;
     border: 1px solid var(--color-border);
     border-radius: 4px;
-    font-size: 1em;
+    font-size: 1rem;
     color: var(--color-text);
     background-color: #fff; /* Fundo branco para edição */
 }
@@ -412,3 +412,164 @@
     border-radius: 12px;
 }
 
+/* =============================
+   CARDS GERAIS
+============================= */
+
+.card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 14px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 20px rgba(13, 47, 88, 0.08);
+}
+
+/* =============================
+   TÍTULOS
+============================= */
+
+.title {
+    color: #0d47a1;
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    margin-top: 20px;
+    margin-bottom: 12px;
+    color: #0d47a1;
+    font-weight: 600;
+}
+
+/* =============================
+   INPUTS
+============================= */
+
+.input-group {
+    margin-bottom: 18px;
+}
+
+.input-group label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #d6d6d6;
+    background: #f4f6fa;
+    transition: 0.2s;
+}
+
+.input-group input:focus {
+    border-color: #0d47a1;
+    box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.15);
+}
+
+/* =============================
+   DISPLAY DE NÍVEL
+============================= */
+
+.level-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.level-display {
+    background: #eef2f9;
+    padding: 10px 16px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #0d47a1;
+}
+
+.edit-button {
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: 1px solid #0d47a1;
+    background: transparent;
+    color: #0d47a1;
+    cursor: pointer;
+    transition: 0.25s;
+    font-weight: 600;
+}
+
+.edit-button:hover {
+    background: #0d47a1;
+    color: #fff;
+}
+
+/* =============================
+   BOTÕES DE ACESSIBILIDADE
+============================= */
+
+.acessibilidade-controles {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.btn-acess {
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: 1px solid #0d47a1;
+    background: white;
+    font-weight: 600;
+    color: #0d47a1;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.btn-acess:hover {
+    background: #0d47a1;
+    color: #fff;
+}
+
+.acess-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+/* Azul cheio */
+.btn-blue {
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: none;
+    background: #0d47a1;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.btn-blue:hover {
+    background: #073b88;
+}
+
+/* Contorno */
+.btn-outline {
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: 2px solid #0d47a1;
+    background: #fff;
+    color: #0d47a1;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.btn-outline:hover {
+    background: #0d47a1;
+    color: #fff;
+}

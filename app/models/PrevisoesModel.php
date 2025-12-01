@@ -7,6 +7,7 @@ class PrevisoesModel{
     $sql = 
     "SELECT 
         pr.nome AS produto,
+        pr.preco_unitario,
         p.tipo_previsao,
         p.previsao_quantidade,
         p.data_previsao,

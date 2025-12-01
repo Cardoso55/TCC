@@ -201,8 +201,106 @@ class CompraModel
         $conn->close();
         return $ok;
     }
+    public static function listarPedidosPorProduto($id_produto) {
+    $db = conectarBanco();
 
+    $sql = "
+        SELECT 
+            pr.id_pedido,
+            pr.id_produto,
+            pr.quantidade,
+            pr.status,
+            pr.data_pedido,
+            p.nome,
+            p.preco_unitario,
+            p.valor_compra,                -- <--- adiciona aqui
+            (pr.quantidade * p.preco_unitario) AS total_item,
+            c.fornecedor,
+            u.nome AS nome_usuario
+        FROM pedidosreposicao_tbl pr
+        JOIN produtos_tbl p ON pr.id_produto = p.id_produto
+        LEFT JOIN compras_tbl c ON pr.id_compra = c.id_compra
+        LEFT JOIN usuarios_tbl u ON pr.idUsuarios_TBL = u.id_usuario
+        WHERE pr.id_produto = ?
+        ORDER BY pr.data_pedido ASC
+    ";
+
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param("i", $id_produto);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC);
 }
+
+public static function getGastosPorProduto($dias = null) {
+        $db = conectarBanco();
+
+        // filtra por data se $dias for inteiro
+        $where = "";
+        if ($dias !== null) {
+            $dias = (int)$dias;
+            if ($dias > 0) {
+                // usa data_pedido da tabela pedidosreposicao_tbl
+                $where = "WHERE pr.data_pedido >= DATE_SUB(NOW(), INTERVAL {$dias} DAY)";
+            }
+        }
+
+        $sql = "
+            SELECT
+                p.id_produto,
+                p.nome,
+                SUM(pr.quantidade) AS quantidade_total,
+                SUM(pr.quantidade * COALESCE(p.valor_compra, p.preco_unitario, 0)) AS total_gasto,
+                -- preço médio ponderado pelo custo (fallback para preco_unitario caso não exista valor_compra)
+                CASE WHEN SUM(pr.quantidade) > 0 
+                     THEN SUM(pr.quantidade * COALESCE(p.valor_compra, p.preco_unitario, 0)) / SUM(pr.quantidade)
+                     ELSE 0 END AS preco_medio,
+                MAX(pr.data_pedido) AS ultima_compra
+            FROM pedidosreposicao_tbl pr
+            LEFT JOIN produtos_tbl p ON pr.id_produto = p.id_produto
+            {$where}
+            GROUP BY p.id_produto, p.nome
+            ORDER BY total_gasto DESC
+        ";
+
+        $res = $db->query($sql);
+        if ($res === false) {
+            error_log("getGastosPorProduto SQL error: " . $db->error);
+            $db->close();
+            return [
+                'total_gasto' => 0,
+                'quantidade_total' => 0,
+                'preco_medio_geral' => 0,
+                'produtos' => []
+            ];
+        }
+
+        $produtos = $res->fetch_all(MYSQLI_ASSOC);
+
+        // agregados gerais
+        $totalGastoGeral = 0.0;
+        $quantidadeGeral = 0;
+        foreach ($produtos as $p) {
+            $totalGastoGeral += (float)$p['total_gasto'];
+            $quantidadeGeral += (int)$p['quantidade_total'];
+        }
+        $precoMedioGeral = $quantidadeGeral > 0 ? $totalGastoGeral / $quantidadeGeral : 0;
+
+        $db->close();
+
+        return [
+            'total_gasto' => (float)$totalGastoGeral,
+            'quantidade_total' => (int)$quantidadeGeral,
+            'preco_medio_geral' => (float)$precoMedioGeral,
+            'produtos' => $produtos
+        ];
+    }
+}
+
+
+
+
 
 
  

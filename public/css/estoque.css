@@ -1,136 +1,225 @@
-.all{
+:root {
+    --macaw-blue: #355fbb;
+    --macaw-blue-dark: #1f3b73;
+    --macaw-blue-light: #6a9dff;
+    --macaw-bg-soft: #eef2ff;
+    --macaw-card-bg: #f9faff;
+    --macaw-gradient: linear-gradient(135deg, #355fbb, #6a9dff);
+    --macaw-hover-shadow: 0 6px 20px rgba(53, 95, 187, 0.35);
+}
+
+.all {
     display: flex;
     flex-direction: row;
+    background: var(--macaw-bg-soft);
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
 }
 
-.main-content{
-    width: 85%;
-    margin: 10px;
+/* ===== CONTEÚDO PRINCIPAL ===== */
+.main-content {
+    width: 80%;
+    margin: 10px auto;
     display: flex;
     flex-direction: column;
-    background-color: #fff;
-    box-shadow: 10px 0 10px rgba(0,0,0,0.1);
+    background-color: var(--macaw-card-bg);
+    border-radius: 16px;
+    box-shadow: 10px 0 25px rgba(0, 0, 0, 0.08);
+    padding: 20px 30px;
+    transition: all 0.3s ease;
 }
 
-.title{
-    font-size: 50px;
+/* ===== TÍTULOS ===== */
+.title,
+.subtitle {
+    margin-left: 30px;
     font-weight: bold;
-    margin: 30px 0px 10px 30px;
 }
 
-.subtitle{
-    font-size: 30px;
-    font-weight: bold;
-    margin: 20px 0px 10px 30px;
+.title {
+    font-size: 2.4rem;
+    margin-top: 25px;
+    position: relative;
+    padding-left: 10px;
 }
 
+.title::before {
+    content: "";
+    width: 6px;
+    height: 28px;
+    background: var(--macaw-blue);
+    border-radius: 6px;
+    position: absolute;
+    left: -12px;
+    top: 6px;
+}
+
+.subtitle {
+    font-size: 1.4rem;
+    margin-top: 20px;
+    padding-left: 8px;
+    border-left: 4px solid var(--macaw-blue-light);
+}
+
+.buttons-group {
+    display: flex;
+    gap: 15px;
+    margin-right: 15px;
+    margin-bottom: 20px;
+    margin-top: 25px;
+}
+
+.button-blue {
+    padding: 12px 22px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--macaw-blue-dark), var(--macaw-blue));
+    box-shadow: 0 4px 12px rgba(30, 70, 165, 0.35);
+    transition: 0.3s ease;
+}
+
+.button-blue:hover {
+    transform: translateY(-2px);
+    opacity: 0.95;
+}
+
+/* ===== FILTROS ===== */
 .stock-management {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    margin: 10px;
-    gap: 10px;
+    gap: 12px;
+    margin-top: 20px;
     margin-bottom: 25px;
 }
 
 .stock-management input[type="text"] {
     width: 250px;
-    padding: 8px 12px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 2px solid #ccc;
     outline: none;
-    font-size: 14px;
-    transition: all 0.2s ease;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    background-color: #fff;
 }
 
 .stock-management input[type="text"]:focus {
-    border-color: #01aad4;
+    border-color: var(--macaw-blue);
+    box-shadow: 0 0 10px rgba(53, 95, 187, 0.25);
 }
 
+.stock-management input[type="text"]::placeholder {
+    color: #9c9c9c;
+    font-weight: 400;
+}
 
+/* ===== BOTÃO REVISAR ===== */
 .stock-management button {
-    background-color: #01aad4;
-    color: white;
+    background: linear-gradient(135deg, var(--macaw-blue), var(--macaw-blue-light));
+    color: #fff;
     border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
+    padding: 10px 18px;
+    border-radius: 12px;
     font-weight: 600;
-    font-size: 14px;
-    transition: 0.3s;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(53, 95, 187, 0.2);
+    transition: all 0.3s ease;
 }
 
 .stock-management button:hover {
-    background-color: #0192b5;
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 8px 25px rgba(53, 95, 187, 0.35);
 }
 
+/* ===== TABELA DE PRODUTOS ===== */
 .product-list {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    background-color: var(--macaw-card-bg);
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(53, 95, 187, 0.1);
     overflow: hidden;
-    margin: 10px;
+    margin: 10px 0;
+    transition: all 0.3s ease;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     text-align: left;
+    font-size: 0.95rem;
 }
 
+/* CABEÇALHO */
 thead {
-    background-color: #fafafa;
+    background: linear-gradient(135deg, var(--macaw-blue-dark), var(--macaw-blue));
+    color: #fff;
 }
 
 th {
     padding: 14px 12px;
-    font-weight: 600;
-    font-size: 15px;
-    color: #333;
-    border-bottom: 2px solid #ddd;
-}
-
-td {
-    padding: 12px;
-    font-size: 14px;
-    color: #555;
-    border-bottom: 1px solid #eee;
-}
-
-tbody tr:nth-child(even) {
-    background-color: #e2e2e2; /* Linhas cinza */
-}
-
-tbody tr:nth-child(odd) {
-    background-color: #f6f6f6;
+    font-weight: 700;
+    font-size: 1rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    position: relative;
 }
 
 th button {
-    background-color: #01aad4;
-    color: white;
+    background: #1f3b73;
+    color: #fff;
     border: none;
     padding: 8px 14px;
     border-radius: 20px;
     cursor: pointer;
     font-weight: 600;
-    transition: 0.3s;
+    transition: all 0.3s ease;
 }
 
 th button:hover {
-    background-color: #0192b5;
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 18px rgba(53, 95, 187, 0.3);
 }
 
+/* LINHAS DA TABELA */
+td {
+    padding: 12px;
+    color: #555;
+    border-bottom: 1px solid #eee;
+    transition: all 0.2s ease;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f0f4ff;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+tbody tr:hover {
+    background-color: #e2ebff;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(53, 95, 187, 0.1);
+}
+
+/* LINKS */
 td a {
     text-decoration: none;
-    color: #01aad4;
+    color: var(--macaw-blue);
     font-weight: 500;
-    transition: 0.3s;
+    transition: all 0.2s ease;
 }
 
 td a:hover {
     text-decoration: underline;
-    color: #0192b5;
+    color: var(--macaw-blue-dark);
 }
 
+/* ÚLTIMA COLUNA (AÇÕES) */
 th:last-child,
 td:last-child {
     text-align: right;
@@ -142,14 +231,16 @@ td:last-child button {
     margin-left: 8px;
 }
 
+/* PADDING ENTRE COLUNAS */
 td:not(:last-child),
 th:not(:last-child) {
-    padding-right: 10px;
+    padding-right: 12px;
 }
+
 
 /* ===== MODAL ===== */
 .modal {
-    display: none; 
+    display: none;
     position: fixed;
     z-index: 2000;
     left: 0;
@@ -157,40 +248,37 @@ th:not(:last-child) {
     width: 100%;
     height: 100%;
     overflow-y: auto;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(3px);
 }
 
 /* ===== MODAL GERAL ===== */
 .modal-content {
-  background-color: #f9f9f9;
-  border-radius: 16px;
-  padding: 40px 60px;
-  width: 900px;
-  max-width: 95%;
-  margin: auto;
-  position: relative;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
-  font-family: "Poppins", sans-serif;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 25px 30px;
+    width: 700px;
+    max-width: 90vw;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    animation: fadeIn 0.3s ease;
+    margin: 0 auto; /* centraliza horizontalmente */
+    box-sizing: border-box;
 }
 
 /* ===== CABEÇALHO ===== */
 .modal-content h2 {
-  font-size: 2.2rem;
-  text-align: center;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 10px;
+    font-size: 2.2rem;
+    text-align: center;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 10px;
 }
 
 .close {
     position: absolute;
     top: 20px;
     right: 25px;
-    font-size: 24px;
+    font-size: 1.5rem;
     color: #01aad4;
     cursor: pointer;
     transition: 0.2s;
@@ -202,112 +290,111 @@ th:not(:last-child) {
 
 /* ===== GRID PRINCIPAL ===== */
 .form-grid {
-  display: grid;
-  grid-template-columns: 1fr 280px;
-  gap: 40px;
-  align-items: start;
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 40px;
+    align-items: start;
 }
 
 /* ===== CAMPOS DE TEXTO ===== */
 .form-fields {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
 .form-group label {
-  font-weight: 600;
-  font-size: 0.95rem;
-  color: #333;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #333;
 }
 
 .form-group input,
 .form-group textarea,
 .form-group select {
-  width: 100%;
-  padding: 10px 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  background: #fff;
-  font-size: 0.95rem;
-  transition: all 0.2s ease;
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: #fff;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
 }
 
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
     border-color: #01aad4;
-    box-shadow: 0 0 0 3px rgba(1,170,212,0.25);
+    box-shadow: 0 0 0 3px rgba(1, 170, 212, 0.25);
     outline: none;
 }
 
 textarea {
-  resize: none;
-  height: 80px;
+    resize: none;
+    height: 80px;
 }
 
 /* ===== ÁREA DE IMAGEM ===== */
 .image-upload {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
 }
 
 .image-preview {
-  width: 250px;
-  height: 200px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
+    width: 250px;
+    height: 200px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 }
 
 .image-preview img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .thumbnail-row {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
 }
 
 .thumbnail {
-  width: 70px;
-  height: 70px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
-  transition: all 0.2s ease;
-  cursor: pointer;
-  border: 2px solid transparent;
+    width: 70px;
+    height: 70px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
 }
 
 .thumbnail:hover {
-  transform: scale(1.05);
+    transform: scale(1.05);
 }
 
 .thumbnail.active {
     border-color: #01aad4;
-    box-shadow: 0 0 0 3px rgba(1,170,212,0.25);
+    box-shadow: 0 0 0 3px rgba(1, 170, 212, 0.25);
 }
 
-/* ===== BOTÃO SALVAR ===== */
 .modal-footer {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
 .modal-footer button {
@@ -328,16 +415,16 @@ textarea {
 }
 
 #char-count {
-  font-size: 0.85rem;
-  color: #666;
-  text-align: right;
-  display: block;
-  margin-top: 4px;
+    font-size: 0.85rem;
+    color: #666;
+    text-align: right;
+    display: block;
+    margin-top: 4px;
 }
 
 .sort {
     cursor: pointer;
-    font-size: 0.8em;
+    font-size: 0.8rem;
     margin-left: 4px;
     color: #666;
     transition: 0.2s;
@@ -406,7 +493,6 @@ textarea {
     padding: 10px 0 !important;
     border-radius: 10px !important;
 }
-/* ===== MODAL REPOSIÇÃO ===== */
 
 /* Linha de info (Produto, estoque atual, etc) */
 .modal-row {
@@ -459,7 +545,7 @@ textarea {
 
 .input-box input:focus {
     border-color: #01aad4;
-    box-shadow: 0 0 0 3px rgba(1,170,212,0.25);
+    box-shadow: 0 0 0 3px rgba(1, 170, 212, 0.25);
 }
 
 /* Botões */
@@ -502,7 +588,7 @@ textarea {
 
 /* Ícones gerais */
 .material-symbols-outlined {
-    font-size: 22px;
+    font-size: 1.2rem;
     vertical-align: middle;
     font-variation-settings:
         'FILL' 0,
@@ -565,8 +651,10 @@ textarea {
 /* --- Tabela de produtos --- */
 .product-list table td.preco,
 .product-list table td.valor-compra {
-    text-align: right;      /* coloca o preço no canto direito */
-    white-space: nowrap;     /* evita que o R$ quebre de linha */
+    text-align: right;
+    /* coloca o preço no canto direito */
+    white-space: nowrap;
+    /* evita que o R$ quebre de linha */
 }
 
 /* Se você quiser separar R$ do valor */
@@ -589,7 +677,8 @@ textarea {
 /* Campo de observação (textarea) */
 .modal-content textarea {
     min-height: 80px;
-    resize: vertical; /* opcional, deixa o usuário ajustar */
+    resize: vertical;
+    /* opcional, deixa o usuário ajustar */
 }
 
 /* --- Ajustes gerais do modal --- */
